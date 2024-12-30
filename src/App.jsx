@@ -27,7 +27,7 @@ const App = () => {
           <Route path='/student-panel' element={<stuHome/>}/>
           <Route path='/student-panel' element={<stuNav/>}/>
         </Routes>
-        {/* <Footer /> */}
+        <Footer />
       </div>
     </Router>
   );
