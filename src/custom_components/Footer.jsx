@@ -1,4 +1,4 @@
-// src/components/Footer.jsx
+// src/custom_components/Footer.jsx
 import React from "react";
 import "./Footer.css"; // Link to the CSS file
 

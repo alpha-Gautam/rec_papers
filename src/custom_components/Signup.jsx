@@ -4,8 +4,8 @@ import email_icon from '../images/email.png';
 import pass_icon from '../images/password.png';
 
 const SignUp = () => {
-  return (
-    <div className='container'>
+  return ( 
+    <div className='container m-5'>
       <div className='header'>
         <div className='text'>Sign Up</div>
         <div className='underline'></div>

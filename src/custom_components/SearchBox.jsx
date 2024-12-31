@@ -11,8 +11,9 @@ const SearchBox = ({ onSearch }) => {
   };
 
   return (
-    <div className="search-box">
+    <div className="search-box ">
       <input
+      className=''
         type="text"
         placeholder="Search for papers or authors or mentors..."
         value={searchTerm}

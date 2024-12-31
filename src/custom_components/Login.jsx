@@ -3,11 +3,15 @@ import email_icon from '../images/email.png';
 import pass_icon from '../images/password.png';
 
 const Login = () => {
-  return (
-    <div className='container'>
-      <div className='header'>
+  return ( 
+    <div className='container m-5 '>
+      <div className='flex flex-col justify-center items-center'>
         <div className='text'>Log In</div>
         <div className='underline'></div>
+        <div className='w-full mt-3 flex justify-center items-center gap-3  text-red-800'>
+          <button className='p-2 bg-slate-700 text-white rounded-lg'>Student</button>
+          <button className='p-2 bg-slate-700 text-white rounded-lg'>Mentor</button>
+        </div>
       </div>
       <div className='inputs'>
         <div className='input'>

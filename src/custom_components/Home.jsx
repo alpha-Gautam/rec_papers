@@ -17,12 +17,12 @@ const Home = () => {
       };
 
   return (
-    <div className="home">
+    <div className="home my-10 rounded-lg w-[80%]">
       <header className="home-header">
         <h2>REC Kannauj</h2>
         <h3>'Academic Reports and Research Papers' Platform'</h3>
         <p>Look for any pertinent research papers and project reports here.</p>
-        <SearchBox onSearch={handleSearch} />
+        <SearchBox className="bg-slate-400" onSearch={handleSearch} />
       </header>
       <div style={{ display: 'flex', gap: '40px', justifyContent: 'center', flexWrap: 'wrap' }}>
       {cardsData.map((card, index) => (
