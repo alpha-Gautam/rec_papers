@@ -1,0 +1,115 @@
+/* General Styling */
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #121212; /* Dark black background */
+  color: #ffffff; /* White text */
+  height: 100vh; /* Ensure full viewport height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Container to occupy full height */
+.create-project-container {
+  padding: 20px;
+  width: 100%; /* Full width */
+  max-width: 600px; /* Maximum width for readability */
+  height: 90vh; /* Occupy most of the vertical height */
+  margin: 0 auto; /* Centered horizontally */
+  background-color: #1e1e1e; /* Slightly lighter black for form container */
+  border-radius: 10px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.8); /* Subtle shadow effect */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Title Styling */
+.create-project-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  color: #64ffda; /* Highlight green */
+  margin-bottom: 20px;
+}
+
+/* Input Fields */
+.create-project-input .MuiOutlinedInput-root {
+  background-color: #333333; /* Dark gray background for inputs */
+  color: #ffffff; /* White text */
+}
+
+.create-project-input .MuiInputLabel-root {
+  color: #888888; /* Subtle gray for input labels */
+}
+
+.create-project-input .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: #64ffda; /* Highlight green on hover */
+}
+
+.create-project-input .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #64ffda; /* Highlight green when focused */
+}
+
+/* File Upload Button */
+.file-upload-button {
+  background-color: #333333; /* Dark gray background */
+  color: #ffffff; /* White text */
+  border: 1px solid #555555; /* Border color */
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.file-upload-button:hover {
+  background-color: #64ffda; /* Highlight green on hover */
+  color: #000000; /* Black text */
+}
+
+/* Submit Button */
+.submit-button {
+  background-color: #64ffda; /* Highlight green */
+  color: #000000; /* Black text */
+  padding: 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.submit-button:hover {
+  background-color: #03dac6; /* Brighter green on hover */
+  color: #000000; /* Black text */
+}
+
+/* Form Item Spacing */
+.form-item {
+  margin-bottom: 15px;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .create-project-container {
+      padding: 15px;
+      width: 90%; /* Slight margin on mobile for better visibility */
+      height: auto; /* Adjust to content height */
+  }
+
+  .create-project-title {
+      font-size: 20px;
+  }
+
+  .file-upload-button,
+  .submit-button {
+      font-size: 14px;
+      padding: 10px;
+  }
+}

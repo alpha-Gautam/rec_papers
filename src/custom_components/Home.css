@@ -44,7 +44,7 @@ html {
 /* Cards Container */
 .cards-container {
   display: flex;
-  gap: 40px;
+  gap: 38px;
   justify-content: center;
   flex-wrap: wrap;
   margin-top: 30px;
