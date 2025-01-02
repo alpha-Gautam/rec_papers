@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../images/Logo.png";
+import logo from "D:/Projects/REC-papers/rec_papers/src/assets/images/Logo.png";
 import "./Navbar.css"; // Create and style your Navbar in this CSS file
-import Login from '../custom_components/prelogin/Login';
+import Login from './Login';
 
 
 const Navbar = () => {
@@ -20,8 +20,8 @@ const Navbar = () => {
 
 const [openLogin,setOpenLogin] = useState(false)
   return (
-    <nav className="navbar w-full border-0">
-      <div className=" px-1 flex flex-1 justify-between gap-96">
+    <nav className=" w-full">
+      <div className="w-full p-4 flex justify-between ">
 
       <div className="navbar-logo ">
         <img src={logo} alt="Website Logo" className="logo" />
@@ -31,7 +31,7 @@ const [openLogin,setOpenLogin] = useState(false)
       </div>
 
 
-      <div className="">
+      <div className=" ">
           <ul className="navbar-links text-nowrap">
             <li>
               <Link to="/">Home</Link>
@@ -39,7 +39,7 @@ const [openLogin,setOpenLogin] = useState(false)
             {userRole === null && (
               <>
                 <li>
-                  <Link to="/signin">Log In</Link>
+                  <Link to="/login">Log In</Link>
                    
                 </li>
                 <li>
@@ -47,7 +47,7 @@ const [openLogin,setOpenLogin] = useState(false)
                 </li>
                 {/* Simulate logins for testing (remove these in production) */}
                 <li>
-                  <Link to="/mentor-panel">Mentor Login</Link>
+                  <Link to="/dashboard">Dashboard</Link>
                 </li>
                 <li>
                   <Link to="/student-panel">Student Login</Link>

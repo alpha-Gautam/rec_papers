@@ -8,17 +8,17 @@ const Home = () => {
     {
       title: 'Image Enhancement using ML',
       description: '',
-      image: require('../images/paper-photo.jpg'), // Local image
+      image: require('../../assets/images/paper-photo.jpg'), // Local image
     },
     {
       title: 'Portfolio Website Development using React.js',
       description: '',
-      image: require('../images/paper-photo.jpg'), // Local image
+      image: require('../../assets/images/paper-photo.jpg'), // Local image
     },
     {
       title: 'Attention Mechanism Implementation',
       description: '',
-      image: require('../images/paper-photo.jpg'), // Local image
+      image: require('../../assets/images/paper-photo.jpg'), // Local image
     },
   ];
 
