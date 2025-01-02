@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Dialog,
   DialogTitle,
@@ -28,6 +29,7 @@ const Register = ({ open, onClose }) => {
   };
   return (
     <Dialog open={open} onClose={onClose} className="register-dialog">
+      <Link to="/">Back</Link>
       <div className="register-header">
         <DialogTitle className="register-title">Register</DialogTitle>
         <IconButton onClick={onClose} className="close-button">

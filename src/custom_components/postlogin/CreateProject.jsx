@@ -39,6 +39,8 @@ const CreateProject = () => {
   };
 
   return (
+    <div className="">
+
     <Box sx={{ padding: 4, maxWidth: 600, margin: "auto", backgroundColor: "#f9f9f9", borderRadius: 4, boxShadow: 3 }}>
       <Typography variant="h5" sx={{ marginBottom: 3, textAlign: "center", fontWeight: "bold" }}>
         Create a New Project
@@ -124,7 +126,7 @@ const CreateProject = () => {
               </Typography>
             )}
           </Grid>
-          <Grid item xs={18}>
+          <Grid item xs={12}>
             <Button
               type="submit"
               variant="contained"
@@ -136,7 +138,12 @@ const CreateProject = () => {
           </Grid>
         </Grid>
       </form>
+      <Typography variant="caption" sx={{ marginTop: 1 }}>
+        Accepted formats: .pdf, .doc, .docx
+      </Typography>
     </Box>
+
+    </div>
   );
 };
 

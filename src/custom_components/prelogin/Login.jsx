@@ -11,6 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import "./Login.css";
+import { Link, useNavigate } from "react-router-dom";
 
 
 const Login = ({ open, onClose }) => {
@@ -33,9 +34,12 @@ const Login = ({ open, onClose }) => {
   };
 
   return (
-    <div>
+    <div className="w-[100%] h-[100%] ">
+      
 
     <Dialog open={open} onClose={onClose} className="login-dialog">
+
+      <Link to="/"> Back </Link>
       <DialogTitle className="login-title">Login</DialogTitle>
       <DialogContent className="login-content">
         <TextField

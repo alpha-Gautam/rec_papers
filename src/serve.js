@@ -10,8 +10,8 @@ import https from "https"; // Import the 'https' module
 let baseURL = "";
 if (window.location.href.includes("localhost")) {
   baseURL = "http://localhost:5000";
-} else if (window.location.href.includes("codesmart.in")) {
-  baseURL = "https://api.codesmart.in";
+} else if (window.location.href.includes("recpapers.in")) {
+  baseURL = "https://api.recpapers.in";
 }
 
 const axiosInstance = axios.create({
