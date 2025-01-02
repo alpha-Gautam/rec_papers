@@ -3,11 +3,15 @@ import {Routes, Route} from 'react-router-dom';
 import StudentPanel from './StudentPanel';
 import MentorPanel from './MentorPanel';
 import CreateProject from './CreateProject';
+import Sidebar from'./sidebar2'
 
 const postLogin = () => {
   return (
-<div>
+<div className='flex'>
 
+            <div className=' h-full'>
+                <Sidebar/>
+            </div>
     <div>
         
     <Routes>
@@ -15,6 +19,8 @@ const postLogin = () => {
           <Route path="/mentor" element={<MentorPanel />} />
           <Route path='/create_Project' element={<CreateProject/>}></Route>
     </Routes>
+
+
       
     </div>
 

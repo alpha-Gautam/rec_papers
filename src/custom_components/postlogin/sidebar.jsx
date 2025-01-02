@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { serverSignout, signUp } from "../../api/login";
+// import { serverSignout, signUp } from "../../api/login";
 import toast from "react-hot-toast";
-import { signOutUser } from "../../firebase/firebase";
+// import { signOutUser } from "../../firebase/firebase";
 import { removeCookie } from "../../cookie/cookie";
 import {
   ChIconCoding,
@@ -22,7 +22,7 @@ import Modal from "../model";
 import { ClassNames } from "@emotion/react";
 import classNames from "classnames";
 import { AppIcon } from "../../assets/images/image";
-import { useUserStore } from "./cs_stores/userStore";
+// import { useUserStore } from "./cs_stores/userStore";
 
 // interface ISideBarItem {
 //   title: string;
@@ -59,29 +59,29 @@ const SideBar = () => {
     setShowSignOutConfirmation(!showSignOutConfirmation);
   };
 
-  const clearStore = useUserStore((state) => state.clearStore);
+  // const clearStore = useUserStore((state) => state.clearStore);
 
   const handleSignOut = () => {
     console.log("debug signout clicked");
-    serverSignout().then((res)=> {
-      signOutUser()
-      .then((res) => {
-        clearStore();
-        sessionStorage.removeItem("status")
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("name");
-        localStorage.removeItem("profile_url");
-        localStorage.removeItem("email");
-        removeCookie("profile_url");
-        removeCookie("idToken");
-        console.log("User signed out successfully");
-        navigate("/login");
-      })
-      .catch((error) => {
-        toast(error.message);
-        console.error("Error signing out:", error);
-      });
-    })
+    // serverSignout().then((res)=> {
+    //   signOutUser()
+    //   .then((res) => {
+    //     clearStore();
+    //     sessionStorage.removeItem("status")
+    //     localStorage.removeItem("accessToken");
+    //     localStorage.removeItem("name");
+    //     localStorage.removeItem("profile_url");
+    //     localStorage.removeItem("email");
+    //     removeCookie("profile_url");
+    //     removeCookie("idToken");
+    //     console.log("User signed out successfully");
+    //     navigate("/login");
+    //   })
+    //   .catch((error) => {
+    //     toast(error.message);
+    //     console.error("Error signing out:", error);
+    //   });
+    // })
     
   };
 
@@ -198,9 +198,9 @@ const SideBar = () => {
       <div onMouseEnter={()=>{setExpanded(true)}}
       onMouseLeave={()=>{setExpanded(false)}} 
       className={`
-        fixed top-0 left-0 bottom-0  // Make it fixed position
+        fixed top-0 left-0 bottom-0 
         ease-in-out duration-500 border-r-[0.5px] 
-        z-50  // Increase z-index to ensure it's above other content
+         
         flex h-screen justify-between
         ${expanded ? "w-[312px]" : "w-[114px]"} 
         bg-[#060606] flex-col space-y-4 drop-shadow-lg
@@ -315,7 +315,7 @@ const SideBar = () => {
         <Modal
           isOpen={showSignOutConfirmation}
           onClose={showHideSignOutModel}
-          onConfirm={handleSignOut}
+          // onConfirm={handleSignOut}
           closeOnOutsideClick={true}
           content={
             <>
@@ -326,7 +326,7 @@ const SideBar = () => {
               <div className="flex justify-end">
                 <button
                   className="bg-red-500 text-white px-4 py-2 rounded mr-2"
-                  onClick={handleSignOut}
+                  // onClick={handleSignOut}
                 >
                   Yes
                 </button>
