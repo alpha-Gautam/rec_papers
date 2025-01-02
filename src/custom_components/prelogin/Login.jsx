@@ -35,7 +35,7 @@ const Login = ({ open, onClose }) => {
   return (
     <div>
 
-    <Dialog open={true} onClose={onClose} className="login-dialog">
+    <Dialog open={open} onClose={onClose} className="login-dialog">
       <DialogTitle className="login-title">Login</DialogTitle>
       <DialogContent className="login-content">
         <TextField

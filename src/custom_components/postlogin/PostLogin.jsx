@@ -1,23 +1,26 @@
 import React from 'react'
 import {Routes, Route} from 'react-router-dom';
-import StudentPanel from './custom_components/postlogin/StudentPanel';
-import MentorPanel from './custom_components/postlogin/MentorPanel';
-import CreateProject from './custom_components/postlogin/CreateProject';
+import StudentPanel from './StudentPanel';
+import MentorPanel from './MentorPanel';
+import CreateProject from './CreateProject';
 
 const postLogin = () => {
   return (
+<div>
+
     <div>
         
-
     <Routes>
-          <Route path="/student-panel" element={<StudentPanel />} />
-          <Route path="/mentor-panel" element={<MentorPanel />} />
-          <Route path='/student-home' element={<stuHome/>}/>
-          <Route path='/student-nav' element={<stuNav/>}/>
-          <Route path='/create-project' element={<CreateProject/>}></Route>
+          <Route path="/" element={<StudentPanel />} />
+          <Route path="/mentor" element={<MentorPanel />} />
+          <Route path='/create_Project' element={<CreateProject/>}></Route>
     </Routes>
       
     </div>
+
+    </div>
+
+
   )
 }
 

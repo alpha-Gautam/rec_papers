@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 
-import PreLogin from '@/custom_components/prelogin/PreLogin'
-import PostLogin from '@/custom_components/postlogin/postLogin'
+import PreLogin from './custom_components/prelogin/PreLogin'
+import PostLogin from './custom_components/postlogin/postLogin'
 // import Profile from './Profile';
 
 // Component to protect routes
