@@ -28,7 +28,7 @@ const Home = () => {
   };
 
   return (
-    <div className="home rounded-lg w-[100%]">
+    <div className="home  w-[100%]">
       <header className="home-header">
         <h2>REC Kannauj</h2>
         <h3>Academic Reports and Research Papers' Platform</h3>
