@@ -13,13 +13,14 @@ import CreateProject from './custom_components/postlogin/CreateProject';
 // Component to protect routes
 
 const App = () => {
-  return (
-    <div className='w-full h-full bg-slate-800'>
+  return ( 
+    <div className='w-full h-full bg-black'>
+    
     <Router>
-      <div className='flex  flex-col  justify-between items-center ' >
-        <Navbar />
+      <div className='h-[inherit] flex flex-col w-[inherit] bg-black' >
+        <div className='w-full '><Navbar /></div>
         {/* <Register/> */}
-
+        <div className='h-[inherit]'>
         <Routes>
           <Route path="/" element={<Home/>} />
           <Route path="/view-papers" element={<h1>View Papers Page</h1>} />
@@ -28,12 +29,12 @@ const App = () => {
           {/* <Route path="/" element={<Home />} /> */}
           <Route path="/student-panel" element={<StudentPanel />} />
           <Route path="/mentor-panel" element={<MentorPanel />} />
-          <Route path='/student-panel' element={<stuHome/>}/>
-          <Route path='/student-panel' element={<stuNav/>}/>
+          <Route path='/student-home' element={<stuHome/>}/>
+          <Route path='/student-nav' element={<stuNav/>}/>
           <Route path='/create-project' element={<CreateProject/>}></Route>
         </Routes>
-
-        <Footer />
+        </div>
+        <div className='w-full '><Footer /></div>
       </div>
     </Router>
     </div>

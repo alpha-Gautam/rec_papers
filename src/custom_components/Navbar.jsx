@@ -1,10 +1,15 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../images/Logo.png";
 import "./Navbar.css"; // Create and style your Navbar in this CSS file
+import Login from '../custom_components/prelogin/Login';
+
 
 const Navbar = () => {
   // State to track login and user role
+
+  const navigate = useNavigate();
+
   const [userRole, setUserRole] = useState(null); // 'mentor', 'student', or null (logged-out)
 
   // Remove these functions since they are no longer needed
@@ -13,8 +18,9 @@ const Navbar = () => {
 
   const handleLogout = () => setUserRole(null);
 
+const [openLogin,setOpenLogin] = useState(false)
   return (
-    <nav className="navbar w-full border-0 rounded-lg  ">
+    <nav className="navbar w-full border-0">
       <div className=" px-1 flex flex-1 justify-between gap-96">
 
       <div className="navbar-logo ">
@@ -26,7 +32,7 @@ const Navbar = () => {
 
 
       <div className="">
-          <ul className="navbar-links">
+          <ul className="navbar-links text-nowrap">
             <li>
               <Link to="/">Home</Link>
             </li>
@@ -34,6 +40,7 @@ const Navbar = () => {
               <>
                 <li>
                   <Link to="/signin">Log In</Link>
+                   
                 </li>
                 <li>
                   <Link to="/signup">Register</Link>

@@ -33,6 +33,8 @@ const Login = ({ open, onClose }) => {
   };
 
   return (
+    <div>
+
     <Dialog open={true} onClose={onClose} className="login-dialog">
       <DialogTitle className="login-title">Login</DialogTitle>
       <DialogContent className="login-content">
@@ -92,6 +94,8 @@ const Login = ({ open, onClose }) => {
         </div>
       </DialogContent>
     </Dialog>
+    </div>
+
   );
 };
 
