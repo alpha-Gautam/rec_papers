@@ -28,20 +28,15 @@ const Home = () => {
   };
 
   return (
-    <div className="home  w-[100%]">
+    <div className="home  w-[100%] h-full">
       <header className="home-header">
         <h2>REC Kannauj</h2>
         <h3>Academic Reports and Research Papers' Platform</h3>
         <p>Look for any pertinent research papers and project reports here.</p>
         <SearchBox className="bg-slate-400" onSearch={handleSearch} />
       </header>
-      <div
-        style={{
-          display: 'flex',
-          gap: '40px',
-          justifyContent: 'center',
-          flexWrap: 'wrap',
-        }}
+      <div className='flex justify-center flex-wrap gap-[40px]'
+        
       >
         {cardsData.map((card, index) => (
           <Card key={index} style={{ maxWidth: 300 }}>

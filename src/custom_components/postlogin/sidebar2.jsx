@@ -19,15 +19,15 @@ const sidebar2 =  ()=>{
                             <li><button onClick={() => window.location.href = '/'} className='text-nowrap'>Landing page</button></li>
                             <li><button onClick={() => window.location.href = '/dashboard'} className='text-nowrap'>Home</button></li>
                             <li><button onClick={() => window.location.href = '/dashboard/create-project'} className='text-nowrap'>Create Project</button></li>
-                            <li><button onClick={() => window.location.href = '/dashboard/project-status'} className='text-nowrap'>Ongoing Projects</button></li>
-                            <li><button onClick={() => window.location.href = '/dashboard/choose-mentor'} className='text-nowrap'>Choose Mentor</button></li>
-                            <li><button onClick={() => window.location.href = '/dashboard/view-projects'} className='text-nowrap'>View Project Reports</button></li>
+                            {/* <li><button onClick={() => window.location.href = '/dashboard/project-status'} className='text-nowrap'>Ongoing Projects</button></li> */}
+                            <li><button onClick={() => window.location.href = '/dashboard/mentor'} className='text-nowrap'>Mentor</button></li>
+                            {/* <li><button onClick={() => window.location.href = '/dashboard/view-projects'} className='text-nowrap'>View Project Reports</button></li> */}
                         </ul>
                     </div>
 
 
                     <div>
-                        <h>this is botom part</h>
+                        <h4>this is bottom part</h4>
                     </div>
                 </div>
 

@@ -9,11 +9,11 @@ import Signup from './Register';
 
 const PreLogin = () => {
   return (
-<div>
+<div className='w-[100%] h-[100%] flex flex-col justify-between bg-black '>
     <div className="w-[100%] shrink-0">
         <Navbar />
     </div>
-    <div>
+    <div className='relative'>
         <Routes>
           <Route path="/" element={<Home/>} />
           <Route path="/login" element={<Login open={true}/>} />
@@ -21,7 +21,7 @@ const PreLogin = () => {
         </Routes>
       
     </div>
-    <div className="w-[100%] shrink-0">
+    <div className="w-[100%] relative pb-0 bg-slate-500">
         <Footer />
       </div>
     </div>

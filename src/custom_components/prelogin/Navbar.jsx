@@ -20,7 +20,7 @@ const Navbar = () => {
 
 const [openLogin,setOpenLogin] = useState(false)
   return (
-    <nav className=" w-full">
+    <nav className=" w-full h-20">
       <div className="w-full p-4 flex justify-between ">
 
       <div className="navbar-logo ">

@@ -9,17 +9,17 @@ import PostLogin from './custom_components/postlogin/postLogin'
 
 const App = () => {
   return ( 
-    <div className='w-full h-full bg-black'>
+    <div className=''>
     
     <Router>
-      <div className='h-[inherit] flex flex-col w-[inherit] bg-black' >
+      <div className='h-screen flex flex-col w-[inherit] bg-black'>
       
         {/* <Register/> */}
         <div className='h-[inherit]'>
         <Routes>
           
        
-          <Route path="/*" element={<PreLogin />} />
+          <Route path="/*" element={<PreLogin />}/>
 
           
           <Route path="/dashboard/*" element={<PostLogin />} />

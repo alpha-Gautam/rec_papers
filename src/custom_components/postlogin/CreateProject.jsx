@@ -126,7 +126,7 @@ const CreateProject = () => {
               </Typography>
             )}
           </Grid>
-          <Grid item xs={18}>
+          <Grid item xs={12}>
             <Button
               type="submit"
               variant="contained"
@@ -138,6 +138,9 @@ const CreateProject = () => {
           </Grid>
         </Grid>
       </form>
+      <Typography variant="caption" sx={{ marginTop: 1 }}>
+        Accepted formats: .pdf, .doc, .docx
+      </Typography>
     </Box>
 
     </div>
