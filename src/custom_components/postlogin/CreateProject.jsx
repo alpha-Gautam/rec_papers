@@ -39,6 +39,8 @@ const CreateProject = () => {
   };
 
   return (
+    <div className="">
+
     <Box sx={{ padding: 4, maxWidth: 600, margin: "auto", backgroundColor: "#f9f9f9", borderRadius: 4, boxShadow: 3 }}>
       <Typography variant="h5" sx={{ marginBottom: 3, textAlign: "center", fontWeight: "bold" }}>
         Create a New Project
@@ -137,6 +139,8 @@ const CreateProject = () => {
         </Grid>
       </form>
     </Box>
+
+    </div>
   );
 };
 

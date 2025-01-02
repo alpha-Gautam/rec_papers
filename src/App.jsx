@@ -19,10 +19,10 @@ const App = () => {
         <Routes>
           
        
-          <Route path="/" element={<PreLogin />} />
+          <Route path="/*" element={<PreLogin />} />
 
           
-          <Route path="/dashboard" element={<PostLogin />} />
+          <Route path="/dashboard/*" element={<PostLogin />} />
          
           
         </Routes>
