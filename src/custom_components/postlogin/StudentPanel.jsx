@@ -1,9 +1,37 @@
 import React from 'react';
+import { useEffect } from 'react';
+import { getProjectList } from '../../api/user';
 import './StudentPanel.css';
 import SideBar from './sidebar';
 import Sidebar from './sidebar2';
+import axios from 'axios';
 
 const StudentPanel = () => {
+
+    
+
+    useEffect(() => {
+        const fetchProjectList = async () => {
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/api/project/');
+                console.log(response.data);
+            } catch (error) {
+                if (error.response) {
+                    console.error('Error data:', error.response.data);
+                    console.error('Error status:', error.response.status);
+                    console.error('Error headers:', error.response.headers);
+                } else if (error.request) {
+                    console.error('No response received:', error.request);
+                } else {
+                    console.error('Error message:', error.message);
+                }
+            }
+        };
+        fetchProjectList();
+    }, []);
+
+
+    
     const researchPapers = [
         {
             id: 1,
