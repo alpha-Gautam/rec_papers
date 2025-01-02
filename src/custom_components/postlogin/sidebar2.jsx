@@ -16,6 +16,7 @@ const sidebar2 =  ()=>{
                     <div className='w-[200px]'>
                         <ul>
                             
+                            <li><button onClick={() => window.location.href = '/'} className='text-nowrap'>Landing page</button></li>
                             <li><button onClick={() => window.location.href = '/dashboard'} className='text-nowrap'>Home</button></li>
                             <li><button onClick={() => window.location.href = '/dashboard/create-project'} className='text-nowrap'>Create Project</button></li>
                             <li><button onClick={() => window.location.href = '/dashboard/project-status'} className='text-nowrap'>Ongoing Projects</button></li>
