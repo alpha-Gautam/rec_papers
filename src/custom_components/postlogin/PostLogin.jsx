@@ -12,7 +12,7 @@ const postLogin = () => {
             <div className=' h-full'>
                 <Sidebar/>
             </div>
-    <div>
+    <div className='w-full h-full'>
         
     <Routes>
           <Route path="/" element={<StudentPanel />} />

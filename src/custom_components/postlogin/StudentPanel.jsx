@@ -113,10 +113,9 @@ const StudentPanel = () => {
                             <div className="card" key={paper}>
                             
                                 <div className="card-content">
-                                    <h3>Paper ID</h3>
-                                    <h4>Author: {paper.author}</h4>
-                                    <h6><strong>Mentor:</strong> {paper.mentor}</h6>
-                                    <p>{paper.summary}</p>
+                                    <h5><strong>Title:</strong> {paper.title}</h5>
+                                    <h6><strong>Author ID:</strong> {paper.user_uuid}</h6>
+                                    <h6><strong>Mentor ID:</strong> {paper.mentor_uuid}</h6>                                    
                                     <button onClick={() => window.location.href = paper.link}>Read More</button>
                                 </div>
                             </div>

@@ -49,9 +49,9 @@ const [openLogin,setOpenLogin] = useState(false)
                 <li>
                   <Link to="/dashboard">Dashboard</Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to="/student-panel">Student Login</Link>
-                </li>
+                </li> */}
               </>
             )}
             {userRole && (
