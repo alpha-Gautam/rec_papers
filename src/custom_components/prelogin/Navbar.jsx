@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "D:/Projects/REC-papers/rec_papers/src/assets/images/Logo.png";
+import logo from "./Logo.png";
 import "./Navbar.css"; // Create and style your Navbar in this CSS file
 import Login from './Login';
 
