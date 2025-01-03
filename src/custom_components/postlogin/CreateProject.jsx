@@ -47,6 +47,17 @@ const CreateProject = () => {
       </Typography>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
+        <Grid item xs={12}>
+            <TextField
+              label="Project Title"
+              name="titleoftheproject"
+              value={formData.title}
+              onChange={handleChange}
+              fullWidth
+              variant="outlined"
+              required
+            />
+          </Grid>
           <Grid item xs={12}>
             <TextField
               label="Name of the Editor"
@@ -60,7 +71,7 @@ const CreateProject = () => {
           </Grid>
           <Grid item xs={12}>
             <TextField
-              label="Mentor"
+              label="Name of the Mentor"
               name="mentorName"
               value={formData.mentorName}
               onChange={handleChange}
@@ -71,20 +82,9 @@ const CreateProject = () => {
           </Grid>
           <Grid item xs={12}>
             <TextField
-              label="Topic"
-              name="topic"
-              value={formData.topic}
-              onChange={handleChange}
-              fullWidth
-              variant="outlined"
-              required
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
               label="Keywords"
               name="keywords"
-              value={formData.keywords}
+              value={formData.status}
               onChange={handleChange}
               fullWidth
               variant="outlined"
@@ -102,6 +102,17 @@ const CreateProject = () => {
               variant="outlined"
               multiline
               rows={4}
+              required
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Github Code Link"
+              name="cideLink"
+              value={formData.github_link}
+              onChange={handleChange}
+              fullWidth
+              variant="outlined"
               required
             />
           </Grid>
