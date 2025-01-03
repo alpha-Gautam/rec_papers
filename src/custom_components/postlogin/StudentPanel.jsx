@@ -93,7 +93,7 @@ const StudentPanel = () => {
             </div> */}
 
 
-            <div className='h-[inherit] w-[inherit] overflow-hidden'>
+            <div className='h-[inherit] w-[inherit] overflow-visible'>
                 <div className='h-32 bg-gray-600 flex px-10 items-center '>
                     <div className='w-[100px] h-[100px]  rounded-full bg-white' ></div>
                     <div className='mx-10 text-white text-[18px]'>
@@ -106,7 +106,7 @@ const StudentPanel = () => {
 
                 <main className="main-content">
                     <h2>Research Papers</h2>
-                    <div className="card-container h-[100%] border-2 border-blue-500 overflow-y-auto">
+                    <div className="card-container h-[100%] border-2 border-blue-500">
                         {/* {researchPapers.map((paper) => ( */}
                         {projectData.map((paper) => (                            
 

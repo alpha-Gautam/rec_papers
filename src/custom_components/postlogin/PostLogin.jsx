@@ -3,6 +3,7 @@ import {Routes, Route} from 'react-router-dom';
 import StudentPanel from './StudentPanel';
 import MentorPanel from './MentorPanel';
 import CreateProject from './CreateProject';
+import ReadMore from './ReadMore';
 import Sidebar from'./sidebar2'
 
 const postLogin = () => {
@@ -18,6 +19,7 @@ const postLogin = () => {
           <Route path="/" element={<StudentPanel />} />
           <Route path="/dashboard/mentor" element={<MentorPanel />} />
           <Route path='/create-project' element={<CreateProject/>}/>  
+          <Route path='/read-more' element={<ReadMore/>}/>
     </Routes>
 
 
