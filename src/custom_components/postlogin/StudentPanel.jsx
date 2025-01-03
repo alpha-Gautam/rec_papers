@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { getProjectList } from '../../api/user';
 import './StudentPanel.css';
@@ -7,6 +7,7 @@ import Sidebar from './sidebar2';
 import axios from 'axios';
 
 const StudentPanel = () => {
+    const [projectData,setProjectData ] = useState([])
 
     
 
@@ -15,6 +16,10 @@ const StudentPanel = () => {
             try {
                 const response = await axios.get('http://127.0.0.1:8000/api/project/');
                 console.log(response.data);
+                if(response.status===200){
+                    setProjectData(response.data)
+                }
+
             } catch (error) {
                 if (error.response) {
                     console.error('Error data:', error.response.data);
@@ -59,7 +64,7 @@ const StudentPanel = () => {
             author: "Jenny Doe",
             mentor: "Dr. Harry",
             summary: "An in-depth analysis of story telling capacity.",
-            link: "/read-more/3"
+            link: "/read-more/4"
         },
         {
             id: 5,
@@ -68,7 +73,6 @@ const StudentPanel = () => {
             summary: "An in-depth analysis of story telling capacity.",
             link: "/read-more/3"
         },
-        // Add more items as needed
     ];
 
     return (
@@ -103,9 +107,13 @@ const StudentPanel = () => {
                 <main className="main-content">
                     <h2>Research Papers</h2>
                     <div className="card-container h-[100%] border-2 border-blue-500 overflow-y-auto">
-                        {researchPapers.map((paper) => (
-                            <div className="card" key={paper.id}>
+                        {/* {researchPapers.map((paper) => ( */}
+                        {projectData.map((paper) => (                            
+
+                            <div className="card" key={paper}>
+                            
                                 <div className="card-content">
+                                    <h3>Paper ID</h3>
                                     <h4>Author: {paper.author}</h4>
                                     <h6><strong>Mentor:</strong> {paper.mentor}</h6>
                                     <p>{paper.summary}</p>

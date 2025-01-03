@@ -39,7 +39,7 @@ const MentorPanel = () => {
             <aside className="sidebar">
                 <h3>OPTIONS</h3>
                 <ul>
-                    <li><button onClick={() => window.location.href = '/create-project'}>Create Project</button></li>
+                    <li><button onClick={() => window.location.href = '/dashboard/create-project'}>Create Project</button></li>
                     <li><button onClick={() => window.location.href = '/project-status'}>Project Status</button></li>
                     <li><button onClick={() => window.location.href = '/manage-students'}>Manage Students</button></li>
                     <li><button onClick={() => window.location.href = '/view-research-papers'}>View Research Papers</button></li>
