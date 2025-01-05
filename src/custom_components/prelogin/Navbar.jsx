@@ -1,84 +1,190 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "./Logo.png";
-import "./Navbar.css"; // Create and style your Navbar in this CSS file
-import Login from './Login';
-
 
 const Navbar = () => {
-  // State to track login and user role
-
   const navigate = useNavigate();
-
   const [userRole, setUserRole] = useState(null); // 'mentor', 'student', or null (logged-out)
-
-  // Remove these functions since they are no longer needed
-  // const handleLoginAsMentor = () => setUserRole("mentor");
-  // const handleLoginAsStudent = () => setUserRole("student");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const handleLogout = () => setUserRole(null);
 
-const [openLogin,setOpenLogin] = useState(false)
+  // Monitor scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <nav className=" w-full h-20">
-      <div className="w-full p-4 flex justify-between ">
+    <nav
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        isScrolled ? "bg-black/70 shadow-md" : "bg-black"
+      } text-white`}
+    >
+      <div className="container mx-auto px-2 py-3 flex justify-between items-center">
+        {/* Logo Section */}
+        <div className="flex items-center">
+          <img src={logo} alt="Website Logo" className="h-10 mr-2" />
+          <span className="text-2xl font-bold">
+            <Link
+              to="/"
+              className="hover:text-blue-500 transition text-white no-underline"
+            >
+              REC PAPERS
+            </Link>
+          </span>
+        </div>
 
-      <div className="navbar-logo ">
-        <img src={logo} alt="Website Logo" className="logo" />
-        <span className="website-name">
-          <Link to="/">Academic Reports and Research Papers</Link>
-        </span>
+        {/* Navigation Links */}
+        <div className="hidden md:flex items-center space-x-5">
+          <Link
+            to="/"
+            className="hover:text-blue-600 transition text-white no-underline"
+          >
+            Home
+          </Link>
+          {userRole === null ? (
+            <>
+              <Link
+                to="/login"
+                className="hover:text-blue-500 transition text-white no-underline"
+              >
+                Log In
+              </Link>
+              <Link
+                to="/signup"
+                className="hover:text-blue-500 transition text-white no-underline"
+              >
+                Register
+              </Link>
+              <Link
+                to="/dashboard"
+                className="hover:text-blue-500 transition text-white no-underline"
+              >
+                Dashboard
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/profile"
+                className="hover:text-blue-500 transition text-white no-underline"
+              >
+                My Profile
+              </Link>
+              {userRole === "mentor" && (
+                <Link
+                  to="./MentorPanel.jsx"
+                  className="hover:text-blue-500 transition text-white no-underline"
+                >
+                  Mentor Panel
+                </Link>
+              )}
+              {userRole === "student" && (
+                <Link
+                  to="./StudentPanel.jsx"
+                  className="hover:text-blue-500 transition text-white no-underline"
+                >
+                  Student Panel
+                </Link>
+              )}
+              <button
+                onClick={handleLogout}
+                className="px-3 py-2 bg-blue-600 rounded-md hover:bg-blue-700 transition"
+              >
+                Logout
+              </button>
+            </>
+          )}
+        </div>
+
+        {/* Hamburger Menu (Mobile View) */}
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="text-2xl md:hidden focus:outline-none"
+        >
+          ☰
+        </button>
       </div>
 
-
-      <div className=" ">
-          <ul className="navbar-links text-nowrap">
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            {userRole === null && (
-              <>
-                <li>
-                  <Link to="/login">Log In</Link>
-                   
-                </li>
-                <li>
-                  <Link to="/signup">Register</Link>
-                </li>
-                {/* Simulate logins for testing (remove these in production) */}
-                <li>
-                  <Link to="/dashboard">Dashboard</Link>
-                </li>
-                {/* <li>
-                  <Link to="/student-panel">Student Login</Link>
-                </li> */}
-              </>
-            )}
-            {userRole && (
-              <>
-                <li>
-                  <Link to="/profile">My Profile</Link>
-                </li>
-                {userRole === "mentor" && (
-                  <li>
-                    <Link to="./MentorPanel.jsx">Mentor Panel</Link>
-                  </li>
-                )}
-                {userRole === "student" && (
-                  <li>
-                    <Link to="./StudentPanel.jsx">Student Panel</Link>
-                  </li>
-                )}
-                <li>
-                  <button onClick={handleLogout}>Logout</button>
-                </li>
-              </>
-            )}
-          </ul>
+      {/* Mobile Dropdown Menu with Transition */}
+      <div
+        className={`md:hidden bg-black border-t border-gray-700 overflow-hidden transition-all duration-300 ease-in-out ${
+          menuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <div className="flex flex-col space-y-2 p-3">
+          <Link
+            to="/"
+            className="hover:text-blue-500 transition text-white no-underline"
+          >
+            Home
+          </Link>
+          {userRole === null ? (
+            <>
+              <Link
+                to="/login"
+                className="hover:text-blue-500 transition text-white no-underline"
+              >
+                Log In
+              </Link>
+              <Link
+                to="/signup"
+                className="hover:text-blue-500 transition text-white no-underline"
+              >
+                Register
+              </Link>
+              <Link
+                to="/dashboard"
+                className="hover:text-blue-500 transition text-white no-underline"
+              >
+                Dashboard
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/profile"
+                className="hover:text-blue-500 transition text-white no-underline"
+              >
+                My Profile
+              </Link>
+              {userRole === "mentor" && (
+                <Link
+                  to="./MentorPanel.jsx"
+                  className="hover:text-blue-500 transition text-white no-underline"
+                >
+                  Mentor Panel
+                </Link>
+              )}
+              {userRole === "student" && (
+                <Link
+                  to="./StudentPanel.jsx"
+                  className="hover:text-blue-500 transition text-white no-underline"
+                >
+                  Student Panel
+                </Link>
+              )}
+              <button
+                onClick={handleLogout}
+                className="px-3 py-2 bg-blue-600 rounded-md hover:bg-blue-700 transition"
+              >
+                Logout
+              </button>
+            </>
+          )}
+        </div>
       </div>
-
-      </div>
-    </nav> 
+    </nav>
   );
 };
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import SearchBox from './SearchBox';
-import './Home.css'; // Optional: Add styling for your homepage
 import { Card, CardContent, Typography, CardMedia } from '@mui/material';
 
 const Home = () => {
@@ -28,27 +27,38 @@ const Home = () => {
   };
 
   return (
-    <div className="home  w-[100%] h-full">
-      <header className="home-header">
-        <h2>REC Kannauj</h2>
-        <h3>Academic Reports and Research Papers' Platform</h3>
-        <p>Look for any pertinent research papers and project reports here.</p>
-        <SearchBox className="bg-slate-400" onSearch={handleSearch} />
+    <div className="home bg-black text-white min-h-screen px-4 py-8">
+      <header className="home-header text-center max-w-3xl mx-auto py-12">
+        <h2 className="text-4xl font-bold mb-4">REC Kannauj</h2>
+        <h3 className="text-3xl font-semibold text-gray-300 mb-6">
+          Academic Reports and Research Papers' Platform
+        </h3>
+        <p className="text-xl text-gray-400 mb-8">
+          Look for any pertinent research papers and project reports here.
+        </p>
+        <SearchBox className="bg-slate-400 rounded" onSearch={handleSearch} />
       </header>
-      <div className='flex justify-center flex-wrap gap-[40px]'
-        
-      >
+      <div className="flex justify-center flex-wrap gap-10 mt-10">
         {cardsData.map((card, index) => (
-          <Card key={index} style={{ maxWidth: 300 }}>
+          <Card
+            key={index}
+            className="max-w-xs rounded-lg shadow-lg transform transition-transform hover:scale-105"
+          >
             <CardMedia
               component="img"
               alt={card.title}
               height="185"
               image={card.image}
+              className="object-cover"
             />
-            <CardContent>
-              <Typography variant="h5">{card.title}</Typography>
-              <Typography variant="body2" color="textSecondary">
+            <CardContent className="p-4">
+              <Typography variant="h5" className="text-xl font-bold text-gray-900">
+                {card.title}
+              </Typography>
+              <Typography
+                variant="body2"
+                className="text-sm text-gray-600 mt-2"
+              >
                 {card.description}
               </Typography>
             </CardContent>
