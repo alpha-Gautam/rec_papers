@@ -35,7 +35,7 @@ const Login = () => {
               </span>
               <input
                 type="text"
-                placeholder="Username or email"
+                placeholder="Username or Email"
                 className="w-full outline-none text-gray-700"
               />
             </div>
@@ -66,16 +66,16 @@ const Login = () => {
             Sign In
           </button>
         </form>
-        <div className="my-2 text-center text-gray-500">OR</div>
+        {/* <div className="my-2 text-center text-gray-500">OR</div> */}
         <div className="grid grid-cols-1 gap-2">
-        <button className="flex items-center justify-center w-full py-2 border border-gray-400 rounded-md bg-sky-500 text-white hover:bg-gray-800 transition">
+        {/* <button className="flex items-center justify-center w-full py-2 border border-gray-400 rounded-md bg-sky-500 text-white hover:bg-gray-800 transition">
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_2013_Google.png"
             alt="Google Logo"
             className="w-5 h-5 mr-2"
           />
           Continue with Google
-        </button>
+        </button> */}
 
           {/* <button className="bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">
             Facebook

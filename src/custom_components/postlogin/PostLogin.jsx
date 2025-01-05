@@ -19,7 +19,7 @@ const postLogin = () => {
           <Route path="/" element={<StudentPanel />} />
           <Route path="/dashboard/mentor" element={<MentorPanel />} />
           <Route path='/create-project' element={<CreateProject/>}/>  
-          <Route path='/read-more' element={<ReadMore/>}/>
+          <Route path="/project/:id" element={<ReadMore/>}/>
     </Routes>
 
 

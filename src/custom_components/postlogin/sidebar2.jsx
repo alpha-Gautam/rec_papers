@@ -27,7 +27,7 @@ const sidebar2 =  ()=>{
 
 
                     <div>
-                        <h4>this is bottom part</h4>
+                        <h4>Bottom Part</h4>
                     </div>
                 </div>
 

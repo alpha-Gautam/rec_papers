@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const navigate = useNavigate();
+  const [role, setRole] = useState(""); // State to track selected role
 
   const handleBackToLanding = () => {
     navigate("/"); // Redirect to Home.jsx
+  };
+
+  const handleRoleChange = (event) => {
+    setRole(event.target.value);
   };
 
   return (
@@ -34,6 +39,16 @@ const Signup = () => {
                 <i className="fas fa-envelope"></i>
               </span>
               <input
+                type="text"
+                placeholder="Roll No."
+                className="w-full outline-none text-gray-700"
+              />
+            </div>
+            <div className="flex items-center border-b border-gray-300 py-2">
+              <span className="text-gray-500 pr-2">
+                <i className="fas fa-envelope"></i>
+              </span>
+              <input
                 type="email"
                 placeholder="E-mail"
                 className="w-full outline-none text-gray-700"
@@ -41,7 +56,61 @@ const Signup = () => {
             </div>
             <div className="flex items-center border-b border-gray-300 py-2">
               <span className="text-gray-500 pr-2">
-                <i className="fas fa-lock"></i>
+                <i className="fas fa-envelope"></i>
+              </span>
+              <input
+                type="text"
+                placeholder="Mobile Number"
+                className="w-full outline-none text-gray-700"
+              />
+            </div>
+            <div className="flex items-center border-b border-gray-300 py-2">
+              <span className="text-gray-500 pr-2">
+                <i className="fas fa-building"></i>
+              </span>
+              <select
+                className="w-full outline-none text-gray-700 bg-transparent"
+                defaultValue=""
+              >
+                <option value="" disabled>
+                  Select Department
+                </option>
+                <option value="CSE">Computer Science & Engineering</option>
+                <option value="EL">Electronics Engineering</option>
+                <option value="EE">Electrical Engineering</option>
+                <option value="CE">Civil Engineering</option>
+              </select>
+            </div>
+            <div className="flex flex-col space-y-2">
+              <label className="text-gray-700 text-center font-medium">
+                Select your role:
+              </label>
+              <div className="flex items-center justify-center space-x-4">
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    value="Student"
+                    checked={role === "Student"}
+                    onChange={handleRoleChange}
+                    className="mr-2"
+                  />
+                  <span>Student</span>
+                </label>
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    value="Mentor"
+                    checked={role === "Mentor"}
+                    onChange={handleRoleChange}
+                    className="mr-2"
+                  />
+                  <span>Mentor</span>
+                </label>
+              </div>
+            </div>
+            <div className="flex items-center border-b border-gray-300 py-2">
+              <span className="text-gray-500 pr-2">
+                <i className="fas fa-envelope"></i>
               </span>
               <input
                 type="password"
@@ -51,24 +120,14 @@ const Signup = () => {
             </div>
             <div className="flex items-center border-b border-gray-300 py-2">
               <span className="text-gray-500 pr-2">
-                <i className="fas fa-building"></i>
+                <i className="fas fa-envelope"></i>
               </span>
               <input
-                type="text"
-                placeholder="Institutes/Organizations"
-                className="w-full outline-none text-gray-700 "
+                type="password"
+                placeholder="Re-type password"
+                className="w-full outline-none text-gray-700"
               />
             </div>
-            {/* <div className="flex items-center py-2">
-              <input
-                type="checkbox"
-                className="mr-2"
-                id="recaptcha"
-              />
-              <label htmlFor="recaptcha" className="text-gray-700">
-                I'm not a robot
-              </label>
-            </div> */}
           </div>
           <button
             type="submit"
@@ -77,32 +136,6 @@ const Signup = () => {
             Sign Up
           </button>
         </form>
-        <div className="my-2 text-center text-gray-500">OR</div>
-        <div className="grid grid-cols-1 gap-2">
-          <button className="flex items-center justify-center w-full py-2 border border-gray-400 rounded-md bg-sky-500 text-white hover:bg-gray-800 transition">
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_2013_Google.png"
-              alt="Google Logo"
-              className="w-5 h-5 mr-2"
-            />
-            Google
-          </button>
-          {/* <button className="bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">
-            Facebook
-          </button>
-          <button className="bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition">
-            LinkedIn
-          </button>
-          <button className="bg-gray-800 text-white py-2 rounded-md hover:bg-gray-900 transition">
-            GitHub
-          </button> */}
-        </div>
-        {/* <div className="text-center mt-4 text-gray-600 text-sm">
-          Why Create an Account? <br />
-          <a href="#" className="text-green-500 hover:underline">
-            Privacy Policy & Cookie Policy
-          </a>
-        </div> */}
         <button
           onClick={handleBackToLanding}
           className="mt-4 w-full text-gray-700 hover:underline text-sm"
