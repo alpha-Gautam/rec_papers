@@ -4,7 +4,7 @@ import {
   ChIconTickMark,
   ChIconTrophy,
   MapIcon,
-} from "../../assets/images/icon";
+} from "../../assets/images/icon_copied";
 import Dropdown from "../dropdown";
 import { getIconOfQuestion } from "../utils/utils-icon";
 import { coding_languages_used, communication_languges } from "../utils/utils";

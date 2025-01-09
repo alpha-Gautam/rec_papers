@@ -49,20 +49,20 @@ const StudentPanel = () => {
   }, []);
 
   return (
-    <div className="student-panel-container flex flex-col h-screen bg-gray-100">
+    <div className="student-panel-container flex flex-col h-screen bg-gray-300">
       {/* Header Section */}
-      <div className="h-32 bg-gray-600 flex px-10 items-center">
+      <div className="h-32 bg-gray-600 flex px-10 items-center ">
         <div className="w-24 h-24 rounded-full bg-white"></div>
         <div className="ml-10 text-white text-lg">
-          <p>{userData? userData["username"] : "User Name"}</p>
-          <p>{userData? userData["college"] : "College Name"}</p>
-          <p>{userData? userData["department"] : "Department Name"}</p>
+          <p>user : {userData? userData["username"] : "User Name"}</p>
+          <p>College : {userData? userData["college"] : "College Name"}</p>
+          <p>Department : {userData? userData["department"] : "Department Name"}</p>
           
         </div>
       </div>
 
       {/* Main Content */}
-      <main className="main-content p-5">
+      <main className="main-content p-5 bg-slate-300 ">
         <h2 className="text-2xl font-bold mb-5">Research Papers</h2>
         <div className="card-container flex flex-col gap-5 border-2 border-blue-500 p-4 bg-white rounded-md shadow-md">
           {projectData.map((paper) => (

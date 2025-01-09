@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {userLoginapi} from '../../api/login';
 import clsx from "clsx";
+import {BackIcon} from '../../assets/images/icon'
 
 const Login = () => {
   const navigate = useNavigate();
@@ -59,6 +60,12 @@ const handleLogout= ()=>{
   return (
     <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50">
       <div className="bg-white w-full max-w-md p-6 rounded-md shadow-lg">
+      <button
+          onClick={handleBackToLanding}
+          className=" w-fit text-gray-700 hover:underline text-sm pr-0  "
+        >
+          <BackIcon/>
+        </button>
         <h2 className="text-center text-xl font-semibold mb-4">
           Please Login To Continue
         </h2>
