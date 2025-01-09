@@ -9,7 +9,7 @@ import { getCookie } from "./cookie/cookie";
 // const  // For local testing
 let baseURL = "";
 if (window.location.href.includes("localhost")) {
-  baseURL = "http://localhost:8000";
+  baseURL = "http://127.0.0.1:8000";
 } else if (window.location.href.includes("recpapers.in")) {
   baseURL = "https://api.recpapers.in";
 }
@@ -98,6 +98,7 @@ const postSignUp = async (url, data) => {
 };
 
 // Function to make a GET request
+
 const get = async (url) => {
   try {
     const response = await axiosInstance.get(`${baseURL}/${url}`);
