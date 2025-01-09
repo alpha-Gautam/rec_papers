@@ -1,11 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {userLoginapi} from '../../api/login';
+import clsx from "clsx";
 
 const Login = () => {
   const navigate = useNavigate();
 
+  const [loginData,setLoginData] = useState({})
+
+
+
+const handleLogout= ()=>{
+  localStorage.clear()
+  navigate("/")
+}
+  
+
+  const handleFormLogin = async(data)=>{
+
+      try {
+        const loginResponse = await userLoginapi(data);
+        // const loginResponse = await userLoginapi(JSON.stringify(data));
+        if (loginResponse.status === 200) {
+          console.log("login response", loginResponse);
+          console.log("login response data", loginResponse.data);
+          setLoginData(loginResponse.data)
+          if(loginData["user_uuid"]){
+            console.log("data uploade in localstorage")
+
+            localStorage.setItem("username",loginData["username"])
+            localStorage.setItem("user_id",loginData["user_uuid"])
+            localStorage.setItem("email",loginData["email"])
+            localStorage.setItem("userf",loginData["is_faculty"])
+            localStorage.setItem("college",loginData["college"])
+            localStorage.setItem("mobile",loginData["mobile"])
+            navigate("/dashboard")
+
+          }
+        } else {
+          console.log("login status failed", loginResponse);
+        }
+      } catch (error) {
+        console.error("An error occurred during login:", error);
+      }
+  }
+
   const handleBackToLanding = () => {
     navigate("/"); // Redirect to Home.jsx
+    
   };
 
   return (
@@ -27,7 +69,20 @@ const Login = () => {
             </button>
           </div>
         </div>
-        <form>
+
+        
+        <form onSubmit={(e) => {
+          e.preventDefault();
+          const formData = new FormData(e.target);
+          const data = {
+            "email": formData.get('userEmail'),
+            "password": formData.get('password'),
+            "rememberMe": formData.get('rememberMe') === 'on'
+          };
+          console.log(data);
+
+          handleFormLogin(data)
+        }}>
           <div className="space-y-4">
             <div className="flex items-center border-b border-gray-300 py-2">
               <span className="text-gray-500 pr-2">
@@ -35,6 +90,7 @@ const Login = () => {
               </span>
               <input
                 type="text"
+                name="userEmail"
                 placeholder="Username or Email"
                 className="w-full outline-none text-gray-700"
               />
@@ -45,6 +101,7 @@ const Login = () => {
               </span>
               <input
                 type="password"
+                name="password"
                 placeholder="Password"
                 className="w-full outline-none text-gray-700"
               />
@@ -52,7 +109,7 @@ const Login = () => {
           </div>
           <div className="flex justify-between items-center my-4">
             <label className="flex items-center text-gray-600">
-              <input type="checkbox" className="mr-2" />
+              <input type="checkbox" name="rememberMe" className="mr-2" />
               Remember me
             </label>
             <a href="#" className="text-sm text-blue-600 hover:underline">
@@ -66,6 +123,12 @@ const Login = () => {
             Sign In
           </button>
         </form>
+
+
+
+
+
+
         {/* <div className="my-2 text-center text-gray-500">OR</div> */}
         <div className="grid grid-cols-1 gap-2">
         {/* <button className="flex items-center justify-center w-full py-2 border border-gray-400 rounded-md bg-sky-500 text-white hover:bg-gray-800 transition">
