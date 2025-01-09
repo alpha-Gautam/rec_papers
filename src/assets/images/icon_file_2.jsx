@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import {IChIconProps} from "./icon";
+import {IChIconProps} from "./icon_copied";
 
 
 

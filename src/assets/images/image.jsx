@@ -1,5 +1,5 @@
 import React from 'react';
-import { IChIconProps } from './icon';
+import { IChIconProps } from './icon_copied';
 import classNames from 'classnames';
 
 export const LoginImage = (props) => {

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {BackIcon} from "../../assets/images/icon"
 
 import {userRagister} from '../../api/login'
 
@@ -39,8 +40,14 @@ const Signup = () => {
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50">
-      <div className="bg-white w-full max-w-md p-6 rounded-md shadow-lg">
+    <div className="fixed inset-0 bg-black bg-opacity-70 pt-40 flex justify-center items-center z-50 overflow-auto">
+      <div className="bg-white w-full max-w-md p-6 rounded-md shadow-lg flex flex-col overflow-auto my-5">
+      <button
+          onClick={handleBackToLanding}
+          className=" w-fit text-gray-700 hover:underline text-sm pr-0  "
+        >
+          <BackIcon/>
+        </button>
         <h2 className="text-center text-xl font-semibold mb-4">
           Please Register To Continue
         </h2>
