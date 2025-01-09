@@ -23,7 +23,11 @@ const Signup = () => {
       if(response.status===200){
         console.log("ragistration succesfull !")
         console.log("response---->",response)
-        // navigate("/login")
+        setTimeout(() => {
+          
+        navigate("/login")
+          
+        }, 1000);
       }
 
     } catch (error) {

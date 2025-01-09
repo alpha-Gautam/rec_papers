@@ -6,8 +6,24 @@ import "./StudentPanel.css";
 
 const StudentPanel = () => {
   const [projectData, setProjectData] = useState([]);
+  const [userData,setUserData] = useState({})
 
   const navigate = useNavigate();
+
+  useEffect(()=>{
+
+    setUserData({
+      "username":localStorage.getItem("username"),
+      "email":localStorage.getItem("email"),
+      "college":localStorage.getItem("college"),
+      "mobile":localStorage.getItem("mobile"),
+      "user_id":localStorage.getItem("user_id"),
+      "role":localStorage.getItem("role"),
+      "department":localStorage.getItem("department")
+    })
+    
+
+  },[])
 
   useEffect(() => {
     const fetchProjectList = async () => {
@@ -38,8 +54,10 @@ const StudentPanel = () => {
       <div className="h-32 bg-gray-600 flex px-10 items-center">
         <div className="w-24 h-24 rounded-full bg-white"></div>
         <div className="ml-10 text-white text-lg">
-          <p>User Name</p>
-          <p>Branch</p>
+          <p>{userData? userData["username"] : "User Name"}</p>
+          <p>{userData? userData["college"] : "College Name"}</p>
+          <p>{userData? userData["department"] : "Department Name"}</p>
+          
         </div>
       </div>
 

@@ -9,7 +9,7 @@ import Dropdown from "../dropdown";
 import { getIconOfQuestion } from "../utils/utils-icon";
 import { coding_languages_used, communication_languges } from "../utils/utils";
 import { recently_questions } from "./question";
-import SideBar from "./sidebar";
+import SideBar from "./sidebar_copied";
 import Banner from "../banner";
 import { Route, Routes } from "react-router-dom";
 import NotFound from "../notfound";
