@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import {userRagister} from '../../api/login'
+
 const Signup = () => {
   const navigate = useNavigate();
   const [role, setRole] = useState(""); // State to track selected role
@@ -12,6 +14,25 @@ const Signup = () => {
   const handleRoleChange = (event) => {
     setRole(event.target.value);
   };
+
+
+  const handleFormRagistration =async(data)=>{
+
+    try {
+      const response = await userRagister(data)
+      if(response.status===200){
+        console.log("ragistration succesfull !")
+        console.log("response---->",response)
+        // navigate("/login")
+      }
+
+    } catch (error) {
+      console.log("ragister error",error)
+      
+    }
+
+
+  }
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50">
@@ -32,7 +53,26 @@ const Signup = () => {
             </button>
           </div>
         </div>
-        <form>
+        <form onSubmit={(e) => {
+          e.preventDefault();
+          const formData = new FormData(e.target);
+          const data = {
+            "user_uuid": formData.get('roll-no'),
+            "username": formData.get('username'),
+            "email": formData.get('email'),
+            "password": formData.get('password'),
+            "mobile": formData.get('mobile'),
+            "college": formData.get('college'),
+            "department": formData.get('department'),
+            "created": "",
+            "isstudent": formData.get('isstudent') === 'Student',
+            "ismentor": formData.get('ismentor') === 'Mentor'
+
+          };
+          console.log(data);
+
+          handleFormRagistration(data)
+        }}>
           <div className="space-y-4">
             <div className="flex items-center border-b border-gray-300 py-2">
               <span className="text-gray-500 pr-2">
@@ -40,7 +80,19 @@ const Signup = () => {
               </span>
               <input
                 type="text"
-                placeholder="Roll No."
+                name="username"
+                placeholder="username"
+                className="w-full outline-none text-gray-700"
+              />
+            </div>
+            <div className="flex items-center border-b border-gray-300 py-2">
+              <span className="text-gray-500 pr-2">
+                <i className="fas fa-envelope"></i>
+              </span>
+              <input
+                type="text"
+                name="roll-no"
+                placeholder="roll-no"
                 className="w-full outline-none text-gray-700"
               />
             </div>
@@ -50,6 +102,7 @@ const Signup = () => {
               </span>
               <input
                 type="email"
+                name="email"
                 placeholder="E-mail"
                 className="w-full outline-none text-gray-700"
               />
@@ -60,15 +113,36 @@ const Signup = () => {
               </span>
               <input
                 type="text"
+                name="mobile"
                 placeholder="Mobile Number"
                 className="w-full outline-none text-gray-700"
               />
+            </div>
+
+            <div className="flex items-center border-b border-gray-300 py-2">
+              <span className="text-gray-500 pr-2">
+                <i className="fas fa-building"></i>
+              </span>
+              <select
+              name="college"
+                className="w-full outline-none text-gray-700 bg-transparent"
+                defaultValue=""
+              >
+                <option value="" disabled>
+                  Select college
+                </option>
+                <option value="reck">Rajkiya Engineering college kannauj</option>
+                <option value="recb">Rajkiya Engineering college b </option>
+                <option value="recsnb">Rajkiya Engineering college snb </option>
+                <option value="recd">Rajkiya Engineering college d</option>
+              </select>
             </div>
             <div className="flex items-center border-b border-gray-300 py-2">
               <span className="text-gray-500 pr-2">
                 <i className="fas fa-building"></i>
               </span>
               <select
+              name="department"
                 className="w-full outline-none text-gray-700 bg-transparent"
                 defaultValue=""
               >
@@ -81,6 +155,7 @@ const Signup = () => {
                 <option value="CE">Civil Engineering</option>
               </select>
             </div>
+
             <div className="flex flex-col space-y-2">
               <label className="text-gray-700 text-center font-medium">
                 Select your role:
@@ -89,6 +164,7 @@ const Signup = () => {
                 <label className="flex items-center">
                   <input
                     type="radio"
+                    name="isstudent"
                     value="Student"
                     checked={role === "Student"}
                     onChange={handleRoleChange}
@@ -99,6 +175,7 @@ const Signup = () => {
                 <label className="flex items-center">
                   <input
                     type="radio"
+                    name="ismentor"
                     value="Mentor"
                     checked={role === "Mentor"}
                     onChange={handleRoleChange}
@@ -114,6 +191,7 @@ const Signup = () => {
               </span>
               <input
                 type="password"
+                name="password"
                 placeholder="Password"
                 className="w-full outline-none text-gray-700"
               />
@@ -124,6 +202,7 @@ const Signup = () => {
               </span>
               <input
                 type="password"
+                name="password-1"
                 placeholder="Re-type password"
                 className="w-full outline-none text-gray-700"
               />
