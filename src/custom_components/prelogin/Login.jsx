@@ -31,10 +31,16 @@ const handleLogout= ()=>{
             localStorage.setItem("username",loginData["username"])
             localStorage.setItem("user_id",loginData["user_uuid"])
             localStorage.setItem("email",loginData["email"])
-            localStorage.setItem("userf",loginData["is_faculty"])
+            localStorage.setItem("role",loginData["is_faculty"])
             localStorage.setItem("college",loginData["college"])
             localStorage.setItem("mobile",loginData["mobile"])
+            localStorage.setItem("department",loginData["department"])
+
+            setTimeout(() => {
+              
             navigate("/dashboard")
+              
+            }, 1000);
 
           }
         } else {

@@ -4,7 +4,7 @@ import StudentPanel from './StudentPanel';
 import MentorPanel from './MentorPanel';
 import CreateProject from './CreateProject';
 import ReadMore from './ReadMore';
-import Sidebar from './sidebar2'
+import Sidebar from './SideBar'
 
 const postLogin = () => {
   return (
