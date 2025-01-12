@@ -11,7 +11,7 @@ let baseURL = "";
 if (window.location.href.includes("localhost")) {
   baseURL = "http://127.0.0.1:8000";
 } else if (window.location.href.includes("recpapers.in")) {
-  baseURL = "https://api.recpapers.in";
+  baseURL = "https://recpapers-backend.onrender.com/";
 }
 
 const axiosInstance = axios.create({
