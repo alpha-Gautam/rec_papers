@@ -169,12 +169,12 @@ const handleLogout= ()=>{
             Privacy Policy & Cookie Policy
           </a>
         </div> */}
-        <button
+        {/* <button
           onClick={handleBackToLanding}
           className="mt-4 w-full text-gray-700 hover:underline text-sm"
         >
           Back to Home-Page
-        </button>
+        </button> */}
       </div>
     </div>
   );

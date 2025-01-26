@@ -22,7 +22,7 @@ const Signup = () => {
     try {
       const response = await userRagister(data)
       if(response.status===200){
-        console.log("ragistration succesfull !")
+        console.log("Registration Succesfull!")
         console.log("response---->",response)
         setTimeout(() => {
           
@@ -32,7 +32,7 @@ const Signup = () => {
       }
 
     } catch (error) {
-      console.log("ragister error",error)
+      console.log("Register Error",error)
       
     }
 
@@ -92,7 +92,7 @@ const Signup = () => {
               <input
                 type="text"
                 name="username"
-                placeholder="username"
+                placeholder="Username"
                 className="w-full outline-none text-gray-700"
               />
             </div>
@@ -103,7 +103,7 @@ const Signup = () => {
               <input
                 type="text"
                 name="roll-no"
-                placeholder="roll-no"
+                placeholder="Roll No"
                 className="w-full outline-none text-gray-700"
               />
             </div>
@@ -142,9 +142,9 @@ const Signup = () => {
                 <option value="" disabled>
                   Select college
                 </option>
-                <option value="reck">Rajkiya Engineering college kannauj</option>
-                <option value="recb">Rajkiya Engineering college b </option>
-                <option value="recsnb">Rajkiya Engineering college snb </option>
+                <option value="reck">Rajkiya Engineering college Kannauj</option>
+                <option value="recb">Rajkiya Engineering college Banda </option>
+                <option value="recsnb">Rajkiya Engineering college Sonbhadra </option>
                 <option value="recd">Rajkiya Engineering college d</option>
               </select>
             </div>
@@ -226,12 +226,12 @@ const Signup = () => {
             Sign Up
           </button>
         </form>
-        <button
+        {/* <button
           onClick={handleBackToLanding}
           className="mt-4 w-full text-gray-700 hover:underline text-sm"
         >
           Back to Home-Page
-        </button>
+        </button> */}
       </div>
     </div>
   );
