@@ -4,7 +4,8 @@ import axios from "axios";
 let baseURL = "";
 if (window.location.href.includes("localhost")) {
   baseURL = "http://127.0.0.1:8000";
-} else if (window.location.href.includes("onrender.com")) {
+  // } else if (window.location.href.includes("onrender.com")) {
+} else {
   baseURL = "https://recpapers-backend.onrender.com/";
 }
 
