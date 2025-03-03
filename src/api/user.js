@@ -1,28 +1,23 @@
-import { server } from "../serve";
+// import { server } from "../serve";
+import { computeHeadingLevel } from "@testing-library/react";
+import axios from "axios";
+import clsx from "clsx";
 
-const url = "api/";
+let baseURL = "";
+if (window.location.href.includes("localhost")) {
+  baseURL = "http://127.0.0.1:8000/";
+  // } else if (window.location.href.includes("onrender.com")) {
+} else {
+  baseURL = "https://recpapers-backend.onrender.com/";
+}
 
-// export function updateUserConfiguration(data) {
-//   return server.post(url + "user_configuration", data);
-// }
+// const url = "/api";
 
-// export function getProjectList() {
-//   console.log("debug getUserQuestions");
-//   return server.get(url + "/project/");
-// }
+export const createProjectapi = async (data) => {
+  //   return server.get(url + "/login/", data);
+  console.log("url is :-", baseURL);
+  const response = await axios.post(baseURL + "api/project/", data);
+  //   const response = await server.post("api/login/", data);
 
-// export function getUserRecentQuestions(filter, page_no) {
-//   return server.post(url + "get_user_recent_questions", {
-//     filter: filter,
-//     page_no: page_no,
-//   });
-// }
-
-// export function saveUserQuestionsNotes(text, question_id, user_id) {
-//   console.log("debug saveUserQuestionsNotes");
-//   return server.post(url + "save_notes_user_questions", {
-//     text: text,
-//     user_id: user_id,
-//     question_id: question_id,
-//   });
-// }
+  return response;
+};

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {createProjectapi} from "../../api/user"
 
 const CreateProject = () => {
   const [formData, setFormData] = useState({
@@ -26,9 +27,14 @@ const CreateProject = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Submitted Data:", formData);
+  const handleSubmit = async(e) => {
+   
+    console.log("Submitted Data:", e);
+    const response = await createProjectapi(e)
+
+
+    console.log("response of create project api :- ", response)
+
     // Add logic to send formData to the backend or process it
   };
 
@@ -42,7 +48,27 @@ const CreateProject = () => {
       {/* Scrollable Content */}
       <div className="flex-1 overflow-y-auto px-4 py-6">
         <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-lg mx-auto">
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={(e)=>{
+            e.preventDefault()
+              const formData = new FormData(e.target);
+              const data = {
+                "project_uuid": formData.get('topic'),
+                "title": formData.get('topic'),
+                "user_uuid": formData.get('editorName'),
+                "mentor_uuid": formData.get('mentorName'),
+                "keyword": formData.get('keywords'),
+                "objective": formData.get('objective'),
+                "description": formData.get('description'),
+                "github_link": formData.get('githubLink'),
+                "status": formData.get('status')|"Initilized",
+              };
+              console.log(data);
+    
+
+            
+            handleSubmit(data)
+          }}
+             className="space-y-4">
             <div>
               <label className="block text-sm font-medium mb-2" htmlFor="topic">
                 Project Title
@@ -58,21 +84,10 @@ const CreateProject = () => {
               />
             </div>
             <div>
-              <label
-                className="block text-sm font-medium mb-2"
-                htmlFor="editorName"
-              >
+              <label className="block text-sm font-medium mb-2" htmlFor="editorName">
                 Name of the Editor
               </label>
-              <input
-                type="text"
-                id="editorName"
-                name="editorName"
-                value={formData.editorName}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
-              />
+              <input type="text" id="editorName" name="editorName" value={formData.editorName} onChange={handleChange} required className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-400" />
             </div>
             <div>
               <label
@@ -160,7 +175,7 @@ const CreateProject = () => {
                 className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
               />
             </div>
-            <div>
+            {/* <div>
               <label className="block text-sm mb-2 font-bold">
                 Insert Content
               </label>
@@ -175,7 +190,7 @@ const CreateProject = () => {
                   File Selected: {formData.file.name}
                 </p>
               )}
-            </div>
+            </div> */}
             <button
               type="submit"
               className="w-full py-3 bg-green-400 text-black font-bold rounded-lg hover:bg-green-300 focus:outline-none focus:ring-2 focus:ring-green-300"
