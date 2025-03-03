@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {createProjectapi} from "../../api/user"
+import { computeHeadingLevel } from "@testing-library/react";
 
 const CreateProject = () => {
   const [formData, setFormData] = useState({
@@ -31,6 +32,13 @@ const CreateProject = () => {
    
     console.log("Submitted Data:", e);
     const response = await createProjectapi(e)
+    console.log(response)
+
+    if(response.status===200){
+      console.log("data is submitted");
+    alert("Project details are submitted!");
+    }
+
 
 
     console.log("response of create project api :- ", response)

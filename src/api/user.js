@@ -21,3 +21,12 @@ export const createProjectapi = async (data) => {
 
   return response;
 };
+
+export const ProjectViewApi = async (data) => {
+  //   return server.get(url + "/login/", data);
+  console.log("url is :-", baseURL);
+  const response = await axios.get(baseURL + "api/project/", data);
+  //   const response = await server.post("api/login/", data);
+
+  return response;
+};
