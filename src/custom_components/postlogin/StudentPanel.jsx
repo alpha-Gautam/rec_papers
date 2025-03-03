@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./StudentPanel.css";
+import {ProjectViewApi} from "../../api/user"
 
 const StudentPanel = () => {
   const [projectData, setProjectData] = useState([]);
@@ -28,7 +29,7 @@ const StudentPanel = () => {
   useEffect(() => {
     const fetchProjectList = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/project/");
+        const response = await ProjectViewApi();
         console.log(response.data);
         if (response.status === 200) {
           setProjectData(response.data);
