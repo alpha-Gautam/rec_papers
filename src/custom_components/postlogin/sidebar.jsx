@@ -6,6 +6,12 @@ const Sidebar =  ()=>{
 const navigate = useNavigate();
 
 const [data,setData] = useState()
+
+const handleLogout=()=>{
+    localStorage.clear()
+    navigate("/")
+    console.log("Logout done! ")
+}
     
 
   return (
@@ -38,7 +44,7 @@ const [data,setData] = useState()
 
 
                     <div>
-                        <h4>Logout</h4>
+                        <button type='button' onClick={handleLogout}>Logout</button>
                     </div>
                 </div>
 
