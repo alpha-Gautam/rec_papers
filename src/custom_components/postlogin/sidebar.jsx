@@ -5,7 +5,8 @@ const Sidebar =  ()=>{
 
 const navigate = useNavigate();
 
-const [data,setData] = useState()
+const [expand,setExpand] = useState(true)
+
 
 const handleLogout=()=>{
     localStorage.clear()
@@ -15,7 +16,7 @@ const handleLogout=()=>{
     
 
   return (
-    <div className='h-screen border-r-2'>
+    <div className={` h-screen border-r-2 ${!expand && "w-20"}`}>
         {/* <div className='h-10'></div> */}
         <aside className="sidebar h-full ">
             <div className='flex h-full flex-col justify-between'>

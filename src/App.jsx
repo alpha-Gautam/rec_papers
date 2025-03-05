@@ -12,7 +12,7 @@ const App = () => {
     <div className=''>
     
     <Router>
-      <div className='h-screen flex flex-col w-[inherit] bg-black'>
+      <div className='h-[inherit] flex flex-col w-[inherit] bg-black'>
       
         {/* <Register/> */}
         <div className='h-[inherit]'>
