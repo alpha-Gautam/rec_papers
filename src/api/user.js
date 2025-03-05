@@ -30,3 +30,10 @@ export const ProjectViewApi = async (data) => {
 
   return response;
 };
+
+export const projectDataApi = async (id) => {
+  console.log("url is :-", baseURL);
+  const response = await axios.get(baseURL + `api/project/${id}`);
+
+  return response;
+};

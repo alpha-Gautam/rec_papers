@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./StudentPanel.css";
 import {ProjectViewApi} from "../../api/user"
+import {ProjectViewPanel} from"./ProjectView"
 
 const StudentPanel = () => {
   const [projectData, setProjectData] = useState([]);
@@ -83,7 +84,7 @@ const StudentPanel = () => {
                 </h6>
                 <button
                   className="self-start px-4 py-2 mt-2 bg-blue-500 text-white rounded hover:bg-blue-700"
-                  onClick={() => {console.log(paper); navigate(`/project/${paper.id}`, { state: { project: paper } }); }}
+                  onClick={() => {console.log("paper: ",paper); navigate(`/dashboard/project/${paper.id}`, { state: { project: paper } }); }}
                   >
                   Read More
                 </button>

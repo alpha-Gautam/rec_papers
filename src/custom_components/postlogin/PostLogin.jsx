@@ -1,25 +1,29 @@
 import React from 'react'
 import {Routes, Route} from 'react-router-dom';
 import StudentPanel from './StudentPanel';
-import MentorPanel from './MentorPanel';
+// import MentorPanel from './ProjectView';
 import CreateProject from './CreateProject';
-import ReadMore from './ReadMore';
+// import ReadMore from './ReadMore';
 import Sidebar from './sidebar'
+import ProjectViewPanel from './ProjectView'
 
 const postLogin = () => {
   return (
 <div className='flex'>
 
-            <div className=' h-full'>
+            <div className='flex h-screen sticky top-0'>
                 <Sidebar/>
             </div>
-    <div className='w-full h-full'>
+
+            
+    <div className='h-[inherit] w-full'>
         
     <Routes>
           <Route path="/" element={<StudentPanel />} />
-          <Route path="/dashboard/mentor" element={<MentorPanel />} />
+          {/* <Route path="/dashboard/mentor" element={<MentorPanel />} /> */}
           <Route path='/create-project' element={<CreateProject/>}/>  
-          <Route path="/project/:id" element={<ReadMore/>}/>
+          <Route path='/project/:id' element={<ProjectViewPanel/>}/>
+          {/* <Route path="/project/:id" element={<ReadMore/>}/> */}
     </Routes>
 
 
