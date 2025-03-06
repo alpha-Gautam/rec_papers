@@ -37,3 +37,10 @@ export const projectDataApi = async (id) => {
 
   return response;
 };
+
+export const projectLogApi = async (id) => {
+  console.log("url is :-", baseURL);
+  const response = await axios.get(baseURL + `api/log/${id}`);
+
+  return response;
+};
