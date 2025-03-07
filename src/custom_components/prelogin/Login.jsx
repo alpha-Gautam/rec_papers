@@ -7,7 +7,10 @@ import {BackIcon} from '../../assets/images/icon'
 const Login = () => {
   const navigate = useNavigate();
 
-  const [loginData,setLoginData] = useState({})
+  const [loginData,setLoginData] = useState()
+  // const [loginData,setLoginData] = useState({})
+  const [email,setEmail] = useState("")
+  const [password,setPassword] = useState("")
 
 
 
@@ -25,30 +28,38 @@ const handleLogout= ()=>{
         if (loginResponse.status === 200) {
           console.log("login response", loginResponse);
           console.log("login response data", loginResponse.data);
-          setLoginData(loginResponse.data)
-          if(loginData["user_uuid"]){
+          const userData=loginResponse.data
+          setLoginData(userData)
+
+          
+          if(loginResponse.data["user_uuid"]){
             console.log("data uploade in localstorage")
 
-            localStorage.setItem("username",loginData["username"])
-            localStorage.setItem("user_id",loginData["user_uuid"])
-            localStorage.setItem("email",loginData["email"])
-            localStorage.setItem("role",loginData["is_faculty"])
-            localStorage.setItem("college",loginData["college"])
-            localStorage.setItem("mobile",loginData["mobile"])
-            localStorage.setItem("department",loginData["department"])
+            localStorage.setItem("username",loginResponse.data["username"])
+            localStorage.setItem("user_id",loginResponse.data["user_uuid"])
+            localStorage.setItem("email",loginResponse.data["email"])
+            localStorage.setItem("role",loginResponse.data["is_faculty"])
+            localStorage.setItem("college",loginResponse.data["college"])
+            localStorage.setItem("mobile",loginResponse.data["mobile"])
+            localStorage.setItem("department",loginResponse.data["department"])
 
-            setTimeout(() => {
-              
+            // setTimeout(() => {
+            //   console.log("----------------:",loginData)
+            //    }, );
+
             navigate("/dashboard")
               
-            }, 1000);
+           
+
 
           }
         } else {
           console.log("login status failed", loginResponse);
+          alert("Login failed: " + (loginResponse.headers || "Unknown error"));
         }
       } catch (error) {
         console.error("An error occurred during login:", error);
+        alert("Login failed: " + (error.response.data.message || "Unknown error"));
       }
   }
 
@@ -84,18 +95,20 @@ const handleLogout= ()=>{
         </div>
 
         
-        <form onSubmit={(e) => {
-          e.preventDefault();
-          const formData = new FormData(e.target);
-          const data = {
-            "email": formData.get('userEmail'),
-            "password": formData.get('password'),
-            "rememberMe": formData.get('rememberMe') === 'on'
-          };
-          console.log(data);
+        <div 
+        // onSubmit={(e) => {
+          
+          // const formData = new FormData(e.target);
+          // const data = {
+          //   "email": formData.get('userEmail'),
+          //   "password": formData.get('password'),
+          //   "rememberMe": formData.get('rememberMe') === 'on'
+          // };
+          // console.log(data);
 
-          handleFormLogin(data)
-        }}>
+          // handleFormLogin(data)
+        // }}
+        >
           <div className="space-y-4">
             <div className="flex items-center border-b border-gray-300 py-2">
               <span className="text-gray-500 pr-2">
@@ -106,6 +119,7 @@ const handleLogout= ()=>{
                 name="userEmail"
                 placeholder="Username or Email"
                 className="w-full outline-none text-gray-700"
+                onChange={(e)=>{setEmail(e.target.value)}}
               />
             </div>
             <div className="flex items-center border-b border-gray-300 py-2">
@@ -116,7 +130,9 @@ const handleLogout= ()=>{
                 type="password"
                 name="password"
                 placeholder="Password"
+
                 className="w-full outline-none text-gray-700"
+                onChange={(e)=>{setPassword(e.target.value)}}
               />
             </div>
           </div>
@@ -132,10 +148,20 @@ const handleLogout= ()=>{
           <button
             type="submit"
             className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition"
+            onClick={()=>{
+              const data = {
+                "email": email,
+                "password": password,
+                "rememberMe": false,
+              };
+              console.log(data);
+    
+              handleFormLogin(data)
+            }}
           >
             Sign In
           </button>
-        </form>
+        </div>
 
 
 
