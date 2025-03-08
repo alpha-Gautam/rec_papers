@@ -33,7 +33,7 @@ const handleLogout= ()=>{
 
           
           if(loginResponse.data["user_uuid"]){
-            console.log("data uploade in localstorage")
+            console.log("Data uploaded in Local Storage")
 
             localStorage.setItem("username",loginResponse.data["username"])
             localStorage.setItem("user_id",loginResponse.data["user_uuid"])
@@ -54,7 +54,7 @@ const handleLogout= ()=>{
 
           }
         } else {
-          console.log("login status failed", loginResponse);
+          console.log("Login status failed", loginResponse);
           alert("Login failed: " + (loginResponse.headers || "Unknown error"));
         }
       } catch (error) {

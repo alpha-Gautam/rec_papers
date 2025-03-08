@@ -53,52 +53,37 @@ const ProjectViewPanel = () => {
     // };
 
     return (
-        <div className="mentor_panel_container  h-[inherit] w-[100%] bg-gray-700">
-         
-            <div className="maincontent flex flex-col m-5">
-                <div>
-                <h2 >Project Title...</h2>
+        <div className="mentor_panel_container h-full w-full bg-gray-100 p-5">
+            <div className="maincontent bg-gray-499 flex flex-col">
+                <div className="text-red-500 text-2xl font-bold">Project Title: <span className="text-black">{data["title"] || "No data found"}</span></div>
+                
+                <div className='grid grid-cols-2 gap-4 mt-5 text-lg'>
+                    <div><strong>Author:</strong> <span>{data["user_uuid"] || "No data found"}</span></div>
+                    <div><strong>Mentor:</strong> <span>{data["mentor_uuid"] || "No data found"}</span></div>
+                    <div><strong>Project Stack:</strong> <span>{data["keyword"] || "No data found"}</span></div>
+                    <div className=''><strong>Code:</strong> <span>{data["github_link"] ? <a href={data["github_link"]} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">{data["github_link"]}</a> : "No data found"}</span></div>                    <div className="col-span-2"><strong>Project Description:</strong> <span>{data["description"] || "No data found"}</span></div>
+                    <div className="col-span-2"><strong>Project Objective:</strong> <span>{data["objective"] || "No data found"}</span></div>
                 </div>
-                <div className="card-container h-full bg-gray-300">
-                    <div className='w-full'>
-                    <p className='text-red-500  text-[20px]'>Project Title :</p>
-                    <div className='flex mx-2 text-[25px] w-full  justfy-center items-center'><p>{data["title"]||"No data fount"}</p></div>
+                
+                <div className='mt-5 text-lg'>
+                    <div className='flex justify-between'>
+                        <strong>Project Log:</strong>
+                        <button onClick={() => setAddProjectLog(true)} className='text-red-700 hover:text-red-500 text-3xl'>+</button>
                     </div>
-
-                    <div className='flex'>
-                        <div className='w-full min-h-10 border-2 bg-green-600  mt-5 z-10 text-[18px]'><label htmlFor="">Author  :</label> <div className='m-2 bg-green-200 rounded p-1'><p>{data["user_uuid"]||"No data found"}</p></div></div>
-                        <div className='w-full min-h-10 border-2 bg-green-600  mt-5 z-10 text-[18px]'><label htmlFor="">Mentor  :</label><div className='m-2 bg-green-200 rounded p-1'><p>{data["mentor_uuid"]||"No data found"}</p></div></div>
-                    </div>   
-
-                    <div className='w-full min-h-10 border-2 bg-green-600  mt-5 z-10 text-[18px]'><label htmlFor="">Project Platform  :</label><div className='m-2 bg-green-200 rounded p-1'><p>{data["keyword"]||"No data found"}</p></div></div>
-                    <div className='w-full min-h-10 border-2 bg-green-600  mt-5 z-10 text-[18px]'><label htmlFor="">GitHub URL  :</label><div className='m-2 bg-green-200 rounded p-1'><p>{data["github_link"]||"No data found"}</p></div></div>
-                    <div className='w-full min-h-10 border-2 bg-green-600  mt-5 z-10 text-[18px]'><label htmlFor="">Project Discription  :</label><div className='m-2 bg-green-200 rounded p-1'><p>{data["description"]||"No data found"}</p></div></div>
-                    <div className='w-full min-h-10 border-2 bg-green-600  mt-5 z-10 text-[18px]'><label htmlFor="">Project Objective :</label><div className='m-2 bg-green-200 rounded p-1'><p>{data["objective"]||"No data found"}</p></div></div>
-
-
-
-                    <div className='w-full min-h-10 border-2 bg-green-600  mt-5 z-10 text-[18px]'>
-                        <div className='flex justify-between px-2'>
-                        <label htmlFor="">Project Logs..  </label>
-                        <button onClick={()=>{setAddProjectLog(true)}}><p className='text-red-700 hover:text-red-500 text-3xl'> +</p></button>
-
-                        {/* {addProjectLog&&<div> <input type="text" /> <button>add</button></div>} */}
-                        </div>
-                        <div className='m-2 bg-green-200 rounded p-1'>
-                            {projectLog.length>0? <div>
-                                            {projectLog.map((log)=>(
-                                                <div key={log.id} className='flex flex-col m-2 py-2 gap-3 border-b-2 border-gray-700'>
-                                                    <div className='flex flex-wrap'><p className='text-red-600 mr-2'>message : </p>{log["remark_by_mentor"]}</div>
-                                                    <div className='flex flex-wrap'><p className='text-red-600 mr-2'>Date: </p> {log.created_at}</div>
-                                                    
-                                                </div>
-
-                                            ))}
-                                        </div>:
-                                 <p>No data found</p>}
-                        </div>
+                    <div className='mt-3'>
+                        {projectLog.length > 0 ? (
+                            <div>
+                                {projectLog.map((log) => (
+                                    <div key={log.id} className='flex flex-col border-b py-2'>
+                                        <div><strong className='text-red-600'>Message:</strong> {log["remark_by_mentor"]}</div>
+                                        <div><strong className='text-red-600'>Date:</strong> {new Date(log.created_at).toLocaleDateString()}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <p>No data found</p>
+                        )}
                     </div>
-                   
                 </div>
             </div>
         </div>
