@@ -11,6 +11,7 @@ const Login = () => {
   // const [loginData,setLoginData] = useState({})
   const [email,setEmail] = useState("")
   const [password,setPassword] = useState("")
+  const [loginButton, setLoginButton] = useState(false)
 
 
 
@@ -60,6 +61,9 @@ const handleLogout= ()=>{
       } catch (error) {
         console.error("An error occurred during login:", error);
         alert("Login failed: " + (error.response.data.message || "Unknown error"));
+      }
+      finally{
+        setLoginButton(false)
       }
   }
 
@@ -147,17 +151,21 @@ const handleLogout= ()=>{
           </div>
           <button
             type="submit"
-            className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition"
+            className={`w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition ${loginButton ? "opacity-50 cursor-not-allowed" : ""}`}
             onClick={()=>{
-              const data = {
-                "email": email,
-                "password": password,
-                "rememberMe": false,
-              };
-              console.log(data);
-    
-              handleFormLogin(data)
+              if (!loginButton) {
+                const data = {
+                  "email": email,
+                  "password": password,
+                  "rememberMe": false,
+                };
+                setLoginButton(true)
+                console.log(data);
+      
+                handleFormLogin(data)
+              }
             }}
+            disabled={loginButton}
           >
             Sign In
           </button>
