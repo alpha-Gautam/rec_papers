@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { projectDataApi, projectLogApi } from "../../api/user";
+import { useNavigate } from "react-router-dom"; // Add this at the top with other imports
 
 const ProjectViewPanel = () => {
     const [data, setData] = useState({});
     const [projectLog, setProjectLog] = useState([]);
     const [addProjectLog, setAddProjectLog] = useState(false);
+
+    const navigate = useNavigate(); // Add this inside the `ProjectViewPanel` function before `useEffect`
 
     useEffect(() => {
         async function fetchData() {
@@ -35,6 +38,13 @@ const ProjectViewPanel = () => {
 
     return (
         <div className="mentor_panel_container h-full w-full bg-gray-100 p-5">
+            <button 
+                onClick={() => navigate(-1)} 
+                className="flex items-center gap-0 bg-blue-600 text-white px-2 py-1 rounded-lg hover:bg-blue-800 transition-all shadow-md mb-4"
+            >
+                ←
+            </button>
+
             <div className="maincontent bg-gray-499 flex flex-col">
                 <div className="text-gray-800 text-2xl font-semibold ">
                     Project Title: "<span className="text-gray-900 text-pretty font-bold text-2xl">{data["title"] || "No data found"}</span>"
