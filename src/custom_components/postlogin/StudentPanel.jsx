@@ -53,19 +53,19 @@ const StudentPanel = () => {
   return (
     <div className="student-panel-container flex flex-col h-screen bg-gray-300">
       {/* Header Section */}
-      <div className="h-32 bg-gray-600 flex px-10 items-center ">
+      <div className="h-32 bg-gray-500 flex px-10 items-center ">
         <div className="w-24 h-24 rounded-full bg-white overflow-hidden"> <img src="https://i.pinimg.com/280x280_RS/e1/08/21/e10821c74b533d465ba888ea66daa30f.jpg" alt="" /></div>
         <div className="ml-10 text-white text-lg">
-          <p>user : {userData? userData["username"] : "User Name"}</p>
-          <p>College : {userData? userData["college"] : "College Name"}</p>
+          <p>User Name : {userData? userData["username"] : "User Name"}</p>
+          {/* <p>College : {userData? userData["college"] : "College Name"}</p> */}
           <p>Department : {userData? userData["department"] : "Department Name"}</p>
           
         </div>
       </div>
 
       {/* Main Content */}
-      <main className="main-content p-5 bg-slate-300 ">
-        <h2 className="text-2xl font-bold mb-5">Research Papers</h2>
+      <main className="main-content p-5 bg-gray-200 ">
+        <h2 className="text-3xl font-bold mb-5">Research Papers</h2>
         <div className="card-container flex flex-col gap-5 border-2 border-blue-500 p-4 bg-white rounded-md shadow-md">
           {projectData.map((paper) => (
             <div
@@ -74,19 +74,19 @@ const StudentPanel = () => {
             >
               <div className="card-content flex flex-col gap-2">
                 <h5 className="text-lg font-semibold">
-                  <strong>Title:</strong> {paper.title}
+                  <strong></strong> {paper.title}
                 </h5>
                 <h6 className="text-sm">
-                  <strong>Author ID:</strong> {paper.user_uuid}
+                  <strong>Author :</strong> {paper.user_uuid}
                 </h6>
                 <h6 className="text-sm">
-                  <strong>Mentor ID:</strong> {paper.mentor_uuid}
+                  <strong>Mentor :</strong> {paper.mentor_uuid}
                 </h6>
                 <button
-                  className="self-start px-4 py-2 mt-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+                  className="self-start px-4 py-2 mt-2 bg-blue-600 text-white rounded hover:bg-blue-800"
                   onClick={() => {console.log("paper: ",paper); navigate(`/dashboard/project/${paper.id}`, { state: { project: paper } }); }}
                   >
-                  Read More
+                  View More
                 </button>
               </div>
             </div>
