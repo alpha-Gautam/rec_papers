@@ -7,6 +7,7 @@ import {userRagister} from '../../api/login'
 const Signup = () => {
   const navigate = useNavigate();
   const [role, setRole] = useState(""); // State to track selected role
+  const [r_button,setR_button] = useState(false)
 
   const handleBackToLanding = () => {
     navigate("/"); // Redirect to Home.jsx
@@ -33,7 +34,11 @@ const Signup = () => {
 
     } catch (error) {
       console.log("Register Error",error)
+      alert(`Error: ${error.message}`)
       
+    }
+    finally{
+      setR_button(false)
     }
 
 
@@ -81,6 +86,7 @@ const Signup = () => {
 
           };
           console.log(data);
+          setR_button(true)
 
           handleFormRagistration(data)
         }}>
@@ -221,7 +227,8 @@ const Signup = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition my-2"
+            className={`w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition my-2 ${r_button ? "opacity-50 cursor-not-allowed" : ""}`}
+            disabled={r_button}
           >
             Sign Up
           </button>
