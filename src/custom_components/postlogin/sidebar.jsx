@@ -6,7 +6,7 @@ import logo from "../../assets/images/logo.png"
 
 const Sidebar = () => {
   const navigate = useNavigate();
-  const [expand, setExpand] = useState(true);
+  const [expand, setExpand] = useState(false);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -67,7 +67,7 @@ const Sidebar = () => {
             <button
               onClick={() => {
                 navigate("/");
-                // setExpand(false);
+               
               }}
             >
               <ChIconLandingPage/>
@@ -79,7 +79,7 @@ const Sidebar = () => {
             <button
               onClick={() => {
                 navigate("/dashboard");
-                setExpand(!expand);
+                
               }}
               
             >
@@ -92,7 +92,7 @@ const Sidebar = () => {
             <button
               onClick={() => {
                 navigate("/dashboard/create-project");
-                setExpand(false);
+                
               }}
               
             >
