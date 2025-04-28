@@ -19,7 +19,7 @@ const StudentPanel = () => {
       "email":localStorage.getItem("email"),
       "college":localStorage.getItem("college"),
       "mobile":localStorage.getItem("mobile"),
-      "user_id":localStorage.getItem("user_id"),
+      "user_id":localStorage.getItem("uuid"),
       "role":localStorage.getItem("role"),
       "department":localStorage.getItem("department")
     })
@@ -70,21 +70,21 @@ const StudentPanel = () => {
           {projectData.map((paper) => (
             <div
               className="card bg-white border rounded-lg shadow-md p-4"
-              key={paper.id}
+              key={paper.uuid}
             >
               <div className="card-content flex flex-col gap-2">
                 <h5 className="text-lg font-semibold">
                   <strong></strong> {paper.title}
                 </h5>
                 <h6 className="text-sm">
-                  <strong>Author :</strong> {paper.user_uuid}
+                  <strong>Author :</strong> {paper.user}
                 </h6>
                 <h6 className="text-sm">
-                  <strong>Mentor :</strong> {paper.mentor_uuid}
+                  <strong>Mentor :</strong> {paper.mentor}
                 </h6>
                 <button
                   className="self-start px-4 py-2 mt-2 bg-blue-600 text-white rounded hover:bg-blue-800"
-                  onClick={() => {console.log("paper: ",paper); navigate(`/dashboard/project/${paper.id}`, { state: { project: paper } }); }}
+                  onClick={() => {console.log("paper: ",paper); navigate(`/dashboard/project/${paper.uuid}`, { state: { project: paper } }); }}
                   >
                   View More
                 </button>
