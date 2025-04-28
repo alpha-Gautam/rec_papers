@@ -14,10 +14,10 @@ const ProjectViewPanel = () => {
             const url = window.location.href.split("/")[5];
             console.log("current url is-", window.location.href);
             console.log("url", url);
-            const data = await projectDataApi(url);
-            console.log("project data is: ", data);
-            if (data.status === 200) {
-                setData(data.data);
+            const responsedata = await projectDataApi(url);
+            console.log("project data is: ", responsedata);
+            if (responsedata.status === 200) {
+                setData(responsedata.data);
             }
         }
         fetchData();
@@ -26,10 +26,10 @@ const ProjectViewPanel = () => {
     useEffect(() => {
         async function fetchLog() {
             const url = window.location.href.split("/")[5];
-            const data = await projectLogApi(url);
-            console.log("projectLogs data is: ", data);
-            if (data.status === 202) {
-                setProjectLog(data.data);
+            const responsedata = await projectLogApi(url);
+            console.log("projectLogs data is: ", responsedata);
+            if (responsedata.status === 202) {
+                setProjectLog(responsedata.data);
             }
             console.log("log.length", projectLog.length);
         }
@@ -51,8 +51,8 @@ const ProjectViewPanel = () => {
                 </div>
 
                 <div className='flex flex-col gap-4 mt-5 text-lg'>
-                    <div><strong>Author:</strong> <span>{data["user_uuid"] || "No data found"}</span></div>
-                    <div><strong>Mentor:</strong> <span>{data["mentor_uuid"] || "No data found"}</span></div>
+                    <div><strong>Author:</strong> <span>{data["user"] || "No data found"}</span></div>
+                    <div><strong>Mentor:</strong> <span>{data["mentor"] || "No data found"}</span></div>
                     <div><strong>Technical Stack:</strong> <span>{data["keyword"] || "No data found"}</span></div>
                     
                     {/* Updated Code Section with Decorated Link */}

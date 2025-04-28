@@ -6,7 +6,7 @@ import {userRagister} from '../../api/login'
 
 const Signup = () => {
   const navigate = useNavigate();
-  const [role, setRole] = useState(""); // State to track selected role
+  const [role, setRole] = useState("Student"); // State to track selected role
   const [r_button,setR_button] = useState(false)
 
   const handleBackToLanding = () => {
