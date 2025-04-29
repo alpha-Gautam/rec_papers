@@ -73,16 +73,16 @@ const Signup = () => {
           e.preventDefault();
           const formData = new FormData(e.target);
           const data = {
-            "user_uuid": formData.get('roll-no'),
             "username": formData.get('username'),
+            "roll_no": formData.get('roll-no'),
             "email": formData.get('email'),
             "password": formData.get('password'),
             "mobile": formData.get('mobile'),
             "college": formData.get('college'),
             "department": formData.get('department'),
-            "created": "",
-            "isstudent": formData.get('isstudent') === 'Student',
-            "ismentor": formData.get('ismentor') === 'Mentor'
+            // "created": "",
+            "is_student": formData.get('isstudent') === 'Student',
+            "is_faculty": formData.get('ismentor') === 'Mentor'
 
           };
           console.log(data);
@@ -98,7 +98,7 @@ const Signup = () => {
               <input
                 type="text"
                 name="username"
-                placeholder="Username"
+                placeholder="Full Name"
                 className="w-full outline-none text-gray-700"
               />
             </div>
@@ -109,7 +109,7 @@ const Signup = () => {
               <input
                 type="text"
                 name="roll-no"
-                placeholder="Roll No"
+                placeholder="Roll No / Id No"
                 className="w-full outline-none text-gray-700"
               />
             </div>
@@ -148,10 +148,10 @@ const Signup = () => {
                 <option value="" disabled>
                   Select college
                 </option>
-                <option value="reck">Rajkiya Engineering college Kannauj</option>
-                <option value="recb">Rajkiya Engineering college Banda </option>
-                <option value="recsnb">Rajkiya Engineering college Sonbhadra </option>
-                <option value="recd">Rajkiya Engineering college d</option>
+                <option value="Rajkiya Engineering college Kannauj">Rajkiya Engineering college Kannauj</option>
+                <option value="Rajkiya Engineering college Banda">Rajkiya Engineering college Banda </option>
+                <option value="Rajkiya Engineering college Sonbhadra">Rajkiya Engineering college Sonbhadra </option>
+                <option value="Rajkiya Engineering college">Rajkiya Engineering college d</option>
               </select>
             </div>
             <div className="flex items-center border-b border-gray-300 py-2">
@@ -166,10 +166,10 @@ const Signup = () => {
                 <option value="" disabled>
                   Select Department
                 </option>
-                <option value="CSE">Computer Science & Engineering</option>
-                <option value="EL">Electronics Engineering</option>
-                <option value="EE">Electrical Engineering</option>
-                <option value="CE">Civil Engineering</option>
+                <option value="Computer Science & Engineering">Computer Science & Engineering</option>
+                <option value="Electronics Engineering">Electronics Engineering</option>
+                <option value="Electrical Engineering">Electrical Engineering</option>
+                <option value="Civil Engineering">Civil Engineering</option>
               </select>
             </div>
 
