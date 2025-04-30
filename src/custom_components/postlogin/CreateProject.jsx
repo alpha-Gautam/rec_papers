@@ -1,100 +1,75 @@
 import React, { useEffect, useState } from "react";
-import {createProjectapi,mentorDataApi} from "../../api/user"
-import { computeHeadingLevel } from "@testing-library/react";
+import { createProjectapi, mentorDataApi } from "../../api/user";
 
 const CreateProject = () => {
   const [formData, setFormData] = useState({
-    editorName: "",
+    editorName: localStorage.getItem("username") || "",
     mentorName: "",
     topic: "",
     keywords: "",
-    objective: "",
-    file: null,
-    githubLink: "",
+    objective: "", 
+    description: "",
+    githubLink: ""
   });
+
+  const [mentorList, setMentorList] = useState([]);
+
+  useEffect(() => {
+    const fetchMentorList = async () => {
+      try {
+        const response = await mentorDataApi();
+        setMentorList(response.data);
+      } catch (error) {
+        console.error('Error fetching mentor list:', error);
+      }
+    };
+    
+    fetchMentorList();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
-  const [mentorList,setMentorList]= useState([""])
-  
-useEffect(() => {
-  const handleMentorList = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    const data = {
+      
+      title: formData.topic,
+      user: formData.editorName,
+      mentor: formData.mentorName,
+      keyword: formData.keywords,
+      objective: formData.objective,
+      description: formData.description,
+      github_link: formData.githubLink,
+      status: "Initialized"
+    };
+
     try {
-      const response = await mentorDataApi();
-      const data = await response.data;
-      console.log("mentor list from backend: -",data)
-      setMentorList(data);
-      console.log("mentor list from backend: -",mentorList)
+      const response = await createProjectapi(data);
+      if (response.status === 200) {
+        alert("Project details submitted successfully!");
+      }
     } catch (error) {
-      console.error('Error fetching mentor list:', error);
+      console.error("Error submitting project:", error);
+      alert("Failed to submit project. Please try again.");
     }
-  };
-  
-  handleMentorList();
-}, []);
-
-  const handleFileChange = (e) => {
-    setFormData({
-      ...formData,
-      file: e.target.files[0],
-    });
-  };
-
-  const handleSubmit = async(e) => {
-   
-    console.log("Submitted Data:", e);
-    const response = await createProjectapi(e)
-    console.log(response)
-
-    if(response.status===200){
-      console.log("data is submitted");
-    alert("Project details are submitted!");
-    }
-
-
-
-    console.log("response of create project api :- ", response)
-
-    // Add logic to send formData to the backend or process it
   };
 
   return (
-    <div className="bg-gray-900 text-white h-screen flex flex-col">
-      {/* Fixed Header */}
-      <header className="bg-gray-800 py-4 shadow-md text-center text-green-400 font-bold text-2xl">
+    <div className="bg-gray-100 text-black min-h-screen flex flex-col">
+      <header className="bg-white py-4 shadow-md text-center text-green-500 font-bold text-3xl">
         Create a New Project
       </header>
 
-      {/* Scrollable Content */}
-      <div className="flex-1 overflow-y-auto px-4 py-6">
-        <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-lg mx-auto">
-          <form onSubmit={(e)=>{
-            e.preventDefault()
-              const formData = new FormData(e.target);
-              const data = {
-                "project_uuid": formData.get('topic'),
-                "title": formData.get('topic'),
-                "user_uuid": formData.get('editorName'),
-                "mentor_uuid": formData.get('mentorName'),
-                "keyword": formData.get('keywords'),
-                "objective": formData.get('objective'),
-                "description": formData.get('description'),
-                "github_link": formData.get('githubLink'),
-                "status": formData.get('status')|"Initilized",
-              };
-              console.log(data);
-    
-
-            
-            handleSubmit(data)
-          }}
-             className="space-y-4">
+      <div className="flex-1 overflow-y-auto px-6 py-8">
+        <div className="bg-white p-10 rounded-lg shadow-lg w-full max-w-4xl mx-auto">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium mb-2" htmlFor="topic">
                 Project Title
@@ -106,21 +81,26 @@ useEffect(() => {
                 value={formData.topic}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
+                className="w-full px-4 py-2 rounded-lg bg-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
               />
             </div>
+
             <div>
               <label className="block text-sm font-medium mb-2" htmlFor="editorName">
                 Name of the Author
               </label>
-              <input type="text" id="editorName" name="editorName" value={localStorage.getItem("username")} onChange={handleChange} required className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-400" />
+              <input 
+                type="text"
+                id="editorName"
+                name="editorName"
+                value={formData.editorName}
+                readOnly
+                className="w-full px-4 py-2 rounded-lg bg-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
+              />
             </div>
 
             <div>
-              <label
-                className="block text-sm font-medium mb-2"
-                htmlFor="mentorName"
-              >
+              <label className="block text-sm font-medium mb-2" htmlFor="mentorName">
                 Name of the Mentor
               </label>
               <select
@@ -129,7 +109,7 @@ useEffect(() => {
                 value={formData.mentorName}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
+                className="w-full px-4 py-2 rounded-lg bg-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
               >
                 <option value="">Select a mentor</option>
                 {mentorList.map((mentor) => (
@@ -139,30 +119,9 @@ useEffect(() => {
                 ))}
               </select>
             </div>
-            
-            {/* <div>
-              <label
-                className="block text-sm font-medium mb-2"
-                htmlFor="mentorName"
-              >
-                Name of the Mentor
-              </label>
-              <input
-                type="text"
-                id="mentorName"
-                name="mentorName"
-                value={formData.mentorName}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
-              />
-            </div> */}
 
             <div>
-              <label
-                className="block text-sm font-medium mb-2"
-                htmlFor="keywords"
-              >
+              <label className="block text-sm font-medium mb-2" htmlFor="keywords">
                 Keywords
               </label>
               <input
@@ -172,15 +131,13 @@ useEffect(() => {
                 value={formData.keywords}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
                 placeholder="Separate keywords with commas"
+                className="w-full px-4 py-2 rounded-lg bg-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
               />
             </div>
+
             <div>
-              <label
-                className="block text-sm font-medium mb-2"
-                htmlFor="objective"
-              >
+              <label className="block text-sm font-medium mb-2" htmlFor="objective">
                 Objective
               </label>
               <textarea
@@ -190,14 +147,12 @@ useEffect(() => {
                 onChange={handleChange}
                 rows="2"
                 required
-                className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
-              ></textarea>
+                className="w-full px-4 py-2 rounded-lg bg-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
+              />
             </div>
+
             <div>
-              <label
-                className="block text-sm font-medium mb-2"
-                htmlFor="description"
-              >
+              <label className="block text-sm font-medium mb-2" htmlFor="description">
                 Briefing about the Project
               </label>
               <textarea
@@ -207,14 +162,12 @@ useEffect(() => {
                 onChange={handleChange}
                 rows="5"
                 required
-                className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
+                className="w-full px-4 py-2 rounded-lg bg-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
               />
             </div>
+
             <div>
-              <label
-                className="block text-sm font-medium mb-2"
-                htmlFor="githubLink"
-              >
+              <label className="block text-sm font-medium mb-2" htmlFor="githubLink">
                 GitHub Code Link
               </label>
               <input
@@ -224,28 +177,13 @@ useEffect(() => {
                 value={formData.githubLink}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
+                className="w-full px-4 py-2 rounded-lg bg-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
               />
             </div>
-            {/* <div>
-              <label className="block text-sm mb-2 font-bold">
-                Insert Content
-              </label>
-              <input
-                type="file"
-                accept=".pdf,.doc,.docx"
-                onChange={handleFileChange}
-                className="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-gray-600 file:text-white hover:file:bg-gray-500"
-              />
-              {formData.file && (
-                <p className="mt-2 text-sm text-gray-400">
-                  File Selected: {formData.file.name}
-                </p>
-              )}
-            </div> */}
+
             <button
               type="submit"
-              className="w-full py-3 bg-green-400 text-black font-bold rounded-lg hover:bg-green-300 focus:outline-none focus:ring-2 focus:ring-green-300"
+              className="w-full py-3 bg-green-500 text-white font-bold rounded-lg hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-green-300"
             >
               Submit Project
             </button>
