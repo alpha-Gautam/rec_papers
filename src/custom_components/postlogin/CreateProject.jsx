@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import {createProjectapi} from "../../api/user"
+import React, { useEffect, useState } from "react";
+import {createProjectapi,mentorDataApi} from "../../api/user"
 import { computeHeadingLevel } from "@testing-library/react";
 
 const CreateProject = () => {
@@ -20,6 +20,24 @@ const CreateProject = () => {
       [name]: value,
     });
   };
+
+  const [mentorList,setMentorList]= useState([""])
+  
+useEffect(() => {
+  const handleMentorList = async () => {
+    try {
+      const response = await mentorDataApi();
+      const data = await response.data;
+      console.log("mentor list from backend: -",data)
+      setMentorList(data);
+      console.log("mentor list from backend: -",mentorList)
+    } catch (error) {
+      console.error('Error fetching mentor list:', error);
+    }
+  };
+  
+  handleMentorList();
+}, []);
 
   const handleFileChange = (e) => {
     setFormData({
@@ -93,11 +111,36 @@ const CreateProject = () => {
             </div>
             <div>
               <label className="block text-sm font-medium mb-2" htmlFor="editorName">
-                Name of the Editor
+                Name of the Author
               </label>
-              <input type="text" id="editorName" name="editorName" value={formData.editorName} onChange={handleChange} required className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-400" />
+              <input type="text" id="editorName" name="editorName" value={localStorage.getItem("username")} onChange={handleChange} required className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-400" />
             </div>
+
             <div>
+              <label
+                className="block text-sm font-medium mb-2"
+                htmlFor="mentorName"
+              >
+                Name of the Mentor
+              </label>
+              <select
+                id="mentorName"
+                name="mentorName"
+                value={formData.mentorName}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
+              >
+                <option value="">Select a mentor</option>
+                {mentorList.map((mentor) => (
+                  <option key={mentor.uuid} value={mentor.username}>
+                    {mentor.username}
+                  </option>
+                ))}
+              </select>
+            </div>
+            
+            {/* <div>
               <label
                 className="block text-sm font-medium mb-2"
                 htmlFor="mentorName"
@@ -113,7 +156,8 @@ const CreateProject = () => {
                 required
                 className="w-full px-4 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
               />
-            </div>
+            </div> */}
+
             <div>
               <label
                 className="block text-sm font-medium mb-2"
