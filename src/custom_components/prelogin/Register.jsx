@@ -8,30 +8,33 @@ import { signInWithPopup } from "firebase/auth";
 const Signup = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({
-    username:   "",
-    rollNo:     "",
-    email:      "",
-    mobile:     "",
-    college:    "",
+    username: "",
+    rollNo: "",
+    email: "",
+    mobile: "",
+    college: "",
     department: "",
-    password:   "",
-    password2:  "",
-    role:       "Student",
+    password: "",
+    password2: "",
+    role: "Student",
   });
   const [loading, setLoading] = useState(false);
-  const [error,   setError]   = useState("");
+  const [error, setError] = useState("");
 
-  const handleBack      = () => navigate("/");
-  const handleTab       = () => navigate("/login");
-  const handleChange    = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
-  const handleRoleChange= e => setForm(f => ({ ...f, role: e.target.value }));
+  const handleBack = () => navigate("/");
+  const handleTab = () => navigate("/login");
+  const handleChange = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
+  const handleRoleChange = e => setForm(f => ({ ...f, role: e.target.value }));
 
   const submit = async data => {
     setError("");
     try {
       const res = await userRegister(data);
-      if (res.status === 200) navigate("/login", { replace: true });
-      else setError("Registration failed. Please try again.");
+      if (res.status === 200) {
+        navigate("/login", { replace: true });
+      } else {
+        setError("Registration failed. Please try again.");
+      }
     } catch (err) {
       setError(err.response?.data?.message || "Sign-up error. Try again.");
     } finally {
@@ -41,41 +44,49 @@ const Signup = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    if (!form.username || !form.rollNo || !form.email || !form.college || !form.department || !form.password) {
+      setError("Please fill in all required fields");
+      return;
+    }
     if (form.password !== form.password2) {
-      setError("Passwords don’t match.");
+      setError("Passwords don't match.");
       return;
     }
     setLoading(true);
     submit({
-      user_uuid:  form.rollNo,
-      username:   form.username,
-      email:      form.email,
-      password:   form.password,
-      mobile:     form.mobile,
-      college:    form.college,
+      user_uuid: form.rollNo,
+      username: form.username,
+      email: form.email,
+      password: form.password,
+      mobile: form.mobile,
+      college: form.college,
       department: form.department,
-      isstudent:  form.role === "Student",
-      ismentor:   form.role === "Mentor",
+      isstudent: form.role === "Student",
+      ismentor: form.role === "Mentor",
     });
   };
 
   const handleGoogle = async () => {
+    if (!form.college || !form.department) {
+      setError("Please select college and department before Google sign up");
+      return;
+    }
     setError("");
     try {
       const { user } = await signInWithPopup(auth, provider);
       setLoading(true);
       await submit({
-        user_uuid:  user.uid,
-        username:   user.displayName,
-        email:      user.email,
-        password:   "",
-        mobile:     "",
-        college:    "",
-        department: "",
-        isstudent:  form.role === "Student",
-        ismentor:   form.role === "Mentor",
+        user_uuid: user.uid,
+        username: user.displayName,
+        email: user.email,
+        password: "",
+        mobile: "",
+        college: form.college,
+        department: form.department,
+        isstudent: form.role === "Student",
+        ismentor: form.role === "Mentor",
       });
-    } catch {
+    } catch (err) {
       setError("Google Sign-Up failed. Try again.");
       setLoading(false);
     }
@@ -105,7 +116,7 @@ const Signup = () => {
         {/* Error */}
         {error && <p className="text-red-500 text-sm text-center mb-2">{error}</p>}
 
-        {/* Inputs */}
+        {/* Form */}
         <form onSubmit={handleSubmit}>
           <div className="space-y-3">
             <input
@@ -141,6 +152,8 @@ const Signup = () => {
               onChange={handleChange}
               type="tel"
               placeholder="Mobile Number"
+              pattern="[0-9]{10}"
+              title="Please enter a valid 10-digit mobile number"
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
             />
             <select
@@ -150,7 +163,7 @@ const Signup = () => {
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
               required
             >
-              <option value="" disabled>Select college</option>
+              <option value="">Select college</option>
               <option value="reck">Rajkiya Engineering College Kannauj</option>
               <option value="recb">Rajkiya Engineering College Banda</option>
               <option value="recsnb">Rajkiya Engineering College Sonbhadra</option>
@@ -163,7 +176,7 @@ const Signup = () => {
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
               required
             >
-              <option value="" disabled>Select Department</option>
+              <option value="">Select Department</option>
               <option value="CSE">Computer Science &amp; Engineering</option>
               <option value="EL">Electronics Engineering</option>
               <option value="EE">Electrical Engineering</option>
@@ -175,6 +188,7 @@ const Signup = () => {
               onChange={handleChange}
               type="password"
               placeholder="Password"
+              minLength="5"
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
               required
             />
@@ -184,6 +198,7 @@ const Signup = () => {
               onChange={handleChange}
               type="password"
               placeholder="Re-type Password"
+              minLength="5"
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
               required
             />
@@ -230,7 +245,8 @@ const Signup = () => {
 
         <button
           onClick={handleGoogle}
-          className="w-full mt-3 bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition"
+          disabled={loading}
+          className={`w-full mt-3 bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
         >
           Sign Up with Google
         </button>

@@ -1,135 +1,185 @@
-import React, { useState } from "react";
-import { createProjectapi } from "../../api/user";
+import React, { useEffect, useState } from "react";
+import { createProjectapi, mentorDataApi } from "../../api/user";
 
 const CreateProject = () => {
   const [formData, setFormData] = useState({
-    editorName: "",
+    editorName: localStorage.getItem("username") || "",
     mentorName: "",
     topic: "",
     keywords: "",
-    objective: "",
-    file: null,
-    githubLink: "",
+    objective: "", 
     description: "",
+    githubLink: ""
   });
+
+  const [mentorList, setMentorList] = useState([]);
+
+  useEffect(() => {
+    const fetchMentorList = async () => {
+      try {
+        const response = await mentorDataApi();
+        setMentorList(response.data);
+      } catch (error) {
+        console.error('Error fetching mentor list:', error);
+      }
+    };
+    
+    fetchMentorList();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
-  const handleSubmit = async (data) => {
-    console.log("Submitted Data:", data);
-    const response = await createProjectapi(data);
-    console.log(response);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    const data = {
+      
+      title: formData.topic,
+      user: formData.editorName,
+      mentor: formData.mentorName,
+      keyword: formData.keywords,
+      objective: formData.objective,
+      description: formData.description,
+      github_link: formData.githubLink,
+      status: "Initialized"
+    };
 
-    if (response.status === 200) {
-      console.log("data is submitted");
-      alert("Project details are submitted!");
+    try {
+      const response = await createProjectapi(data);
+      if (response.status === 200) {
+        alert("Project details submitted successfully!");
+      }
+    } catch (error) {
+      console.error("Error submitting project:", error);
+      alert("Failed to submit project. Please try again.");
     }
   };
 
   return (
     <div className="bg-gray-100 text-black min-h-screen flex flex-col">
-      {/* Header */}
       <header className="bg-white py-4 shadow-md text-center text-green-500 font-bold text-3xl">
         Create a New Project
       </header>
 
-      {/* Scrollable Form Area */}
       <div className="flex-1 overflow-y-auto px-6 py-8">
         <div className="bg-white p-10 rounded-lg shadow-lg w-full max-w-4xl mx-auto">
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              const formData = new FormData(e.target);
-              const data = {
-                project_uuid: formData.get("topic"),
-                title: formData.get("topic"),
-                user_uuid: formData.get("editorName"),
-                mentor_uuid: formData.get("mentorName"),
-                keyword: formData.get("keywords"),
-                objective: formData.get("objective"),
-                description: formData.get("description"),
-                github_link: formData.get("githubLink"),
-                status: formData.get("status") || "Initialized",
-              };
-              handleSubmit(data);
-            }}
-            className="grid grid-cols-1 gap-6"
-          >
-            <input
-              type="text"
-              name="topic"
-              value={formData.topic}
-              onChange={handleChange}
-              placeholder="Project Title"
-              required
-              className="w-full px-4 py-2 rounded-lg bg-gray-100 text-black border border-gray-300 focus:ring-2 focus:ring-green-400"
-            />
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium mb-2" htmlFor="topic">
+                Project Title
+              </label>
+              <input
+                type="text"
+                id="topic"
+                name="topic"
+                value={formData.topic}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-2 rounded-lg bg-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
+              />
+            </div>
 
-            <input
-              type="text"
-              name="editorName"
-              value={formData.editorName}
-              onChange={handleChange}
-              placeholder="Name of the Editor"
-              required
-              className="w-full px-4 py-2 rounded-lg bg-gray-100 text-black border border-gray-300 focus:ring-2 focus:ring-green-400"
-            />
+            <div>
+              <label className="block text-sm font-medium mb-2" htmlFor="editorName">
+                Name of the Author
+              </label>
+              <input 
+                type="text"
+                id="editorName"
+                name="editorName"
+                value={formData.editorName}
+                readOnly
+                className="w-full px-4 py-2 rounded-lg bg-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
+              />
+            </div>
 
-            <input
-              type="text"
-              name="mentorName"
-              value={formData.mentorName}
-              onChange={handleChange}
-              placeholder="Name of the Mentor"
-              required
-              className="w-full px-4 py-2 rounded-lg bg-gray-100 text-black border border-gray-300 focus:ring-2 focus:ring-green-400"
-            />
+            <div>
+              <label className="block text-sm font-medium mb-2" htmlFor="mentorName">
+                Name of the Mentor
+              </label>
+              <select
+                id="mentorName"
+                name="mentorName"
+                value={formData.mentorName}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-2 rounded-lg bg-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
+              >
+                <option value="">Select a mentor</option>
+                {mentorList.map((mentor) => (
+                  <option key={mentor.uuid} value={mentor.username}>
+                    {mentor.username}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-            <input
-              type="text"
-              name="keywords"
-              value={formData.keywords}
-              onChange={handleChange}
-              placeholder="Keywords (separate with commas)"
-              required
-              className="w-full px-4 py-2 rounded-lg bg-gray-100 text-black border border-gray-300 focus:ring-2 focus:ring-green-400"
-            />
+            <div>
+              <label className="block text-sm font-medium mb-2" htmlFor="keywords">
+                Keywords
+              </label>
+              <input
+                type="text"
+                id="keywords"
+                name="keywords"
+                value={formData.keywords}
+                onChange={handleChange}
+                required
+                placeholder="Separate keywords with commas"
+                className="w-full px-4 py-2 rounded-lg bg-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
+              />
+            </div>
 
-            <input
-              type="url"
-              name="githubLink"
-              value={formData.githubLink}
-              onChange={handleChange}
-              placeholder="GitHub Link"
-              required
-              className="w-full px-4 py-2 rounded-lg bg-gray-100 text-black border border-gray-300 focus:ring-2 focus:ring-green-400"
-            />
+            <div>
+              <label className="block text-sm font-medium mb-2" htmlFor="objective">
+                Objective
+              </label>
+              <textarea
+                id="objective"
+                name="objective"
+                value={formData.objective}
+                onChange={handleChange}
+                rows="2"
+                required
+                className="w-full px-4 py-2 rounded-lg bg-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
+              />
+            </div>
 
-            <textarea
-              name="objective"
-              value={formData.objective}
-              onChange={handleChange}
-              placeholder="Objective"
-              rows="3"
-              required
-              className="w-full px-4 py-2 rounded-lg bg-gray-100 text-black border border-gray-300 focus:ring-2 focus:ring-green-400"
-            ></textarea>
+            <div>
+              <label className="block text-sm font-medium mb-2" htmlFor="description">
+                Briefing about the Project
+              </label>
+              <textarea
+                id="description"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                rows="5"
+                required
+                className="w-full px-4 py-2 rounded-lg bg-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
+              />
+            </div>
 
-            <textarea
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              placeholder="Project Description"
-              rows="6"
-              required
-              className="w-full px-4 py-2 rounded-lg bg-gray-100 text-black border border-gray-300 focus:ring-2 focus:ring-green-400"
-            ></textarea>
+            <div>
+              <label className="block text-sm font-medium mb-2" htmlFor="githubLink">
+                GitHub Code Link
+              </label>
+              <input
+                type="url"
+                id="githubLink"
+                name="githubLink"
+                value={formData.githubLink}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-2 rounded-lg bg-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
+              />
+            </div>
 
             <button
               type="submit"
