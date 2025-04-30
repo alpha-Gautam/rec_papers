@@ -22,7 +22,7 @@ export const userLoginapi = async (data) => {
   return response;
 };
 
-export const userRagister = async (data) => {
+export const userRegister = async (data) => {
   //   return server.get(url + "/login/", data);
   const response = await axios.post(baseURL + "api/ragister/", data);
   //   const response = await server.post("api/login/", data);
