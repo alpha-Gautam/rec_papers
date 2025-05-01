@@ -3,10 +3,11 @@ import { createProjectapi, mentorDataApi } from "../../api/user";
 
 const CreateProject = () => {
   const [formData, setFormData] = useState({
-    editorName: localStorage.getItem("username") || "",
+    editorName: localStorage.getItem("user_id") || "",
     mentorName: "",
     topic: "",
     keywords: "",
+    platforms: "",
     objective: "", 
     description: "",
     githubLink: ""
@@ -44,6 +45,7 @@ const CreateProject = () => {
       user: formData.editorName,
       mentor: formData.mentorName,
       keyword: formData.keywords,
+      platform: formData.platforms,
       objective: formData.objective,
       description: formData.description,
       github_link: formData.githubLink,
@@ -93,7 +95,7 @@ const CreateProject = () => {
                 type="text"
                 id="editorName"
                 name="editorName"
-                value={formData.editorName}
+                value={localStorage.getItem("username")}
                 readOnly
                 className="w-full px-4 py-2 rounded-lg bg-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
               />
@@ -113,7 +115,7 @@ const CreateProject = () => {
               >
                 <option value="">Select a mentor</option>
                 {mentorList.map((mentor) => (
-                  <option key={mentor.uuid} value={mentor.username}>
+                  <option key={mentor.uuid} value={mentor.uuid}>
                     {mentor.username}
                   </option>
                 ))}
@@ -121,8 +123,24 @@ const CreateProject = () => {
             </div>
 
             <div>
+              <label className="block text-sm font-medium mb-2" htmlFor="platforms">
+              Platforms / Resource used
+              </label>
+              <input
+                type="text"
+                id="platform"
+                name="platforms"
+                value={formData.platforms}
+                onChange={handleChange}
+                required
+                placeholder="Separate Platforms with commas"
+                className="w-full px-4 py-2 rounded-lg bg-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
+              />
+            </div>
+
+            <div>
               <label className="block text-sm font-medium mb-2" htmlFor="keywords">
-                Keywords
+                Keywords / Technical Stack
               </label>
               <input
                 type="text"

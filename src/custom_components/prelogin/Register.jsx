@@ -164,10 +164,11 @@ const Signup = () => {
               required
             >
               <option value="">Select college</option>
-              <option value="reck">Rajkiya Engineering College Kannauj</option>
-              <option value="recb">Rajkiya Engineering College Banda</option>
-              <option value="recsnb">Rajkiya Engineering College Sonbhadra</option>
-              <option value="recd">Rajkiya Engineering College D</option>
+              <option value="ajkiya Engineering College Kannauj">Rajkiya Engineering College Kannauj</option>
+              <option value="Rajkiya Engineering College Banda">Rajkiya Engineering College Banda</option>
+              <option value="Rajkiya Engineering College Sonbhadra">Rajkiya Engineering College Sonbhadra</option>
+              <option value="Rajkiya Engineering College Bijnor">Rajkiya Engineering College Bijnor</option>
+              <option value="Rajkiya Engineering College Basti">Rajkiya Engineering College Basti</option>
             </select>
             <select
               name="department"
@@ -177,10 +178,10 @@ const Signup = () => {
               required
             >
               <option value="">Select Department</option>
-              <option value="CSE">Computer Science &amp; Engineering</option>
-              <option value="EL">Electronics Engineering</option>
-              <option value="EE">Electrical Engineering</option>
-              <option value="CE">Civil Engineering</option>
+              <option value="Computer Science & Engineering">Computer Science & Engineering</option>
+              <option value="Electronics Engineering">Electronics Engineering</option>
+              <option value="Electrical Engineering">Electrical Engineering</option>
+              <option value="Civil Engineering">Civil Engineering</option>
             </select>
             <input
               name="password"
