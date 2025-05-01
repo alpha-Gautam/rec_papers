@@ -59,7 +59,7 @@ const StudentPanel = () => {
           <p>User Name : {userData? userData["username"] : "User Name"}</p>
           <p>College : {userData? userData["college"] : "College Name"}</p>
           <p>Department : {userData? userData["department"] : "Department Name"}</p>
-          <p>Role: {userData ? (userData["is_faculty"] ? "Faculty" : "Student") : "Role"}</p>
+          <p>Role: {userData ? (userData["role"]==="true" ? "Faculty" : "Student") : "Role"}</p>
           
         </div>
       </div>

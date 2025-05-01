@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { projectDataApi, projectLogApi } from "../../api/user";
 import { useNavigate } from "react-router-dom";
-import PopUpPlus from "./PopUpPlus"; // Import the popup component
+import PopUpPlus from "./ProjectLog"; // Import the popup component
 
 const ProjectViewPanel = () => {
     const [data, setData] = useState({});
@@ -11,6 +11,7 @@ const ProjectViewPanel = () => {
     const navigate = useNavigate();
 
     const projectId = window.location.href.split("/")[5];
+    console.log("project uuid is : ",projectId)
 
     useEffect(() => {
         async function fetchData() {
@@ -32,6 +33,18 @@ const ProjectViewPanel = () => {
     useEffect(() => {
         fetchLog();
     }, [projectId]);
+
+
+    const handleprojectLogCreate = ()=>{
+        console.log("role check ",localStorage.getItem("role"))
+        console.log("project mentor check ",data["mentor"])
+        if(localStorage.getItem("role")==="true"){
+            setAddProjectLog(true)
+        }
+        else{
+        alert("Student are not allow to create Log !");
+        }
+    }
 
     return (
         <div className="mentor_panel_container h-full w-full bg-gray-100 p-5">
@@ -82,7 +95,8 @@ const ProjectViewPanel = () => {
                     <div className='flex justify-between items-center mb-3'>
                         <strong>Project Log:</strong>
                         <button 
-                            onClick={() => setAddProjectLog(true)} 
+                            onClick={handleprojectLogCreate} 
+                            // onClick={() => setAddProjectLog(true)} 
                             className='text-red-500 hover:text-red-800 text-3xl'
                             title="Add Remark"
                         >
@@ -96,6 +110,7 @@ const ProjectViewPanel = () => {
                                 <tr className="bg-gray-200">
                                 <th className="border px-4 py-2">S.No.</th>
                                     <th className="border px-4 py-2">Remark by Supervisor</th>
+                                    <th className="border px-4 py-2">Current Status</th>
                                     <th className="border px-4 py-2">Date of Meeting</th>
                                 </tr>
                             </thead>
@@ -104,6 +119,7 @@ const ProjectViewPanel = () => {
                                         <tr key={log.id} className="hover:bg-gray-50">
                                             <td className="py-2 px-4 border-b">{index + 1}</td>
                                             <td className="py-2 px-4 border-b">{log["remark_by_mentor"]}</td>
+                                            <td className="py-2 px-4 border-b">{log["current_status"]}</td>
                                             <td className="py-2 px-4 border-b">
                                                 {new Date(log.created_at).toLocaleDateString()}
                                             </td>
@@ -121,6 +137,8 @@ const ProjectViewPanel = () => {
                 <PopUpPlus 
                     onClose={() => setAddProjectLog(false)} 
                     onSuccess={fetchLog}
+                    projectId={projectId}
+                    mentor={data["mentor"]}
                 />
             )}
         </div>

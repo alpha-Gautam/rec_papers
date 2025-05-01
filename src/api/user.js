@@ -47,6 +47,10 @@ export const mentorDataApi = async () => {
 export const projectLogApi = async (id) => {
   console.log("url is :-", baseURL);
   const response = await axios.get(baseURL + `api/log/${id}`);
-
+  return response;
+};
+export const projectLogCreateApi = async (data) => {
+  console.log("url is :-", baseURL);
+  const response = await axios.post(baseURL + `api/log/`, data);
   return response;
 };

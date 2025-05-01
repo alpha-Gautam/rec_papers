@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { projectLogApi } from "../../api/user";
+import { projectLogCreateApi } from "../../api/user";
 
-const PopUpPlus = ({ onClose, onSuccess }) => {
+const PopUpPlus = ({ onClose, onSuccess, projectId, project_mentor }) => {
     const [remark, setRemark] = useState("");
+    const [status, setStatus] = useState("Working");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
@@ -15,11 +16,14 @@ const PopUpPlus = ({ onClose, onSuccess }) => {
             const url = window.location.href.split("/")[5];
             const payload = {
                 remark_by_mentor: remark,
+                project:projectId,
+                current_status:status,
+                mentor:project_mentor,
                 created_at: new Date().toISOString(),
-                project_id: url,
+                
             };
 
-            const response = await projectLogApi(url, payload, "POST");
+            const response = await projectLogCreateApi(payload);
 
             if (response.status === 201 || response.status === 202) {
                 onSuccess();
@@ -45,7 +49,14 @@ const PopUpPlus = ({ onClose, onSuccess }) => {
                         onChange={(e) => setRemark(e.target.value)}
                         placeholder="Enter remarks..."
                         required
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full p-3 border bg-gray-200 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    <textarea
+                        value={status}
+                        onChange={(e) => setStatus(e.target.value)}
+                        placeholder="Enter current status..."
+                        required
+                        className="w-full p-3 border bg-gray-200 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     {error && <p className="text-red-500 text-sm">{error}</p>}
                     <div className="flex justify-end gap-2">
