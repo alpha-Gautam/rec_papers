@@ -16,7 +16,7 @@ if (window.location.href.includes("localhost")) {
 export const createProjectapi = async (data) => {
   //   return server.get(url + "/login/", data);
   console.log("url is :-", baseURL);
-  const response = await axios.post(baseURL + "api/project/", data);
+  const response = await axios.post(baseURL + "api/project_create/", data);
   //   const response = await server.post("api/login/", data);
 
   return response;
