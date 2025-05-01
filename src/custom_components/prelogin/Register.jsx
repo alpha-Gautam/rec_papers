@@ -54,15 +54,15 @@ const Signup = () => {
     }
     setLoading(true);
     submit({
-      user_uuid: form.rollNo,
+      roll_no: form.rollNo,
       username: form.username,
       email: form.email,
       password: form.password,
       mobile: form.mobile,
       college: form.college,
       department: form.department,
-      isstudent: form.role === "Student",
-      ismentor: form.role === "Mentor",
+      is_student: form.role === "Student",
+      is_faculty: form.role === "Mentor",
     });
   };
 
@@ -76,15 +76,15 @@ const Signup = () => {
       const { user } = await signInWithPopup(auth, provider);
       setLoading(true);
       await submit({
-        user_uuid: user.uid,
+        roll_no: user.uid,
         username: user.displayName,
         email: user.email,
         password: "",
         mobile: "",
         college: form.college,
         department: form.department,
-        isstudent: form.role === "Student",
-        ismentor: form.role === "Mentor",
+        is_student: form.role === "Student",
+        is_faculty: form.role === "Mentor",
       });
     } catch (err) {
       setError("Google Sign-Up failed. Try again.");
@@ -164,7 +164,7 @@ const Signup = () => {
               required
             >
               <option value="">Select college</option>
-              <option value="ajkiya Engineering College Kannauj">Rajkiya Engineering College Kannauj</option>
+              <option value="Rajkiya Engineering College Kannauj">Rajkiya Engineering College Kannauj</option>
               <option value="Rajkiya Engineering College Banda">Rajkiya Engineering College Banda</option>
               <option value="Rajkiya Engineering College Sonbhadra">Rajkiya Engineering College Sonbhadra</option>
               <option value="Rajkiya Engineering College Bijnor">Rajkiya Engineering College Bijnor</option>
@@ -200,7 +200,7 @@ const Signup = () => {
               type="password"
               placeholder="Re-type Password"
               minLength="5"
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
+              className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-400 ${form.password2!==form.password? "text-red-600":""}`}
               required
             />
           </div>
