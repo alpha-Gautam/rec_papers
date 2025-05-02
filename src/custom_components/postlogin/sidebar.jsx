@@ -7,6 +7,8 @@ import logo from "../../assets/images/logo.png"
 const Sidebar = () => {
   const navigate = useNavigate();
   const [expand, setExpand] = useState(false);
+  const isProduction = window.location.href.includes("localhost")
+
 
   const handleLogout = () => {
     localStorage.clear();
@@ -60,7 +62,7 @@ const Sidebar = () => {
           <div className="p-4 flex flex-col justify-center items-center space-y-4">
 
 
-            <div className="flex justify-center items-center w-full py-2 px-4  text-blue-700 font-semibold rounded-lg text-center transition-all duration-300 hover:bg-gray-200"
+           {isProduction && <div className="flex justify-center items-center w-full py-2 px-4  text-blue-700 font-semibold rounded-lg text-center transition-all duration-300 hover:bg-gray-200"
             >
 
            
@@ -73,7 +75,7 @@ const Sidebar = () => {
               <ChIconLandingPage/>
               {/* {expand? <p>Landing Page</p>:""} */}
             </button>
-            </div>
+            </div>}
 
                 <div className="flex justify-center items-center w-full py-2 px-4  text-blue-700 font-semibold rounded-lg text-center transition-all duration-300 hover:bg-gray-200">
             <button
