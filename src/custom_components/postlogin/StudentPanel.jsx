@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 import "./StudentPanel.css";
 import {ProjectViewApi} from "../../api/user"
-import {ProjectViewPanel} from"./ProjectView"
+// import {ProjectViewPanel} from"./ProjectView"
 
 const StudentPanel = () => {
   const [projectData, setProjectData] = useState([]);

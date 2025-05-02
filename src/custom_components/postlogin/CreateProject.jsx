@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { createProjectapi, mentorDataApi } from "../../api/user";
+import { Message } from "@mui/icons-material";
 
 const CreateProject = () => {
   const [formData, setFormData] = useState({
@@ -14,8 +15,17 @@ const CreateProject = () => {
   });
 
   const [mentorList, setMentorList] = useState([]);
+  const [createNotAllowed,setCreatNotAllowed] = useState(false);
+
+   // If user is faculty then they are not able to create project, currently ;
+
+  
+  
 
   useEffect(() => {
+
+
+    
     const fetchMentorList = async () => {
       try {
         const response = await mentorDataApi();
@@ -25,7 +35,19 @@ const CreateProject = () => {
       }
     };
     
-    fetchMentorList();
+
+    const faculty = localStorage.getItem("role") === "true";
+    setTimeout(()=>{
+        if(faculty){
+          alert("Faculty are not able to create Project....!");
+          setCreatNotAllowed(true);
+        }
+        else{
+          fetchMentorList();
+        }
+      },[1000])
+
+
   }, []);
 
   const handleChange = (e) => {
@@ -201,7 +223,8 @@ const CreateProject = () => {
 
             <button
               type="submit"
-              className="w-full py-3 bg-green-500 text-white font-bold rounded-lg hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-green-300"
+              disabled={createNotAllowed}
+              className={`w-full py-3 ${createNotAllowed ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-green-500 text-white font-bold rounded-lg hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-green-300"}`}
             >
               Submit Project
             </button>
