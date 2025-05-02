@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "./Logo.png";
+import logo1 from "./logo1.png";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const Navbar = () => {
       <div className="container mx-auto px-2 py-3 flex justify-between items-center">
         {/* Logo Section */}
         <div className="flex items-center">
-          <img src={logo} alt="Website Logo" className="h-10 mr-2" />
+          <img src={logo1} alt="Website Logo" className="h-10 mr-2" />
           <span className="text-2xl font-bold">
             <Link
               to="/"
