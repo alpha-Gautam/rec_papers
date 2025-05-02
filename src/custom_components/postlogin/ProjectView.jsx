@@ -31,7 +31,13 @@ const ProjectViewPanel = () => {
     };
 
     useEffect(() => {
+        const user = localStorage.getItem("user")
+        if(user){
+            
+        }
+
         fetchLog();
+
     }, [projectId]);
 
 

@@ -13,7 +13,7 @@ const PopUpPlus = ({ onClose, onSuccess, projectId, project_mentor }) => {
         setLoading(true);
 
         try {
-            const url = window.location.href.split("/")[5];
+            // const url = window.location.href.split("/")[5];
             const payload = {
                 remark_by_mentor: remark,
                 project:projectId,

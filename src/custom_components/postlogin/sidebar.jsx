@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import {HomeIcon,ChIconCreate,ChIconLogOut,ChIconLandingPage,ChIconLogo} from "../../assets/images/icon"
+import {HomeIcon,ChIconCreate,ChIconLogOut,ChIconLandingPage} from "../../assets/images/icon"
 import logo from "../../assets/images/logo.png"
 
 const Sidebar = () => {

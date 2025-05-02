@@ -1,7 +1,7 @@
 // import { server } from "../serve";
-import { computeHeadingLevel } from "@testing-library/react";
+// import { computeHeadingLevel } from "@testing-library/react";
 import axios from "axios";
-import clsx from "clsx";
+// import clsx from "clsx";
 
 let baseURL = "";
 if (window.location.href.includes("localhost")) {
