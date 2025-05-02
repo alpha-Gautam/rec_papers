@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "./Logo.png";
+// import logo from "./Logo.png";
 import logo1 from "./logo1.png";
 
 const Navbar = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [userRole, setUserRole] = useState(null); // 'mentor', 'student', or null (logged-out)
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -12,7 +12,12 @@ const Navbar = () => {
   const handleLogout = () => setUserRole(null);
 
   // Monitor scroll position
+  const isProduction = window.location.href.includes("localhost")
+  console.log("is url local:-",isProduction)
+  
   useEffect(() => {
+   
+
     const handleScroll = () => {
       if (window.scrollY > 50) {
         setIsScrolled(true);
@@ -47,12 +52,7 @@ const Navbar = () => {
 
         {/* Navigation Links */}
         <div className="hidden md:flex items-center space-x-5">
-          <Link
-            to="/"
-            className="hover:text-blue-600 transition text-white no-underline"
-          >
-            Home
-          </Link>
+          
           {userRole === null ? (
             <>
               <Link
@@ -67,12 +67,12 @@ const Navbar = () => {
               >
                 Register
               </Link>
-              <Link
+             { isProduction && <Link
                 to="/dashboard"
                 className="hover:text-blue-500 transition text-white no-underline"
               >
                 Dashboard
-              </Link>
+              </Link>}
             </>
           ) : (
             <>
@@ -124,12 +124,12 @@ const Navbar = () => {
         }`}
       >
         <div className="flex flex-col space-y-2 p-3">
-          <Link
+          {/* <Link
             to="/"
             className="hover:text-blue-500 transition text-white no-underline"
           >
             Home
-          </Link>
+          </Link> */}
           {userRole === null ? (
             <>
               <Link
@@ -144,12 +144,12 @@ const Navbar = () => {
               >
                 Register
               </Link>
-              <Link
+              {isProduction&&<Link
                 to="/dashboard"
                 className="hover:text-blue-500 transition text-white no-underline"
               >
                 Dashboard
-              </Link>
+              </Link>}
             </>
           ) : (
             <>

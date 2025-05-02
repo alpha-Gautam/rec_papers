@@ -65,12 +65,20 @@ const StudentPanel = () => {
       </div>
 
       {/* Main Content */}
-      <main className="main-content p-5 bg-gray-200 ">
-        <h2 className="text-3xl font-bold mb-5">Research Papers</h2>
+      <main className="main-content py-2 px-3 bg-gray-200 ">
+        <h2 className="text-3xl font-bold ">Research Papers</h2>
+        <div className="flex flex-row justify-between items-center h-[50px] rounded-sm bg-gray500 my-3 px-3 ">
+
+          <div className="flex justify-center items-center bg-gray-100 rounded-3xl h-full w-[20%] border-2 border-green-400"> Filter button</div>
+          <div className="flex justify-center items-center bg-gray-100 rounded-3xl h-full w-[20%] border-2 border-green-400"> Filter button</div>
+          <div className="flex justify-center items-center bg-gray-100 rounded-3xl h-full w-[20%] border-2 border-green-400"> Filter button</div>
+          <div className="flex justify-center items-center bg-gray-100 rounded-3xl h-full w-[20%] border-2 border-green-400"> Filter button</div>
+
+        </div>
         <div className="card-container flex flex-col gap-5 border-2 border-blue-500 p-4 bg-white rounded-md shadow-md">
           {projectData.map((paper) => (
             <div
-              className="card bg-white border rounded-lg shadow-md p-4"
+              className="card bg-white border rounded-lg shadow-md p-4 flex flex-row justify-between"
               key={paper.uuid}
             >
               <div className="card-content flex flex-col gap-2">
@@ -81,7 +89,7 @@ const StudentPanel = () => {
                   <strong>Author :</strong> {paper.user}
                 </h6>
                 <h6 className="text-sm">
-                  <strong>Mentor :</strong> {paper.mentor}
+                  <strong>Supervisor :</strong> {paper.mentor}
                 </h6>
                 <button
                   className="self-start px-4 py-2 mt-2 bg-blue-600 text-white rounded hover:bg-blue-800"
@@ -89,6 +97,13 @@ const StudentPanel = () => {
                   >
                   View More
                 </button>
+              </div>
+              <div className="flex justify-end p-2 w-[20%] text-[20px]">
+                <div>
+                  
+                Created At : {new Date(paper.created_at).toLocaleDateString()}
+                </div>
+                
               </div>
             </div>
           ))}
