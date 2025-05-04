@@ -73,6 +73,7 @@ const ProjectViewPanel = () => {
                 <div className='flex flex-col gap-4 mt-5 text-lg'>
                     <div><strong>Author:</strong> <span>{data["user"] || "No data found"}</span></div>
                     <div><strong>Mentor:</strong> <span>{data["mentor"] || "No data found"}</span></div>
+                    <div><strong>Platform Used:</strong> <span>{data["platform"] || "No data found"}</span></div>
                     <div><strong>Technical Stack:</strong> <span>{data["keyword"] || "No data found"}</span></div>
                     
                     <div>
