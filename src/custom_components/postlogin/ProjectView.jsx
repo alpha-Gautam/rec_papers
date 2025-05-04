@@ -7,6 +7,7 @@ const ProjectViewPanel = () => {
     const [data, setData] = useState({});
     const [projectLog, setProjectLog] = useState([]);
     const [addProjectLog, setAddProjectLog] = useState(false);
+    const [pro_Log, setPro_Log] = useState(false)
 
     const navigate = useNavigate();
 
@@ -21,6 +22,9 @@ const ProjectViewPanel = () => {
             }
         }
         fetchData();
+
+
+
     }, [projectId]);
 
     const fetchLog = async () => {
@@ -31,14 +35,14 @@ const ProjectViewPanel = () => {
     };
 
     useEffect(() => {
-        const user = localStorage.getItem("user")
-        if(user){
-            
+        const user = localStorage.getItem("user_id");
+        if (data["p_user"]?.includes(user)) {
+            setPro_Log(true);
+            fetchLog();
         }
 
-        fetchLog();
 
-    }, [projectId]);
+    }, [data]);
 
 
     const handleprojectLogCreate = ()=>{
@@ -97,7 +101,7 @@ const ProjectViewPanel = () => {
                     </div>
                 </div>
 
-                <div className='mt-5 text-lg'>
+               {pro_Log&& <div className='mt-5 text-lg'>
                     <div className='flex justify-between items-center mb-3'>
                         <strong>Project Log:</strong>
                         <button 
@@ -136,7 +140,7 @@ const ProjectViewPanel = () => {
                     ) : (
                         <p>No data found</p>
                     )}
-                </div>
+                </div>}
             </div>
 
             {addProjectLog && (
