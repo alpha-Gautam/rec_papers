@@ -9,6 +9,12 @@ if (window.location.href.includes("localhost")) {
   baseURL = "https://recpapers-backend.onrender.com/";
 }
 
+export const ProjectViewApi = async (data) => {
+  console.log("url is :-", baseURL);
+  const response = await axios.get(baseURL + "api/project/", data);
+  return response;
+};
+
 export const createProjectapi = async (data) => {
   //   return server.get(url + "/login/", data);
   //   const response = await server.post("api/login/", data);
@@ -18,9 +24,9 @@ export const createProjectapi = async (data) => {
   return response;
 };
 
-export const ProjectViewApi = async (data) => {
+export const projectPatchEditApi = async (data) => {
   console.log("url is :-", baseURL);
-  const response = await axios.get(baseURL + "api/project/", data);
+  const response = await axios.patch(baseURL + "api/project_create/", data);
   return response;
 };
 
@@ -49,6 +55,7 @@ export const projectLogApi = async (id) => {
   const response = await axios.get(baseURL + `api/log/${id}`);
   return response;
 };
+
 export const projectLogCreateApi = async (data) => {
   console.log("url is :-", baseURL);
   const response = await axios.post(baseURL + `api/log/`, data);

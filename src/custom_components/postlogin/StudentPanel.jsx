@@ -78,7 +78,7 @@ const StudentPanel = () => {
 
             <div className="flex justify-center items-center bg-gray-100 rounded-3xl h-full w-[60%] border-2 border-green-400">
               <input type="text"
-              placeholder="search by: title/user/supervisor/keyword" 
+              placeholder="Search by title, authors, etc.." 
               className="w-full h-full rounded-3xl px-2" 
               onChange={(e) => setSearchValue(e.target.value)} />
             </div>
