@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { projectDataApi, projectLogApi, ProjectFilesApi} from "../../api/user";
+import { projectDataApi, projectLogApi, ProjectFilesApi, UploadFileApi, deleteFileAPI} from "../../api/user";
 import { useNavigate } from "react-router-dom";
 import PopUpPlus from "./ProjectLog"; // Import the popup component
 import EditPopup from "./ProjectEditPopup"
 import pdf_image from "../../assets/images/pdf_image.jpg"
+import {ChIconAddCircle} from "../../assets/images/icon"
 
 const ProjectViewPanel = () => {
     const [pro_Edit,setPro_Edit] = useState(false)
@@ -79,6 +80,51 @@ const ProjectViewPanel = () => {
             setProjectItemValue(value);
         }
     };
+
+
+    const handleFileUpload = async(event) => {
+        const file = event.target.files[0]; // Get the first selected file
+        if (file) {
+            // You can perform actions with the file here, such as uploading it
+            console.log("Selected file:", file);
+
+            // Example: Create a FormData object to send the file to an API
+            const formData = new FormData();
+            formData.append('file', file);
+            const response = await UploadFileApi(projectId,formData)
+                if(response.status===200||response.status===201){
+                    alert("File is uploaded successfully !")
+                    const fileResponse = await ProjectFilesApi(projectId)
+                        if(fileResponse.status===200){
+                            setProjectFiles(fileResponse.data)
+                        }
+                }
+                else{
+                    alert("File Uploading Failed !")
+                }   
+
+            // You can then use your API to upload the file
+            // Example: await uploadFileApi(formData);
+        } else {
+            console.log("No file selected");
+        }
+    };
+
+    const handleFileDelete = async(file_id)=>{
+
+        const response = await deleteFileAPI(file_id)
+        if(response.status===200 || response.status===2001){
+            alert("File Deletion Successful !")
+            const fileResponse = await ProjectFilesApi(projectId)
+                if(fileResponse.status===200){
+                    setProjectFiles(fileResponse.data)
+                }
+        }
+        else{
+            alert("File Deletion Failed !")
+        }
+
+    }
 
     return (
         <div className="mentor_panel_container h-full w-full bg-gray-100 p-5">
@@ -162,35 +208,52 @@ const ProjectViewPanel = () => {
                 <div className='flex  my-3'>
                         <strong className="text-nowrap">Projects Files :</strong>
                         
-                        {projectFiles.length>0? <div>
+                        <div className='flex'>
+
                             {projectFiles.map((filesdata,index)=>(
-                                <div>
-                                <div>
-                                    {index+1} : 
-                                    {filesdata["file"].includes('.pdf') ? (
-                                        <div className='flex h-[100px] w-[100px]'>
-                                        <a 
-                                            href={filesdata["file"]} 
-                                            target="_blank" 
-                                            rel="noopener noreferrer" 
-                                            className="h-[100px] w-[100px]"
-                                        >
-                                            <img src={pdf_image} alt="PDF Icon" className="h-full w-full object-cover" />
-                                        </a>
-                                        </div>
-                                    ) : (
-                                        <div className='h-[100px] w-[100px]'>
-                                        <img src={filesdata["file"]} alt="Project File" />
-                                        </div>
-                                    )}
-                                </div>
-                                <div>Message : {filesdata["message"]}</div>
+                                <div className='m-3'>
+                                    <div className='flex overflow-hidden'>
+
+                                        {filesdata["file"].includes('.pdf') ? (
+                                            <div className='flex h-[100px] w-[100px]'>
+                                            <a 
+                                                href={filesdata["file"]} 
+                                                target="_blank" 
+                                                rel="noopener noreferrer" 
+                                                className="h-[100px] w-[100px]"
+                                            >
+                                                <img src={pdf_image} alt="PDF Icon" className="h-full w-full object-cover" />
+                                            </a>
+                                            </div>
+                                        ) : (
+                                            <div className='h-[100px] w-[100px] '>
+                                                <a href={filesdata["file"]}
+                                                target="_blank" 
+                                                rel="noopener noreferrer" 
+                                                className="h-[90px] w-[90px]"
+                                                >
+                                                <img src={filesdata["file"]} alt="Project File" />
+                                            </a>
+                                            </div>  
+                                        )}
+                                    </div>
+
+                                    <div className='flex flex-col mt-1'>
+                                        <span>({index+1}).</span>
+                                        <span>{filesdata["message"]}</span>
+                                        <span>Created: {new Date(filesdata.created_at).toLocaleDateString()}</span>
+                                    </div>
+                                        <button className='w-[50px] h-[30px] bg-blue-500 rounded-sm' onClick={()=>handleFileDelete(filesdata.uuid)}>Delete</button>
                                 </div>
                             ))}
-                        </div>:
-                            <div>
-                                No file available for this project
-                            </div>}
+                            <div className='flex  justify-center items-center bgred-300 w-[120px] h-[120px]'>
+                                <input type="file" id="fileInput" hidden onChange={handleFileUpload} />
+                                <label htmlFor="fileInput" className='w-[50px] h-[50px]'>
+                                    <ChIconAddCircle/>
+                                    <span className='text-nowrap ml-4'>ADD Files</span>
+                                </label>
+                            </div>
+                        </div>
                 </div>
 
                {pro_Log&& <div className='mt-5 text-lg'>

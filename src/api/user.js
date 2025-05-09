@@ -67,3 +67,15 @@ export const ProjectFilesApi = async (id) => {
   const response = await axios.get(baseURL + `api/file/${id}`);
   return response;
 };
+
+export const UploadFileApi = async (id, file) => {
+  console.log("url is :-", baseURL);
+  const response = await axios.post(baseURL + `api/file/${id}`, file);
+  return response;
+};
+
+export const deleteFileAPI = async (pk) => {
+  console.log("url is :-", baseURL);
+  const response = await axios.delete(baseURL + `api/file/${pk}`);
+  return response;
+};
