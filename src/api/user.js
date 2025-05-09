@@ -61,3 +61,9 @@ export const projectLogCreateApi = async (data) => {
   const response = await axios.post(baseURL + `api/log/`, data);
   return response;
 };
+
+export const ProjectFilesApi = async (id) => {
+  console.log("url is :-", baseURL);
+  const response = await axios.get(baseURL + `api/file/${id}`);
+  return response;
+};
