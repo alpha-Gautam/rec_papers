@@ -2,8 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { projectDataApi, projectLogApi } from "../../api/user";
 import { useNavigate } from "react-router-dom";
 import PopUpPlus from "./ProjectLog"; // Import the popup component
+import EditPopup from "./ProjectEditPopup"
+import {Button} from "../../components/UI/button"
 
 const ProjectViewPanel = () => {
+    const [pro_Edit,setPro_Edit] = useState(false)
+    const [projectItem,setprojectItem] = useState("")
+    const [ProjectItemValue,setProjectItemValue] = useState("")
+    const [user_auth,setUser_auth] = useState(false)
+
+
+
     const [data, setData] = useState({});
     const [projectLog, setProjectLog] = useState([]);
     const [addProjectLog, setAddProjectLog] = useState(false);
@@ -14,18 +23,19 @@ const ProjectViewPanel = () => {
     const projectId = window.location.href.split("/")[5];
     console.log("project uuid is : ",projectId)
 
-    useEffect(() => {
-        async function fetchData() {
-            const responsedata = await projectDataApi(projectId);
-            if (responsedata.status === 200) {
-                setData(responsedata.data);
-            }
+
+
+
+    async function fetchData() {
+        const responsedata = await projectDataApi(projectId);
+        if (responsedata.status === 200) {
+            setData(responsedata.data);
         }
+    }
+    useEffect(() => {
+       
         fetchData();
-
-
-
-    }, [projectId]);
+    }, []);
 
     const fetchLog = async () => {
         const responsedata = await projectLogApi(projectId);
@@ -38,9 +48,9 @@ const ProjectViewPanel = () => {
         const user = localStorage.getItem("user_id");
         if (data["p_user"]?.includes(user)) {
             setPro_Log(true);
+            setUser_auth(true)
             fetchLog();
         }
-
 
     }, [data]);
 
@@ -71,12 +81,35 @@ const ProjectViewPanel = () => {
                 </div>
 
                 <div className='flex flex-col gap-4 mt-5 text-lg'>
-                    <div><strong>Author:</strong> <span>{data["user"] || "No data found"}</span></div>
-                    <div><strong>Mentor:</strong> <span>{data["mentor"] || "No data found"}</span></div>
-                    <div><strong>Platform Used:</strong> <span>{data["platform"] || "No data found"}</span></div>
-                    <div><strong>Technical Stack:</strong> <span>{data["keyword"] || "No data found"}</span></div>
-                    
                     <div>
+                        <strong>Author:</strong> <span>{data["user"] || "No data found"}</span>
+                        
+                    </div>
+                    <div>
+                        <strong>Mentor:</strong> <span>{data["mentor"] || "No data found"}</span>
+                        </div>
+                    <div className='flex flex-col border-2 min-h-[100px] '>
+                        <strong>Platform Used:</strong> <span className='ml-10 my-1 bg-green-100 p-1'>{data["platform"] || "No data found"}</span>
+
+                        {user_auth&&<button className='w-[50px] h-[30px] bg-blue-500 rounded-lg' 
+                        onClick={()=>{setPro_Edit(true);setprojectItem("platform");setProjectItemValue(data["platform"]) }}> 
+                        Edit </button>}
+                    </div>
+                    <div className='flex flex-col border-2 min-h-[100px] '>
+                        <strong>Technical Stack:</strong> <span className='ml-10 my-1 bg-green-100 p-1'>{data["keyword"] || "No data found"}</span>
+
+                        {user_auth&&<button className='w-[50px] h-[30px] bg-blue-500 rounded-lg' 
+                        onClick={()=>{setPro_Edit(true);setprojectItem("keyword");setProjectItemValue(data["keyword"]) }}> 
+                        Edit </button>}
+                    </div>
+                    {/* <div>
+                        <strong>Technical Stack:</strong> <span>{data["keyword"] || "No data found"}</span>
+                        <button className='w-[50px] h-[40px] bg-blue-500 rounded-lg' 
+                        onClick={()=>{setPro_Edit(true);setprojectItem("keyword");setProjectItemValue(data["keyword"]) }}> 
+                        Edit </button>
+                    </div> */}
+                    
+                    <div className='flex flex-col border-2 min-h-[100px] '>
                         <strong>Code: </strong> 
                         <span>
                             {data["github_link"] ? (
@@ -90,15 +123,25 @@ const ProjectViewPanel = () => {
                                 </a>
                             ) : "No data found"}
                         </span>
+                        {user_auth&&<button className='w-[50px] h-[40px] bg-blue-500 rounded-lg' 
+                        
+                        onClick={()=>{setPro_Edit(true);setprojectItem("github_link");setProjectItemValue(data["github_link"]) }}> 
+                        Edit </button>}
                     </div>
 
-                    <div className="col-span-2">
+                    <div className='flex flex-col border-2 min-h-[100px] '>
                         <strong>Project Description:</strong> 
                         <span><br />{data["description"] || "No data found"}</span>
+                        {user_auth && <button className='w-[50px] h-[40px] bg-blue-500 rounded-lg' 
+                        onClick={()=>{setPro_Edit(true);setprojectItem("description");setProjectItemValue(data["description"]) }}> 
+                        Edit </button>}
                     </div>
-                    <div className="col-span-2">
+                    <div className='flex flex-col border-2 min-h-[100px] '>
                         <strong>Project Objective:</strong> 
                         <span><br />{data["objective"] || "No data found"}</span>
+                        {user_auth && <button className='w-[50px] h-[40px] bg-blue-500 rounded-lg' 
+                        onClick={()=>{setPro_Edit(true);setprojectItem("objective");setProjectItemValue(data["objective"]) }}> 
+                        Edit </button>}
                     </div>
                 </div>
 
@@ -143,6 +186,14 @@ const ProjectViewPanel = () => {
                     )}
                 </div>}
             </div>
+
+            {pro_Edit && <EditPopup
+            onClose={()=>setPro_Edit(false)}
+            onSuccess={fetchData()}
+            project_id={data["uuid"]}
+            item = {projectItem}
+            itemValue={ProjectItemValue}
+            />}
 
             {addProjectLog && (
                 <PopUpPlus 
