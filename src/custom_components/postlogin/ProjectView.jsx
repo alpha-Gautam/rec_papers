@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { projectDataApi, projectLogApi } from "../../api/user";
+import { projectDataApi, projectLogApi, ProjectFilesApi} from "../../api/user";
 import { useNavigate } from "react-router-dom";
 import PopUpPlus from "./ProjectLog"; // Import the popup component
 import EditPopup from "./ProjectEditPopup"
-import {Button} from "../../components/UI/button"
+import pdf_image from "../../assets/images/pdf_image.jpg"
 
 const ProjectViewPanel = () => {
     const [pro_Edit,setPro_Edit] = useState(false)
@@ -11,7 +11,7 @@ const ProjectViewPanel = () => {
     const [ProjectItemValue,setProjectItemValue] = useState("")
     const [user_auth,setUser_auth] = useState(false)
 
-
+    const [projectFiles,setProjectFiles] = useState([])
 
     const [data, setData] = useState({});
     const [projectLog, setProjectLog] = useState([]);
@@ -30,12 +30,18 @@ const ProjectViewPanel = () => {
         const responsedata = await projectDataApi(projectId);
         if (responsedata.status === 200) {
             setData(responsedata.data);
+
+            const fileResponse = await ProjectFilesApi(projectId)
+            if(fileResponse.status===200){
+                setProjectFiles(fileResponse.data)
+            }
+
         }
     }
     useEffect(() => {
        
         fetchData();
-    }, []);
+    }, [pro_Edit]);
 
     const fetchLog = async () => {
         const responsedata = await projectLogApi(projectId);
@@ -66,6 +72,14 @@ const ProjectViewPanel = () => {
         }
     }
 
+    const handleEditClick = (item, value) => {
+        if (!pro_Edit) { // Only fetch if not already in edit mode
+            setPro_Edit(true);
+            setprojectItem(item);
+            setProjectItemValue(value);
+        }
+    };
+
     return (
         <div className="mentor_panel_container h-full w-full bg-gray-100 p-5">
             <button 
@@ -92,14 +106,14 @@ const ProjectViewPanel = () => {
                         <strong>Platform Used:</strong> <span className='ml-10 my-1 bg-green-100 p-1'>{data["platform"] || "No data found"}</span>
 
                         {user_auth&&<button className='w-[50px] h-[30px] bg-blue-500 rounded-lg' 
-                        onClick={()=>{setPro_Edit(true);setprojectItem("platform");setProjectItemValue(data["platform"]) }}> 
+                        onClick={() => handleEditClick("platform", data["platform"])}> 
                         Edit </button>}
                     </div>
                     <div className='flex flex-col border-2 min-h-[100px] '>
                         <strong>Technical Stack:</strong> <span className='ml-10 my-1 bg-green-100 p-1'>{data["keyword"] || "No data found"}</span>
 
                         {user_auth&&<button className='w-[50px] h-[30px] bg-blue-500 rounded-lg' 
-                        onClick={()=>{setPro_Edit(true);setprojectItem("keyword");setProjectItemValue(data["keyword"]) }}> 
+                        onClick={() => handleEditClick("keyword", data["keyword"])}> 
                         Edit </button>}
                     </div>
                     {/* <div>
@@ -125,7 +139,7 @@ const ProjectViewPanel = () => {
                         </span>
                         {user_auth&&<button className='w-[50px] h-[40px] bg-blue-500 rounded-lg' 
                         
-                        onClick={()=>{setPro_Edit(true);setprojectItem("github_link");setProjectItemValue(data["github_link"]) }}> 
+                        onClick={() => handleEditClick("github_link", data["github_link"])}> 
                         Edit </button>}
                     </div>
 
@@ -133,16 +147,50 @@ const ProjectViewPanel = () => {
                         <strong>Project Description:</strong> 
                         <span><br />{data["description"] || "No data found"}</span>
                         {user_auth && <button className='w-[50px] h-[40px] bg-blue-500 rounded-lg' 
-                        onClick={()=>{setPro_Edit(true);setprojectItem("description");setProjectItemValue(data["description"]) }}> 
+                        onClick={() => handleEditClick("description", data["description"])}> 
                         Edit </button>}
                     </div>
                     <div className='flex flex-col border-2 min-h-[100px] '>
                         <strong>Project Objective:</strong> 
                         <span><br />{data["objective"] || "No data found"}</span>
                         {user_auth && <button className='w-[50px] h-[40px] bg-blue-500 rounded-lg' 
-                        onClick={()=>{setPro_Edit(true);setprojectItem("objective");setProjectItemValue(data["objective"]) }}> 
+                        onClick={() => handleEditClick("objective", data["objective"])}> 
                         Edit </button>}
                     </div>
+                </div>
+                
+                <div className='flex  my-3'>
+                        <strong className="text-nowrap">Projects Files :</strong>
+                        
+                        {projectFiles.length>0? <div>
+                            {projectFiles.map((filesdata,index)=>(
+                                <div>
+                                <div>
+                                    {index+1} : 
+                                    {filesdata["file"].includes('.pdf') ? (
+                                        <div className='flex h-[100px] w-[100px]'>
+                                        <a 
+                                            href={filesdata["file"]} 
+                                            target="_blank" 
+                                            rel="noopener noreferrer" 
+                                            className="h-[100px] w-[100px]"
+                                        >
+                                            <img src={pdf_image} alt="PDF Icon" className="h-full w-full object-cover" />
+                                        </a>
+                                        </div>
+                                    ) : (
+                                        <div className='h-[100px] w-[100px]'>
+                                        <img src={filesdata["file"]} alt="Project File" />
+                                        </div>
+                                    )}
+                                </div>
+                                <div>Message : {filesdata["message"]}</div>
+                                </div>
+                            ))}
+                        </div>:
+                            <div>
+                                No file available for this project
+                            </div>}
                 </div>
 
                {pro_Log&& <div className='mt-5 text-lg'>
@@ -157,6 +205,7 @@ const ProjectViewPanel = () => {
                             +
                         </button>
                     </div>
+                    
 
                     {projectLog.length > 0 ? (
                         <table className="w-full border-collapse text-left">
@@ -189,7 +238,6 @@ const ProjectViewPanel = () => {
 
             {pro_Edit && <EditPopup
             onClose={()=>setPro_Edit(false)}
-            onSuccess={fetchData()}
             project_id={data["uuid"]}
             item = {projectItem}
             itemValue={ProjectItemValue}

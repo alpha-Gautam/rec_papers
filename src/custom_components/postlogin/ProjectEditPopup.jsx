@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { projectPatchEditApi } from "../../api/user";
 
-const EditPopup = ({ onClose, onSuccess, project_id, item, itemValue }) => {
+const EditPopup = ({ onClose, project_id, item, itemValue }) => {
     // const [key, setkey] = useState(item);
     const [keyValue, setKeyValue] = useState(itemValue);
     const [loading, setLoading] = useState(false);
@@ -22,7 +22,9 @@ const EditPopup = ({ onClose, onSuccess, project_id, item, itemValue }) => {
             const response = await projectPatchEditApi(payload);
 
             if (response.status === 200 || response.status === 201) {
-                onSuccess();
+                alert("Data is updated");
+               
+               
                 onClose();
             } else {
                 setError("Failed to submit remark.");
