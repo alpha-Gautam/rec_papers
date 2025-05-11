@@ -11,6 +11,7 @@ const ProjectViewPanel = () => {
     const [projectItem,setprojectItem] = useState("")
     const [ProjectItemValue,setProjectItemValue] = useState("")
     const [user_auth,setUser_auth] = useState(false)
+    const [editMode,setEditMde] = useState(false)
 
     const [projectFiles,setProjectFiles] = useState([])
 
@@ -128,12 +129,19 @@ const ProjectViewPanel = () => {
 
     return (
         <div className="mentor_panel_container h-full w-full bg-gray-100 p-5">
+            <div className='flex justify-between'>
             <button 
                 onClick={() => navigate(-1)} 
                 className="flex items-center gap-0 bg-blue-600 text-white px-2 py-1 rounded-lg hover:bg-blue-800 transition-all shadow-md mb-4"
             >
                 ←
             </button>
+            {user_auth&&<button 
+            onClick={()=>setEditMde(!editMode)}
+            className={`flex transition-all hover:scale-110 shadow-md bg-blue-500 p-2 h-[50px] rounded-md text-white ${editMode?"bg-red-600":""}`}>
+                {editMode?<p>Disable Edit Mode</p>:<p>Enable Edit Mode</p>}
+            </button>}
+            </div>
 
             <div className="maincontent bg-gray-499 flex flex-col">
                 <div className="text-gray-800 text-2xl font-semibold">
@@ -149,29 +157,24 @@ const ProjectViewPanel = () => {
                         <strong>Mentor:</strong> <span>{data["mentor"] || "No data found"}</span>
                         </div>
                     <div className='flex flex-col border-2 min-h-[100px] '>
-                        <strong>Platform Used:</strong> <span className='ml-10 my-1 bg-green-100 p-1'>{data["platform"] || "No data found"}</span>
+                        <strong>Platform Used:</strong> <span className='ml-10 my-1  p-1'>{data["platform"] || "No data found"}</span>
 
-                        {user_auth&&<button className='w-[50px] h-[30px] bg-blue-500 rounded-lg' 
+                        {editMode&&<button className='w-[50px] h-[30px] bg-blue-500 rounded-lg' 
                         onClick={() => handleEditClick("platform", data["platform"])}> 
                         Edit </button>}
                     </div>
                     <div className='flex flex-col border-2 min-h-[100px] '>
-                        <strong>Technical Stack:</strong> <span className='ml-10 my-1 bg-green-100 p-1'>{data["keyword"] || "No data found"}</span>
+                        <strong>Technical Stack:</strong> <span className='ml-10 my-1  p-1'>{data["keyword"] || "No data found"}</span>
 
-                        {user_auth&&<button className='w-[50px] h-[30px] bg-blue-500 rounded-lg' 
+                        {editMode&&<button className='w-[50px] h-[30px] bg-blue-500 rounded-lg' 
                         onClick={() => handleEditClick("keyword", data["keyword"])}> 
                         Edit </button>}
                     </div>
-                    {/* <div>
-                        <strong>Technical Stack:</strong> <span>{data["keyword"] || "No data found"}</span>
-                        <button className='w-[50px] h-[40px] bg-blue-500 rounded-lg' 
-                        onClick={()=>{setPro_Edit(true);setprojectItem("keyword");setProjectItemValue(data["keyword"]) }}> 
-                        Edit </button>
-                    </div> */}
+                   
                     
                     <div className='flex flex-col border-2 min-h-[100px] '>
                         <strong>Code: </strong> 
-                        <span>
+                        <span className='ml-10 my-1  p-1'>
                             {data["github_link"] ? (
                                 <a 
                                     href={data["github_link"]} 
@@ -183,32 +186,32 @@ const ProjectViewPanel = () => {
                                 </a>
                             ) : "No data found"}
                         </span>
-                        {user_auth&&<button className='w-[50px] h-[40px] bg-blue-500 rounded-lg' 
+                        {editMode&&<button className='w-[50px] h-[40px] bg-blue-500 rounded-lg' 
                         
                         onClick={() => handleEditClick("github_link", data["github_link"])}> 
                         Edit </button>}
                     </div>
 
-                    <div className='flex flex-col border-2 min-h-[100px] '>
+                    <div className='flex flex-col border-2 min-h-[100px]'>
                         <strong>Project Description:</strong> 
-                        <span><br />{data["description"] || "No data found"}</span>
-                        {user_auth && <button className='w-[50px] h-[40px] bg-blue-500 rounded-lg' 
+                        <span className='ml-10 my-1  p-1'>{data["description"] || "No data found"}</span>
+                        {editMode && <button className='w-[50px] h-[40px] bg-blue-500 rounded-lg' 
                         onClick={() => handleEditClick("description", data["description"])}> 
                         Edit </button>}
                     </div>
                     <div className='flex flex-col border-2 min-h-[100px] '>
                         <strong>Project Objective:</strong> 
-                        <span><br />{data["objective"] || "No data found"}</span>
-                        {user_auth && <button className='w-[50px] h-[40px] bg-blue-500 rounded-lg' 
+                        <span className='ml-10 my-1 p-1'>{data["objective"] || "No data found"}</span>
+                        {editMode && <button className='w-[50px] h-[40px] bg-blue-500 rounded-lg' 
                         onClick={() => handleEditClick("objective", data["objective"])}> 
                         Edit </button>}
                     </div>
                 </div>
                 
-                <div className='flex  my-3'>
+                <div className='flex  my-3  border-2 min-h-[100px] '>
                         <strong className="text-nowrap">Projects Files :</strong>
                         
-                        <div className='flex'>
+                        <div className='flex ml-5 my-1  p-1'>
 
                             {projectFiles.map((filesdata,index)=>(
                                 <div className='m-3'>
@@ -243,16 +246,16 @@ const ProjectViewPanel = () => {
                                         <span>{filesdata["message"]}</span>
                                         <span>Created: {new Date(filesdata.created_at).toLocaleDateString()}</span>
                                     </div>
-                                        <button className='w-[50px] h-[30px] bg-blue-500 rounded-sm' onClick={()=>handleFileDelete(filesdata.uuid)}>Delete</button>
+                                        {editMode&&<button className='w-[50px] h-[30px] bg-blue-500 rounded-sm' onClick={()=>handleFileDelete(filesdata.uuid)}>Delete</button>}
                                 </div>
                             ))}
-                            <div className='flex  justify-center items-center bgred-300 w-[120px] h-[120px]'>
+                            {editMode&&<div className='flex  justify-center items-center bgred-300 w-[120px] h-[120px]'>
                                 <input type="file" id="fileInput" hidden onChange={handleFileUpload} />
-                                <label htmlFor="fileInput" className='w-[50px] h-[50px]'>
+                                <label htmlFor="fileInput" className='w-[50px] h-[50px] hover:scale-110'>
                                     <ChIconAddCircle/>
                                     <span className='text-nowrap ml-4'>ADD Files</span>
                                 </label>
-                            </div>
+                            </div>}
                         </div>
                 </div>
 
