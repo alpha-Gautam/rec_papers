@@ -220,4 +220,26 @@ export const ChIconLandingPage = (props) => {
   }
 
 
+
+
+  export const ChIconChat = (props)=>{
+
+
+    return(
+      <svg width={props.width||"24"} height={props.height||"24"} version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 512 512" space="preserve" fill="#369FFF">
+
+      <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+
+      <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+
+      <g id="SVGRepo_iconCarrier"> <path fill="#3B95D1;" d="M428.512,474.464L294.608,367.152H110.192C49.44,367.152,0,317.648,0,256.8V147.888 C0,87.04,49.44,37.536,110.192,37.536h291.632C462.56,37.536,512,87.04,512,147.888v108.928c0,51.2-35.008,94.944-83.488,107.008 V474.464z M110.192,69.536C67.072,69.536,32,104.688,32,147.888v108.928c0,43.2,35.072,78.336,78.192,78.336h195.664l90.656,72.656 v-71.584l14.176-1.632C450.208,330.064,480,296.624,480,256.8V147.888c0-43.2-35.072-78.336-78.192-78.336H110.192V69.536z"/> </g>
+      className={props.selected?"fill-[#369FFF]":"group-hover:fill-[#369FFF]"}
+
+
+      </svg>
+
+    )
+  }
+
+
   

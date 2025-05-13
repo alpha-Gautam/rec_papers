@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import {HomeIcon,ChIconCreate,ChIconLogOut,ChIconLandingPage} from "../../assets/images/icon"
+import {HomeIcon,ChIconCreate,ChIconLogOut,ChIconLandingPage, ChIconChat} from "../../assets/images/icon"
 import logo from "../../assets/images/logo.png"
 
 const Sidebar = () => {
@@ -76,6 +76,19 @@ const Sidebar = () => {
               {/* {expand? <p>Landing Page</p>:""} */}
             </button>
             </div>}
+
+                <div className="flex justify-center items-center w-full py-2 px-4  text-blue-700 font-semibold rounded-lg text-center transition-all duration-300 hover:bg-gray-200">
+            <button
+              onClick={() => {
+                navigate("/dashboard");
+                
+              }}
+              
+            >
+              <ChIconChat selected={true} width={40} height={40} />
+              {/* {expand? <p>Home</p>:""} */}
+            </button>
+            </div>
 
                 <div className="flex justify-center items-center w-full py-2 px-4  text-blue-700 font-semibold rounded-lg text-center transition-all duration-300 hover:bg-gray-200">
             <button
