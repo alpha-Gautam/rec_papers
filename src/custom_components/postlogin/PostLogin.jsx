@@ -6,6 +6,7 @@ import CreateProject from './CreateProject';
 // import ReadMore from './ReadMore';
 import Sidebar from './sidebar'
 import ProjectViewPanel from './ProjectView'
+import ChatDashboard from "./chat_components/ChatDashboard"
 
 const postLogin = () => {
   return (
@@ -20,7 +21,7 @@ const postLogin = () => {
         
     <Routes>
           <Route path="/" element={<StudentPanel />} />
-          {/* <Route path="/dashboard/mentor" element={<MentorPanel />} /> */}
+          <Route path='/chat' element={<ChatDashboard />} />
           <Route path='/create-project' element={<CreateProject/>}/>  
           <Route path='/project/:id' element={<ProjectViewPanel/>}/>
           {/* <Route path="/project/:id" element={<ReadMore/>}/> */}
