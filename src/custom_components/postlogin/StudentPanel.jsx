@@ -55,7 +55,7 @@ const StudentPanel = () => {
   }, []);
 
   return (
-    <div className="student-panel-container flex flex-col h-screen bg-gray-300">
+    <div className="student-panel-container  flex flex-col h-screen bg-gray-300">
       {/* Header Section */}
       <div className="h-35 bg-gray-500 flex px-10 items-center ">
         <div className="w-24 h-24 rounded-full bg-white overflow-hidden"> <img src="https://i.pinimg.com/280x280_RS/e1/08/21/e10821c74b533d465ba888ea66daa30f.jpg" alt="" /></div>
@@ -69,7 +69,7 @@ const StudentPanel = () => {
 
       {/* Main Content */}
       <main className="main-content py-2 px-3 bg-gray-200 ">
-        <div className="flex flex-row justify-between items-center  h-[50px] rounded-sm bg-gray500 my-3 px-3 ">
+        <div className="flex flex-col sm:flex-row justify-between items-center  h-[50px] rounded-sm bg-gray500 my-3 px-3 ">
           <div className="">
             <h2 className="text-3xl font-bold text-nowrap">Research Papers</h2>
           </div>
@@ -96,9 +96,13 @@ const StudentPanel = () => {
         <div className="card-container flex flex-col gap-5 border-2 border-blue-500 p-4 bg-white rounded-md shadow-md">
           {projectData.map((paper) => (
             <div
-              className="card bg-white border rounded-lg shadow-md p-4 flex flex-row justify-between"
+              className=" bg-white border rounded-lg shadow-md p-4 flex flex-row justify-between"
               key={paper.uuid}
             >
+            {/* <div
+              className="card bg-white border rounded-lg shadow-md p-4 flex flex-row justify-between"
+              key={paper.uuid}
+            > */}
               <div className="card-content flex flex-col gap-2">
                 <h5 className="text-lg font-semibold">
                   <strong></strong> {paper.title}
