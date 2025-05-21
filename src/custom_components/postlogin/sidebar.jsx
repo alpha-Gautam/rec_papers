@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import {HomeIcon,ChIconCreate,ChIconLogOut,ChIconLandingPage, ChIconChat} from "../../assets/images/icon"
+import {HomeIcon,ChIconCreate,ChIconLogOut,ChIconLandingPage, ChIconChat, ChIconProfile} from "../../assets/images/icon"
 import logo from "../../assets/images/logo.png"
 
 const Sidebar = () => {
@@ -28,20 +28,24 @@ const Sidebar = () => {
       </button>
 
       {/* Overlay for mobile view when sidebar is open */}
-      {expand && (
+      {/* {expand && (
         <div
           className="fixed inset-0 bg-black bg-opacity-40 sm:hidden z-40"
           onClick={() => setExpand(false)}
         />
-      )}
+      )} */}
 
       {/* Sidebar */}
-      <div
+      {/* <div
       onMouseEnter={() => setExpand(true)}
       onMouseLeave={()=>setExpand(false)}
-        className={`fixed sm:relative h-screen bg-gray-900 text-white border-r transition-all duration-300 z-50  ${
-          expand ? "w-64" : "w-20"
-        }`}
+        className={` sm:relative h-screen bg-gray-900 text-white border-r transition-all duration-300 z-50  ${expand ? "w-64 absolute" : "w-20"}`}
+      > */}/
+
+<div
+      onMouseEnter={() => setExpand(true)}
+      onMouseLeave={()=>setExpand(false)}
+        className={`absolute h-screen z-50 bg-gray-900 text-white transition-all duration-300 ${expand ? "w-64 " : "w-20"}`}
       >
         <aside className="flex h-full flex-col justify-between">
           {/* Logo - Centered */}
@@ -77,6 +81,18 @@ const Sidebar = () => {
             </button>
             </div>}
 
+                <div className="flex justify-center items-center w-full py-2 px-4  text-blue-700 font-semibold rounded-lg text-center transition-all duration-300 hover:bg-gray-200">
+            <button
+              onClick={() => {
+                navigate("/dashboard/profile");
+                
+              }}
+              
+            >
+              <ChIconProfile selected={true} width={40} height={40} />
+              {/* {expand? <p>Home</p>:""} */}
+            </button>
+            </div>
                 <div className="flex justify-center items-center w-full py-2 px-4  text-blue-700 font-semibold rounded-lg text-center transition-all duration-300 hover:bg-gray-200">
             <button
               onClick={() => {

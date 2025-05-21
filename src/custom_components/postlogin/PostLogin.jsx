@@ -1,26 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {Routes, Route} from 'react-router-dom';
 import StudentPanel from './StudentPanel';
-// import MentorPanel from './ProjectView';
 import CreateProject from './CreateProject';
-// import ReadMore from './ReadMore';
+import StudentProfile from './StudentProfile';
+import FacultyProfile from './FacultyProfile';
 import Sidebar from './sidebar'
 import ProjectViewPanel from './ProjectView'
 import ChatDashboard from "./chat_components/ChatDashboard"
 
 const postLogin = () => {
+  // const [role,setRole] = useState(false)
+
+  const role = localStorage.getItem("role")
+  console.log("user role:-",role)
+
   return (
 <div className='flex'>
 
-            <div className='flex h-screen sticky top-0'>
+            <div className='flex  h-screen sticky top-0'>
                 <Sidebar/>
             </div>
 
             
-    <div className='h-[inherit] w-full'>
+    <div className='h-[inherit] w-full ml-[75px] '>
         
     <Routes>
           <Route path="/" element={<StudentPanel />} />
+          <Route path="/profile" element={role? <FacultyProfile/>:<StudentProfile/>} />
           <Route path='/chat' element={<ChatDashboard />} />
           <Route path='/create-project' element={<CreateProject/>}/>  
           <Route path='/project/:id' element={<ProjectViewPanel/>}/>
