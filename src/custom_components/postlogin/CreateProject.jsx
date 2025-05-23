@@ -6,6 +6,7 @@ const CreateProject = () => {
   const [formData, setFormData] = useState({
     editorName: localStorage.getItem("user_id") || "",
     mentorName: "",
+    semester: "",
     topic: "",
     keywords: "",
     platforms: "",
@@ -18,7 +19,16 @@ const CreateProject = () => {
   const [createNotAllowed,setCreatNotAllowed] = useState(false);
 
    // If user is faculty then they are not able to create project, currently ;
-
+  const semesterList = [
+    { label: "1st", value: 1 },
+    { label: "2nd", value: 2 },
+    { label: "3rd", value: 3 },
+    { label: "4th", value: 4 },
+    { label: "5th", value: 5 },
+    { label: "6th", value: 6 },
+    { label: "7th", value: 7 },
+    { label: "8th", value: 8 },
+  ];
   
   
 
@@ -36,15 +46,15 @@ const CreateProject = () => {
     };
     
 
-    const faculty = localStorage.getItem("role") === "true";
+    // const faculty = localStorage.getItem("role") === "true";
     setTimeout(()=>{
-        if(faculty){
-          alert("Faculty are not able to create Project....!");
-          setCreatNotAllowed(true);
-        }
-        else{
-          fetchMentorList();
-        }
+        // if(faculty){
+        //   alert("Faculty are not able to create Project....!");
+        //   setCreatNotAllowed(true);
+        // }
+        // else{
+        // }
+        fetchMentorList();
       },[1000])
 
 
@@ -66,6 +76,7 @@ const CreateProject = () => {
       title: formData.topic,
       user: formData.editorName,
       mentor: formData.mentorName,
+      semester:formData.semester,
       keyword: formData.keywords,
       platform: formData.platforms,
       objective: formData.objective,
@@ -139,6 +150,27 @@ const CreateProject = () => {
                 {mentorList.map((mentor) => (
                   <option key={mentor.uuid} value={mentor.uuid}>
                     {mentor.username}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-2" htmlFor="mentorName">
+                Semester
+              </label>
+              <select
+                id="semester"
+                name="semester"
+                value={formData.semester}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-2 rounded-lg bg-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
+              >
+                <option value="">Select a semester</option>
+                {semesterList.map(({ label, value }) => (
+                  <option key={value} value={value}>
+                    {label}
                   </option>
                 ))}
               </select>
