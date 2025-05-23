@@ -130,10 +130,12 @@ const FacultyProfile = (user_details) => {
                 </button>
               </div>
               <div className="flex justify-end p-2 w-[20%] text-[20px]">
-                <div>
+              <div className="flex flex-col gap-2">
                   
-                Created At : {new Date(paper.created_at).toLocaleDateString()}
-                </div>
+                  Created At : {new Date(paper.created_at).toLocaleDateString()}
+                  {paper["verified"]?(<strong className='text-blue-600'>Varified</strong>):(<strong className='text-red-600'>Not Varified</strong>)}
+  
+                  </div>
                 
               </div>
             </div>

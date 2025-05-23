@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { projectDataApi, projectLogApi, ProjectFilesApi, UploadFileApi, deleteFileAPI} from "../../api/user";
+import { projectDataApi, projectLogApi, ProjectFilesApi, UploadFileApi, deleteFileAPI,projectVerifyAPI} from "../../api/user";
 import { useNavigate } from "react-router-dom";
 import PopUpPlus from "./ProjectLog"; // Import the popup component
 import EditPopup from "./ProjectEditPopup"
 import pdf_image from "../../assets/images/pdf_image.jpg"
 import {ChIconAddCircle} from "../../assets/images/icon"
+import { Button } from 'bootstrap';
 
 const ProjectViewPanel = () => {
     const [pro_Edit,setPro_Edit] = useState(false)
@@ -12,6 +13,8 @@ const ProjectViewPanel = () => {
     const [ProjectItemValue,setProjectItemValue] = useState("")
     const [user_auth,setUser_auth] = useState(false)
     const [editMode,setEditMde] = useState(false)
+
+    const [userRole,setUserRole]=useState(false)
 
     const [projectFiles,setProjectFiles] = useState([])
 
@@ -23,9 +26,10 @@ const ProjectViewPanel = () => {
     const navigate = useNavigate();
 
     const projectId = window.location.href.split("/")[5];
+    const current_user = localStorage.getItem("user_id");
     console.log("project uuid is : ",projectId)
 
-
+    
 
 
     async function fetchData() {
@@ -45,6 +49,29 @@ const ProjectViewPanel = () => {
         fetchData();
     }, [pro_Edit]);
 
+    const handleProjectVerification=async()=>{
+        const data={
+            "project":projectId,
+            "user":current_user,
+        }
+        try{
+            const response=await projectVerifyAPI(data)
+            if(response.status===200){
+                alert("Project Varification status is updated!")
+            }
+            else{
+                alert("something went wrong!",response.message)
+            }
+        }
+        catch{
+            alert("something went wrong! Please Try again")
+
+        }
+        finally{
+            fetchData();
+        }
+    }
+
     const fetchLog = async () => {
         const responsedata = await projectLogApi(projectId);
         if (responsedata.status === 202) {
@@ -53,6 +80,8 @@ const ProjectViewPanel = () => {
     };
 
     useEffect(() => {
+        setUserRole(localStorage.getItem("role"))
+        console.log("role check ",userRole)
         const user = localStorage.getItem("user_id");
         if (data["p_user"]?.includes(user)) {
             setPro_Log(true);
@@ -64,9 +93,9 @@ const ProjectViewPanel = () => {
 
 
     const handleprojectLogCreate = ()=>{
-        console.log("role check ",localStorage.getItem("role"))
+        
         console.log("project mentor check ",data["mentor"])
-        if(localStorage.getItem("role")==="true"){
+        if(userRole==="true"){
             setAddProjectLog(true)
         }
         else{
@@ -149,13 +178,28 @@ const ProjectViewPanel = () => {
                 </div>
 
                 <div className='flex flex-col gap-4 mt-5 text-lg'>
-                    <div>
-                        <strong>Author:</strong> <span>{data["user"] || "No data found"}</span>
-                        
-                    </div>
-                    <div>
-                        <strong>Mentor:</strong> <span>{data["mentor"] || "No data found"}</span>
+                    <div className='flex justify-between'>
+                        <div className='flex flex-col '>
+                            <div className='text-nowrap'>
+                                <strong>Author:</strong> <span>{data["user"] || "No data found"}</span>
+                            </div>
+                            <div className='text-nowrap'>
+                                <strong>Mentor:</strong> <span>{data["mentor"] || "No data found"}</span>
+                            </div>
                         </div>
+                        <div>
+                            <div className='text-nowrap'>
+                                    <strong>Created AT:</strong> <span>{new Date(data["created_at"]).toLocaleDateString() || "No data found"}</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div className=' flex flex-col text-nowrap'>
+                                    {data["verified"]?(<strong className='text-blue-600'>Varified</strong>):(<strong className='text-red-600'>Not Varified</strong>)}
+                                   {(editMode && userRole === "true")&&(!data["verified"]?(<button onClick={handleProjectVerification} className='px-1 h-[30px] bg-blue-500 rounded-lg'>Click to verify</button>):(<button onClick={handleProjectVerification} className='px-1 h-[30px] bg-red-500 rounded-lg'>Click to Unverify</button>))}
+                            </div>
+                        </div>
+                    </div>
+
                     <div className='flex flex-col border-2 min-h-[100px] '>
                         <strong>Platform Used:</strong> <span className='ml-10 my-1  p-1'>{data["platform"] || "No data found"}</span>
 
