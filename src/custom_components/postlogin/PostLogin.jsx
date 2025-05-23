@@ -13,6 +13,17 @@ const postLogin = () => {
 
   const role = localStorage.getItem("role")
   console.log("user role:-",role)
+  
+    const userdata={
+      "username": localStorage.getItem("username"),
+      "email": localStorage.getItem("email"),
+      "college": localStorage.getItem("college"),
+      "mobile": localStorage.getItem("mobile"),
+      "user_id": localStorage.getItem("user_id"),
+      "role": localStorage.getItem("role"),
+      "department": localStorage.getItem("department")
+    };
+  
 
   return (
 <div className='flex'>
@@ -26,7 +37,7 @@ const postLogin = () => {
         
     <Routes>
           <Route path="/" element={<StudentPanel />} />
-          <Route path="/profile" element={role? <FacultyProfile/>:<StudentProfile/>} />
+          <Route path="/profile" element={<FacultyProfile user_details={userdata} />} />
           <Route path='/chat' element={<ChatDashboard />} />
           <Route path='/create-project' element={<CreateProject/>}/>  
           <Route path='/project/:id' element={<ProjectViewPanel/>}/>

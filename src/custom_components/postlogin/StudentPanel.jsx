@@ -57,7 +57,7 @@ const StudentPanel = () => {
   return (
     <div className="student-panel-container  flex flex-col h-screen bg-gray-300">
       {/* Header Section */}
-      <div className="h-35 bg-gray-500 flex px-10 items-center ">
+      {/* <div className="h-35 bg-gray-500 flex px-10 items-center ">
         <div className="w-24 h-24 rounded-full bg-white overflow-hidden"> <img src="https://i.pinimg.com/280x280_RS/e1/08/21/e10821c74b533d465ba888ea66daa30f.jpg" alt="" /></div>
         <div className="ml-10 text-white text-lg gap-2">
           <p>User Name : {userData ? userData["username"] : "User Name"}</p>
@@ -65,7 +65,7 @@ const StudentPanel = () => {
           <p>Department : {userData ? userData["department"] : "Department Name"}</p>
           <p>Role: {userData ? (userData["role"] === "true" ? "Faculty" : "Student") : "Role"}</p>
         </div>
-      </div>
+      </div> */}
 
       {/* Main Content */}
       <main className="main-content py-2 px-3 bg-gray-200 ">

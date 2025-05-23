@@ -15,6 +15,12 @@ export const ProjectViewApi = async (data) => {
   return response;
 };
 
+export const UserProjectViewApi = async (data) => {
+  console.log("url is :-", baseURL);
+  const response = await axios.post(baseURL + `api/user_project/`, data);
+  return response;
+};
+
 export const createProjectapi = async (data) => {
   //   return server.get(url + "/login/", data);
   //   const response = await server.post("api/login/", data);
