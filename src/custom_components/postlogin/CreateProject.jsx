@@ -216,7 +216,7 @@ const CreateProject = () => {
                 name="githubLink"
                 value={formData.githubLink}
                 onChange={handleChange}
-                required
+                
                 className="w-full px-4 py-2 rounded-lg bg-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
               />
             </div>
