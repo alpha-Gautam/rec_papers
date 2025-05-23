@@ -85,3 +85,9 @@ export const deleteFileAPI = async (pk) => {
   const response = await axios.delete(baseURL + `api/file/${pk}`);
   return response;
 };
+
+export const projectVerifyAPI = async (data) => {
+  console.log("url is :-", baseURL);
+  const response = await axios.patch(baseURL + `api/verify_project/`, data);
+  return response;
+};
