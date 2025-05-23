@@ -53,17 +53,25 @@ const Signup = () => {
       return;
     }
     setLoading(true);
-    submit({
-      roll_no: form.rollNo,
-      username: form.username,
-      email: form.email,
-      password: form.password,
-      mobile: form.mobile,
-      college: form.college,
-      department: form.department,
-      is_student: form.role === "Student",
-      is_faculty: form.role === "Mentor",
-    });
+    const emailValidate = form.email.split("@")
+    console.log("email validater", emailValidate)
+    if(emailValidate[emailValidate.length-1]!=="reck.ac.in"){
+      alert("Write a valied college 'Email Id'")
+      setLoading(false);
+    }
+    else{
+      submit({
+        user_id: form.rollNo,
+        username: form.username,
+        email: form.email,
+        password: form.password,
+        mobile: form.mobile,
+        college: form.college,
+        department: form.department,
+        is_student: form.role === "Student",
+        is_faculty: form.role === "Mentor",
+      });
+    }
   };
 
   const handleGoogle = async () => {
@@ -76,7 +84,7 @@ const Signup = () => {
       const { user } = await signInWithPopup(auth, provider);
       setLoading(true);
       await submit({
-        roll_no: user.uid,
+        user_id: user.uid,
         username: user.displayName,
         email: user.email,
         password: "",
@@ -142,7 +150,9 @@ const Signup = () => {
               value={form.email}
               onChange={handleChange}
               type="email"
-              placeholder="E-mail"
+              placeholder="College E-mail"
+              pattern="[a-zA-Z0-9._-]+@reck.ac.in"
+              title="Please enter a valid email address ending with @reck.ac.in"
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
               required
             />
