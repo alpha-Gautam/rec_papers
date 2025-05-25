@@ -6,6 +6,7 @@ import EditPopup from "./ProjectEditPopup"
 import pdf_image from "../../assets/images/pdf_image.jpg"
 import {ChIconAddCircle} from "../../assets/images/icon"
 import { Button } from 'bootstrap';
+import { Loader2 } from 'lucide-react';
 
 const ProjectViewPanel = () => {
     const [pro_Edit,setPro_Edit] = useState(false)
@@ -13,6 +14,10 @@ const ProjectViewPanel = () => {
     const [ProjectItemValue,setProjectItemValue] = useState("")
     const [user_auth,setUser_auth] = useState(false)
     const [editMode,setEditMde] = useState(false)
+    const [showFileDataPopup, setShowFileDataPopup] = useState(false);
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [fileLabel, setFileLabel] = useState('');
+    const [uploading,setUploading] = useState(false)
 
     const [userRole,setUserRole]=useState(false)
 
@@ -112,31 +117,64 @@ const ProjectViewPanel = () => {
     };
 
 
-    const handleFileUpload = async(event) => {
-        const file = event.target.files[0]; // Get the first selected file
-        if (file) {
-            // You can perform actions with the file here, such as uploading it
-            console.log("Selected file:", file);
+    // const handleFileUpload = async(event) => {
+    //     const file = event.target.files[0]; // Get the first selected file
+    //     if (file) {
+    //         // You can perform actions with the file here, such as uploading it
+    //         console.log("Selected file:", file);
 
+    //         // Example: Create a FormData object to send the file to an API
+    //         const formData = new FormData();
+    //         formData.append('file', file);
+    //         const response = await UploadFileApi(projectId,formData)
+    //             if(response.status===200||response.status===201){
+    //                 alert("File is uploaded successfully !")
+    //                 const fileResponse = await ProjectFilesApi(projectId)
+    //                     if(fileResponse.status===200){
+    //                         setProjectFiles(fileResponse.data)
+    //                     }
+    //             }
+    //             else{
+    //                 alert("File Uploading Failed !")
+    //             }   
+
+    //         // You can then use your API to upload the file
+    //         // Example: await uploadFileApi(formData);
+    //     } else {
+    //         console.log("No file selected");
+    //     }
+    // };
+
+    const handleFileUpload = async(event) => {
+   
+        if (selectedFile) {
+            // You can perform actions with the file here, such as uploading it
+            console.log("Selected file:", selectedFile);
+            setUploading(true)
             // Example: Create a FormData object to send the file to an API
             const formData = new FormData();
-            formData.append('file', file);
+            formData.append('file', selectedFile);
+            formData.append('message', fileLabel);
             const response = await UploadFileApi(projectId,formData)
                 if(response.status===200||response.status===201){
                     alert("File is uploaded successfully !")
                     const fileResponse = await ProjectFilesApi(projectId)
                         if(fileResponse.status===200){
                             setProjectFiles(fileResponse.data)
+                            setUploading(false)
+                            setShowFileDataPopup(false)
                         }
                 }
                 else{
                     alert("File Uploading Failed !")
+                    setUploading(false)
                 }   
 
             // You can then use your API to upload the file
             // Example: await uploadFileApi(formData);
         } else {
             console.log("No file selected");
+            setUploading(false)
         }
     };
 
@@ -190,11 +228,13 @@ const ProjectViewPanel = () => {
                         <div>
                             <div className='text-nowrap'>
                                     <strong>Created AT:</strong> <span>{new Date(data["created_at"]).toLocaleDateString() || "No data found"}</span>
+                                    <div className="flex flex-row gap-2"><strong>Sem: </strong><p>{ data.semester}</p></div>
+
                             </div>
                         </div>
                         <div>
                             <div className=' flex flex-col text-nowrap'>
-                                    {data["verified"]?(<strong className='text-blue-600'>Varified</strong>):(<strong className='text-red-600'>Not Varified</strong>)}
+                                    {data["verified"]?(<strong className='text-blue-600'>Verified</strong>):(<strong className='text-red-600'>Not Verified</strong>)}
                                    {(editMode && userRole === "true")&&(!data["verified"]?(<button onClick={handleProjectVerification} className='px-1 h-[30px] bg-blue-500 rounded-lg'>Click to verify</button>):(<button onClick={handleProjectVerification} className='px-1 h-[30px] bg-red-500 rounded-lg'>Click to Unverify</button>))}
                             </div>
                         </div>
@@ -288,18 +328,92 @@ const ProjectViewPanel = () => {
                                     <div className='flex flex-col mt-1'>
                                         <span>({index+1}).</span>
                                         <span>{filesdata["message"]}</span>
-                                        <span>Created: {new Date(filesdata.created_at).toLocaleDateString()}</span>
+                                        <span>{new Date(filesdata.created_at).toLocaleDateString()}</span>
+                                        
                                     </div>
                                         {editMode&&<button className='w-[50px] h-[30px] bg-blue-500 rounded-sm' onClick={()=>handleFileDelete(filesdata.uuid)}>Delete</button>}
                                 </div>
                             ))}
-                            {editMode&&<div className='flex  justify-center items-center bgred-300 w-[120px] h-[120px]'>
+                            {/* {editMode&&<div className='flex  justify-center items-center bgred-300 w-[120px] h-[120px]'>
                                 <input type="file" id="fileInput" hidden onChange={handleFileUpload} />
                                 <label htmlFor="fileInput" className='w-[50px] h-[50px] hover:scale-110'>
                                     <ChIconAddCircle/>
                                     <span className='text-nowrap ml-4'>ADD Files</span>
                                 </label>
-                            </div>}
+                            </div>} */}
+
+{editMode && (
+  <>
+    {/* <div className='flex justify-center items-center bg-red-300 w-[120px] h-[120px]'>
+      <input type="file" id="fileInput" hidden onChange={handleFileUpload} />
+      <label htmlFor="fileInput" className='w-[50px] h-[50px] hover:scale-110'>
+        <ChIconAddCircle/>
+        <span className='text-nowrap ml-4'>ADD Files</span>
+      </label>
+    </div> */}
+    
+    {/* Add File Data Button */}
+    <button 
+      onClick={() => setShowFileDataPopup(true)}
+      className='bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md ml-4'
+    >
+      <ChIconAddCircle className='w-[20px] h-[20px]'/>Add file Data
+    </button>
+
+    {/* File Data Popup */}
+    {showFileDataPopup && (
+      <div className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50'>
+        <div className='bg-white p-6 rounded-lg shadow-lg w-96'>
+          <h3 className='text-lg font-semibold mb-4'>Add File Data</h3>
+          
+          <div className='mb-4'>
+            <label className='block text-sm font-medium mb-2'>Select File:</label>
+            <input 
+              type="file" 
+              onChange={(e) => setSelectedFile(e.target.files[0])}
+              className='w-full border border-gray-300 rounded-md p-2'
+            />
+          </div>
+          
+          <div className='mb-6'>
+            <label className='block text-sm font-medium mb-2'>File Label:</label>
+            <input 
+              type="text" 
+              value={fileLabel}
+              onChange={(e) => setFileLabel(e.target.value)}
+              placeholder="Enter file label"
+              className='w-full border border-gray-300 rounded-md p-2'
+            />
+          </div>
+          
+          <div className='flex justify-end space-x-3'>
+            <button 
+              onClick={() => {
+                setShowFileDataPopup(false);
+                setSelectedFile(null);
+                setFileLabel('');
+              }}
+              className='px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50'
+            >
+              Cancel
+            </button>
+            {uploading? <button 
+              className='px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600'
+            >
+             <Loader2 className='animate-spin'/>
+            </button>: <button 
+              onClick={handleFileUpload}
+              className='px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600'
+            >
+              Add File
+            </button>}
+          </div>
+        </div>
+      </div>
+    )}
+  </>
+)}
+
                         </div>
                 </div>
 

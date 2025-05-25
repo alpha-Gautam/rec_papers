@@ -12,7 +12,8 @@ const CreateProject = () => {
     platforms: "",
     objective: "", 
     description: "",
-    githubLink: ""
+    githubLink: "",
+    group: ""
   });
 
   const [mentorList, setMentorList] = useState([]);
@@ -77,6 +78,7 @@ const CreateProject = () => {
       user: formData.editorName,
       mentor: formData.mentorName,
       semester:formData.semester,
+      group:formData.group==="true"?true:false,
       keyword: formData.keywords,
       platform: formData.platforms,
       objective: formData.objective,
@@ -154,7 +156,22 @@ const CreateProject = () => {
                 ))}
               </select>
             </div>
-
+            <div>
+              <label className="block text-sm font-medium mb-2" htmlFor="group">
+                Group Number
+              </label>
+              <select
+                id="group"
+                name="group"
+                value={formData.group}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-2 rounded-lg bg-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
+              >
+                <option value="false">No</option>
+                <option value="true">Yes</option>
+              </select>
+            </div>
             <div>
               <label className="block text-sm font-medium mb-2" htmlFor="mentorName">
                 Semester
