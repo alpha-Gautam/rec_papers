@@ -124,7 +124,8 @@ const StudentPanel = () => {
                 <div className="flex flex-col gap-2">
                   
                 Created At : {new Date(paper.created_at).toLocaleDateString()}
-                {paper["verified"]?(<strong className='text-blue-600'>Varified</strong>):(<strong className='text-red-600'>Not Varified</strong>)}
+                <div className="flex flex-row gap-2"><strong>Sem: </strong><p>{ paper.semester}</p></div>
+                {paper["verified"]?(<strong className='text-blue-600'>Verified</strong>):(<strong className='text-red-600'>Not Verified</strong>)}
 
                 </div>
                 
