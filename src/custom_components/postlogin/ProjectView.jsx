@@ -331,24 +331,54 @@ const ProjectViewPanel = () => {
 
                                         {filesdata["file"].includes('.pdf') ? (
                                             <div className='flex h-[100px] w-[100px]'>
-                                            <a 
-                                                href={filesdata["file"]} 
-                                                target="_blank" 
-                                                rel="noopener noreferrer" 
-                                                className="h-[100px] w-[100px]"
-                                            >
-                                                <img src={pdf_image} alt="PDF Icon" className="h-full w-full object-cover" />
-                                            </a>
+                                                <button 
+                                                    
+                                                    className="h-[100px] w-[100px]"
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        // Use an iframe viewer or Google PDF Viewer to display PDF
+                                                        const viewerUrl = `https://docs.google.com/viewerng/viewer?url=${filesdata["file"]}`;
+                                                        // const viewerUrl = `https://docs.google.com/viewerng/viewer?url=${filesdata["file"]}&embedded=true`;
+                                                        window.open(viewerUrl, '_blank');
+                                                    }}
+                                                >
+                                                    <img src={pdf_image} alt="PDF Icon" className="h-full w-full object-cover" />
+                                                </button>
                                             </div>
                                         ) : (
-                                            <div className='h-[100px] w-[100px] '>
-                                                <a href={filesdata["file"]}
-                                                target="_blank" 
-                                                rel="noopener noreferrer" 
-                                                className="h-[90px] w-[90px]"
+                                            <div className='h-[100px] w-[100px]'>
+                                                <button 
+                                                   
+                                                    className="h-[90px] w-[90px]"
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        
+                                                        // Check if file is an image based on extension
+                                                        const isImage = /\.(jpe?g|png|gif|bmp|webp|svg)$/i.test(filesdata["file"]);
+
+                                                        if (isImage) {
+                                                            // Create a new HTML document with the image embedded
+                                                            const newWindow = window.open('');
+                                                            newWindow.document.write(`
+                                                                <html>
+                                                                    <head>
+                                                                        <title>Image Viewer</title>
+                                                                        <style>
+                                                                            body { margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f0f0f0; }
+                                                                            img { max-width: 100%; max-height: 100vh; object-fit: contain; }
+                                                                        </style>
+                                                                    </head>
+                                                                    <body>
+                                                                        <img src="${filesdata["file"]}" alt="Project File" />
+                                                                    </body>
+                                                                </html>
+                                                            `);
+                                                        }
+
+                                                    }}
                                                 >
-                                                <img src={filesdata["file"]} alt="Project File" />
-                                            </a>
+                                                    <img src={filesdata["file"]} alt="Project File" />
+                                                </button>
                                             </div>  
                                         )}
                                     </div>
