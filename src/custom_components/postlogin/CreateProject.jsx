@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { createProjectapi, mentorDataApi } from "../../api/user";
-import { Message } from "@mui/icons-material";
 
 const CreateProject = () => {
   const [formData, setFormData] = useState({
@@ -15,17 +14,9 @@ const CreateProject = () => {
   });
 
   const [mentorList, setMentorList] = useState([]);
-  const [createNotAllowed,setCreatNotAllowed] = useState(false);
-
-   // If user is faculty then they are not able to create project, currently ;
-
-  
-  
+  const [createNotAllowed, setCreateNotAllowed] = useState(false);
 
   useEffect(() => {
-
-
-    
     const fetchMentorList = async () => {
       try {
         const response = await mentorDataApi();
@@ -34,20 +25,16 @@ const CreateProject = () => {
         console.error('Error fetching mentor list:', error);
       }
     };
-    
 
     const faculty = localStorage.getItem("role") === "true";
-    setTimeout(()=>{
-        if(faculty){
-          alert("Faculty are not able to create Project....!");
-          setCreatNotAllowed(true);
-        }
-        else{
-          fetchMentorList();
-        }
-      },[1000])
-
-
+    setTimeout(() => {
+      if (faculty) {
+        alert("Faculty are not able to create Project....!");
+        setCreateNotAllowed(true);
+      } else {
+        fetchMentorList();
+      }
+    }, 1000);
   }, []);
 
   const handleChange = (e) => {
@@ -60,9 +47,7 @@ const CreateProject = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     const data = {
-      
       title: formData.topic,
       user: formData.editorName,
       mentor: formData.mentorName,
@@ -86,45 +71,32 @@ const CreateProject = () => {
   };
 
   return (
-    <div className="bg-gray-100 text-black min-h-screen flex flex-col">
+    <div className="bg-white text-black min-h-screen flex flex-col">
       <header className="bg-white py-4 shadow-md text-center text-green-500 font-bold text-3xl">
         Create a New Project
       </header>
 
-      <div className="flex-1 overflow-y-auto px-6 py-8">
-        <div className="bg-white p-10 rounded-lg shadow-lg w-full max-w-4xl mx-auto">
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium mb-2" htmlFor="topic">
-                Project Title
-              </label>
-              <input
-                type="text"
-                id="topic"
-                name="topic"
-                value={formData.topic}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-2 rounded-lg bg-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
-              />
-            </div>
+      <div className="flex-1 overflow-y-auto px-6 py-10 bg-gray-100">
+        <div className="bg-gray-100 border border-gray-200 p-10 rounded-xl shadow-md w-full max-w-4xl mx-auto">
+          <form onSubmit={handleSubmit} className="space-y-5">
+            
+            <FormInput
+              label="Project Title"
+              name="topic"
+              value={formData.topic}
+              onChange={handleChange}
+              required
+            />
+
+            <FormInput
+              label="Name of the Author"
+              name="editorName"
+              value={localStorage.getItem("username")}
+              readOnly
+            />
 
             <div>
-              <label className="block text-sm font-medium mb-2" htmlFor="editorName">
-                Name of the Author
-              </label>
-              <input 
-                type="text"
-                id="editorName"
-                name="editorName"
-                value={localStorage.getItem("username")}
-                readOnly
-                className="w-full px-4 py-2 rounded-lg bg-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium mb-2" htmlFor="mentorName">
+              <label className="block text-sm font-semibold mb-2 text-gray-700" htmlFor="mentorName">
                 Name of the Mentor
               </label>
               <select
@@ -133,7 +105,7 @@ const CreateProject = () => {
                 value={formData.mentorName}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 rounded-lg bg-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
+                className="w-full px-4 py-2 rounded-md bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400"
               >
                 <option value="">Select a mentor</option>
                 {mentorList.map((mentor) => (
@@ -144,87 +116,58 @@ const CreateProject = () => {
               </select>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium mb-2" htmlFor="platforms">
-              Platforms / Resource used
-              </label>
-              <input
-                type="text"
-                id="platform"
-                name="platforms"
-                value={formData.platforms}
-                onChange={handleChange}
-                required
-                placeholder="Separate Platforms with commas"
-                className="w-full px-4 py-2 rounded-lg bg-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
-              />
-            </div>
+            <FormInput
+              label="Platforms / Resources Used"
+              name="platforms"
+              value={formData.platforms}
+              onChange={handleChange}
+              placeholder="Separate with commas"
+              required
+            />
 
-            <div>
-              <label className="block text-sm font-medium mb-2" htmlFor="keywords">
-                Keywords / Technical Stack
-              </label>
-              <input
-                type="text"
-                id="keywords"
-                name="keywords"
-                value={formData.keywords}
-                onChange={handleChange}
-                required
-                placeholder="Separate keywords with commas"
-                className="w-full px-4 py-2 rounded-lg bg-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
-              />
-            </div>
+            <FormInput
+              label="Keywords / Technical Stack"
+              name="keywords"
+              value={formData.keywords}
+              onChange={handleChange}
+              placeholder="Separate with commas"
+              required
+            />
 
-            <div>
-              <label className="block text-sm font-medium mb-2" htmlFor="objective">
-                Objective
-              </label>
-              <textarea
-                id="objective"
-                name="objective"
-                value={formData.objective}
-                onChange={handleChange}
-                rows="2"
-                required
-                className="w-full px-4 py-2 rounded-lg bg-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
-              />
-            </div>
+            <FormTextarea
+              label="Objective"
+              name="objective"
+              value={formData.objective}
+              onChange={handleChange}
+              rows={2}
+              required
+            />
 
-            <div>
-              <label className="block text-sm font-medium mb-2" htmlFor="description">
-                Briefing about the Project
-              </label>
-              <textarea
-                id="description"
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                rows="5"
-                required
-                className="w-full px-4 py-2 rounded-lg bg-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
-              />
-            </div>
+            <FormTextarea
+              label="Briefing about the Project"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              rows={4}
+              required
+            />
 
-            <div>
-              <label className="block text-sm font-medium mb-2" htmlFor="githubLink">
-                GitHub Code Link
-              </label>
-              <input
-                type="url"
-                id="githubLink"
-                name="githubLink"
-                value={formData.githubLink}
-                onChange={handleChange}
-                
-                className="w-full px-4 py-2 rounded-lg bg-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-green-400"
-              />
-            </div>
+            <FormInput
+              label="GitHub Code Link"
+              name="githubLink"
+              type="url"
+              value={formData.githubLink}
+              onChange={handleChange}
+            />
 
             <button
               type="submit"
               disabled={createNotAllowed}
-              className={`w-full py-3 ${createNotAllowed ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-green-500 text-white font-bold rounded-lg hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-green-300"}`}
+              className={`w-full py-3 text-lg font-bold rounded-lg transition ${
+                createNotAllowed
+                  ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  : "bg-green-600 text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-300"
+              }`}
             >
               Submit Project
             </button>
@@ -234,5 +177,37 @@ const CreateProject = () => {
     </div>
   );
 };
+
+// Reusable input component
+const FormInput = ({ label, name, type = "text", ...props }) => (
+  <div>
+    <label className="block text-sm font-semibold mb-2 text-gray-700" htmlFor={name}>
+      {label}
+    </label>
+    <input
+      type={type}
+      id={name}
+      name={name}
+      className="w-full px-4 py-2 rounded-md bg-white border border-gray-300 text-black focus:outline-none focus:ring-2 focus:ring-green-400"
+      {...props}
+    />
+  </div>
+);
+
+// Reusable textarea component
+const FormTextarea = ({ label, name, rows, ...props }) => (
+  <div>
+    <label className="block text-sm font-semibold mb-2 text-gray-700" htmlFor={name}>
+      {label}
+    </label>
+    <textarea
+      id={name}
+      name={name}
+      rows={rows}
+      className="w-full px-4 py-2 rounded-md bg-white border border-gray-300 text-black focus:outline-none focus:ring-2 focus:ring-green-400"
+      {...props}
+    />
+  </div>
+);
 
 export default CreateProject;
