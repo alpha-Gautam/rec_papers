@@ -1,13 +1,15 @@
 // import { server } from "../serve";
 // import { computeHeadingLevel } from "@testing-library/react";
 import axios from "axios";
+import { baseURL } from "./login";
 
-let baseURL = "";
-if (window.location.href.includes("localhost")) {
-  baseURL = "http://127.0.0.1:8000/";
-} else {
-  baseURL = "https://recpapers-backend.onrender.com/";
-}
+// let baseURL = "";
+// if (window.location.href.includes("localhost")) {
+//   baseURL = "http://127.0.0.1:8000/";
+// } else {
+//   baseURL = "https://recpapers-backend.onrender.com/";
+// }
+// baseURL = "https://recpapers-backend.onrender.com/";
 
 export const ProjectViewApi = async (data) => {
   console.log("url is :-", baseURL);
@@ -15,9 +17,9 @@ export const ProjectViewApi = async (data) => {
   return response;
 };
 
-export const UserProjectViewApi = async (data) => {
+export const UserProjectViewApi = async (user_id) => {
   console.log("url is :-", baseURL);
-  const response = await axios.post(baseURL + `api/user_project/`, data);
+  const response = await axios.get(baseURL + `api/user_projects/${user_id}`);
   return response;
 };
 

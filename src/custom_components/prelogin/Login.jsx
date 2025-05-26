@@ -36,6 +36,8 @@ const Login = () => {
           localStorage.setItem("college", userData["college"]);
           localStorage.setItem("mobile", userData["mobile"]);
           localStorage.setItem("department", userData["department"]);
+          localStorage.setItem("v_by_a", userData["verified_by_admin"]);
+
           navigate("/dashboard");
         }
       } else {
@@ -100,7 +102,7 @@ const Login = () => {
         </div>
 
         {/* Role Selection */}
-        <div className="mt-4 text-center">
+        {/* <div className="mt-4 text-center">
           <label className="block text-gray-700 font-medium mb-1">Select your role:</label>
           <div className="flex justify-center space-x-6">
             <label className="flex items-center">
@@ -126,7 +128,7 @@ const Login = () => {
               Mentor
             </label>
           </div>
-        </div>
+        </div> */}
 
         {/* Sign In Button */}
         <button

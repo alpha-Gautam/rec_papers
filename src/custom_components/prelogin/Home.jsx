@@ -30,13 +30,13 @@ const Home = () => {
     <div className="home bg-black text-white min-h-screen px-4 py-8">
       <header className="home-header text-center max-w-3xl mx-auto py-12">
         <h2 className="text-4xl font-bold mb-4">REC Kannauj</h2>
-        <h3 className="text-3xl font-semibold text-gray-300 mb-6">
+        <h3 className="text-3xl font-semibold text-gray-300 mb-6 ">
           Academic Reports and Research Papers' Platform
         </h3>
-        <p className="text-xl text-gray-400 mb-8">
+        <p className="text-xl text-gray-400 mb-8 ">
           Look for any pertinent research papers and project reports here.
         </p>
-        <SearchBox className="bg-slate-400 rounded" onSearch={handleSearch} />
+        {/* <SearchBox className="bg-slate-400 rounded" onSearch={handleSearch} /> */}
       </header>
       <div className="flex justify-center flex-wrap gap-10 mt-10">
         {cardsData.map((card, index) => (

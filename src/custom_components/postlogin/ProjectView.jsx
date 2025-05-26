@@ -58,6 +58,7 @@ const ProjectViewPanel = () => {
         const data={
             "project":projectId,
             "user":current_user,
+            "verification":"",
         }
         try{
             const response=await projectVerifyAPI(data)
@@ -69,7 +70,30 @@ const ProjectViewPanel = () => {
             }
         }
         catch{
-            alert("something went wrong! Please Try again")
+            alert("something went wrong!/ Account is not verified")
+
+        }
+        finally{
+            fetchData();
+        }
+    }
+    const handleProjectVisibility=async()=>{
+        const data={
+            "project":projectId,
+            "user":current_user,
+            "visibility":"",
+        }
+        try{
+            const response=await projectVerifyAPI(data)
+            if(response.status===200){
+                alert("Project Varification status is updated!")
+            }
+            else{
+                alert("something went wrong!",response.message)
+            }
+        }
+        catch{
+            alert("something went wrong!/ Account is not verified")
 
         }
         finally{
@@ -236,6 +260,10 @@ const ProjectViewPanel = () => {
                             <div className=' flex flex-col text-nowrap'>
                                     {data["verified"]?(<strong className='text-blue-600'>Verified</strong>):(<strong className='text-red-600'>Not Verified</strong>)}
                                    {(editMode && userRole === "true")&&(!data["verified"]?(<button onClick={handleProjectVerification} className='px-1 h-[30px] bg-blue-500 rounded-lg'>Click to verify</button>):(<button onClick={handleProjectVerification} className='px-1 h-[30px] bg-red-500 rounded-lg'>Click to Unverify</button>))}
+                            </div>
+                            <div className=' flex flex-col text-nowrap'>
+                                    {data["public"]?(<strong className='text-blue-600'>Public</strong>):(<strong className='text-red-600'>Private</strong>)}
+                                   {(editMode && userRole === "true")&&(<button onClick={handleProjectVisibility} className='px-1 h-[30px] bg-blue-500 rounded-lg'>Click to change Visibility</button>)}
                             </div>
                         </div>
                     </div>

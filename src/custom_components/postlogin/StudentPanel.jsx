@@ -126,6 +126,8 @@ const StudentPanel = () => {
                 Created At : {new Date(paper.created_at).toLocaleDateString()}
                 <div className="flex flex-row gap-2"><strong>Sem: </strong><p>{ paper.semester}</p></div>
                 {paper["verified"]?(<strong className='text-blue-600'>Verified</strong>):(<strong className='text-red-600'>Not Verified</strong>)}
+                {paper["public"]?(<strong className='text-blue-600'>Public</strong>):(<strong className='text-red-600'>Private</strong>)}
+
 
                 </div>
                 
