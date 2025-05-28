@@ -84,6 +84,23 @@ const CreateProject = () => {
       const response = await createProjectapi(data);
       if (response.status === 200) {
         alert("Project details submitted successfully!");
+        setFormData({
+          topic: "",
+          editorName: formData.editorName,
+          mentorName: "",
+          semester:"",
+          group:"",
+          keywords: "",
+          platforms: "",
+          objective: "",
+          description: "",
+          githubLink: "",
+        });
+        // formData.clear()
+
+
+      } else {
+        alert("Failed to submit project. Please try again.");
       }
     } catch (error) {
       console.error("Error submitting project:", error);

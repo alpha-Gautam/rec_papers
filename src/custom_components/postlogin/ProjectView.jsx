@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { projectDataApi, projectLogApi, ProjectFilesApi, UploadFileApi, deleteFileAPI,projectVerifyAPI} from "../../api/user";
+import { projectDataApi, projectLogApi, ProjectFilesApi, UploadFileApi, deleteFileAPI,projectVerifyAPI,fileVisibilityAPI} from "../../api/user";
 import { useNavigate } from "react-router-dom";
 import PopUpPlus from "./ProjectLog"; // Import the popup component
 import EditPopup from "./ProjectEditPopup"
@@ -42,7 +42,11 @@ const ProjectViewPanel = () => {
         if (responsedata.status === 200) {
             setData(responsedata.data);
 
-            const fileResponse = await ProjectFilesApi(projectId)
+            const data= {
+                project_id: projectId,
+                user_id: current_user,
+            }
+            const fileResponse = await ProjectFilesApi(data)
             if(fileResponse.status===200){
                 setProjectFiles(fileResponse.data)
             }
@@ -100,6 +104,31 @@ const ProjectViewPanel = () => {
             fetchData();
         }
     }
+    const handleFileVisibility=async(file_uuid)=>{
+        const data={
+            "file":file_uuid,
+            "user":current_user,
+            "visibility":"",
+        }
+        try{
+            const response=await fileVisibilityAPI(data)
+            if(response.status===200){
+                alert("File Visibility status is updated!")
+            }
+            else{
+                alert("something went wrong!",response.message)
+            }
+        }
+        catch{
+            alert("something went wrong!/ Account is not verified")
+
+        }
+        finally{
+            fetchData();
+        }
+    }
+
+
 
     const fetchLog = async () => {
         const responsedata = await projectLogApi(projectId);
@@ -182,12 +211,10 @@ const ProjectViewPanel = () => {
             const response = await UploadFileApi(projectId,formData)
                 if(response.status===200||response.status===201){
                     alert("File is uploaded successfully !")
-                    const fileResponse = await ProjectFilesApi(projectId)
-                        if(fileResponse.status===200){
-                            setProjectFiles(fileResponse.data)
-                            setUploading(false)
-                            setShowFileDataPopup(false)
-                        }
+                    fetchData()
+                    setUploading(false)
+                    setShowFileDataPopup(false)
+                    
                 }
                 else{
                     alert("File Uploading Failed !")
@@ -207,10 +234,7 @@ const ProjectViewPanel = () => {
         const response = await deleteFileAPI(file_id)
         if(response.status===200 || response.status===2001){
             alert("File Deletion Successful !")
-            const fileResponse = await ProjectFilesApi(projectId)
-                if(fileResponse.status===200){
-                    setProjectFiles(fileResponse.data)
-                }
+            fetchData()
         }
         else{
             alert("File Deletion Failed !")
@@ -327,6 +351,10 @@ const ProjectViewPanel = () => {
 
                             {projectFiles.map((filesdata,index)=>(
                                 <div className='m-3'>
+                                    {editMode&&<button className='p-1 bg-blue-500 rounded-lg' 
+                                    onClick={() => handleFileVisibility(filesdata["uuid"])}> 
+                                    Change visibility </button>}
+                                    <p>{filesdata["public"]?(<strong className='text-blue-600'>Public</strong>):(<strong className='text-red-600'>Private</strong>)}</p>
                                     <div className='flex overflow-hidden'>
 
                                         {filesdata["file"].includes('.pdf') ? (

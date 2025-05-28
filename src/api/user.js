@@ -70,26 +70,34 @@ export const projectLogCreateApi = async (data) => {
   return response;
 };
 
-export const ProjectFilesApi = async (id) => {
+export const ProjectFilesApi = async (data) => {
   console.log("url is :-", baseURL);
-  const response = await axios.get(baseURL + `api/file/${id}`);
+  const response = await axios.get(
+    baseURL + `api/file/${data.project_id}?user=${data.user_id}`
+  );
   return response;
 };
 
 export const UploadFileApi = async (id, file) => {
   console.log("url is :-", baseURL);
-  const response = await axios.post(baseURL + `api/file/${id}`, file);
+  const response = await axios.post(baseURL + `api/file/${id}/`, file);
   return response;
 };
 
 export const deleteFileAPI = async (pk) => {
   console.log("url is :-", baseURL);
-  const response = await axios.delete(baseURL + `api/file/${pk}`);
+  const response = await axios.delete(baseURL + `api/file/${pk}/`);
   return response;
 };
 
 export const projectVerifyAPI = async (data) => {
   console.log("url is :-", baseURL);
   const response = await axios.patch(baseURL + `api/verify_project/`, data);
+  return response;
+};
+
+export const fileVisibilityAPI = async (data) => {
+  console.log("url is :-", baseURL);
+  const response = await axios.patch(baseURL + `api/file_visibility/`, data);
   return response;
 };

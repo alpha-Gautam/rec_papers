@@ -105,7 +105,10 @@ const StudentPanel = () => {
             > */}
               <div className="card-content flex flex-col gap-2">
                 <h5 className="text-lg font-semibold">
-                  <strong></strong> {paper.title}
+                  <strong>College: </strong> {paper.college}
+                </h5>
+                <h5 className="text-lg font-semibold">
+                  <strong>Title: </strong> {paper.title}
                 </h5>
                 <h6 className="text-sm">
                   <strong>Author :</strong> {paper.user}
