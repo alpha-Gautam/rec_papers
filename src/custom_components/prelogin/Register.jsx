@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BackIcon } from "../../assets/images/icon";
 import { userRegister } from '../../api/login';
-import { auth, provider } from '../../firebase';
-import { signInWithPopup } from "firebase/auth";
+// import { auth, provider } from '../../firebase';
+// import { signInWithPopup } from "firebase/auth";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -80,24 +80,24 @@ const Signup = () => {
       return;
     }
     setError("");
-    try {
-      const { user } = await signInWithPopup(auth, provider);
-      setLoading(true);
-      await submit({
-        user_id: user.uid,
-        username: user.displayName,
-        email: user.email,
-        password: "",
-        mobile: "",
-        college: form.college,
-        department: form.department,
-        is_student: form.role === "Student",
-        is_faculty: form.role === "Mentor",
-      });
-    } catch (err) {
-      setError("Google Sign-Up failed. Try again.");
-      setLoading(false);
-    }
+    // try {
+    //   const { user } = await signInWithPopup(auth, provider);
+    //   setLoading(true);
+    //   await submit({
+    //     user_id: user.uid,
+    //     username: user.displayName,
+    //     email: user.email,
+    //     password: "",
+    //     mobile: "",
+    //     college: form.college,
+    //     department: form.department,
+    //     is_student: form.role === "Student",
+    //     is_faculty: form.role === "Mentor",
+    //   });
+    // } catch (err) {
+    //   setError("Google Sign-Up failed. Try again.");
+    //   setLoading(false);
+    // }
   };
 
   return (
