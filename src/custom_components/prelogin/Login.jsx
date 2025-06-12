@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { userLoginapi } from '../../api/login';
 import { auth, provider } from '../../firebase';
-import { signInWithPopup } from "firebase/auth";
+// import { signInWithPopup } from "firebase/auth";
 import { BackIcon } from '../../assets/images/icon';
 
 const Login = () => {
@@ -52,7 +52,8 @@ const Login = () => {
 
   const handleGoogleLogin = async () => {
     try {
-      const result = await signInWithPopup(auth, provider);
+      const result = await "nothing";
+      // const result = await signInWithPopup(auth, provider);
       const user = result.user;
       const data = {
         email: user.email,
