@@ -38,7 +38,8 @@ const Login = () => {
           localStorage.setItem("department", userData["department"]);
           localStorage.setItem("v_by_a", userData["verified_by_admin"]);
 
-          navigate("/dashboard");
+          navigate("/dashboard/profile");
+          // navigate("/dashboard");
         }
       } else {
         setErrorMsg("Login failed. Please check your credentials.");
