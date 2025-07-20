@@ -254,13 +254,13 @@ const Signup = () => {
           </button>
         </form>
 
-        <button
+        {/* <button
           onClick={handleGoogle}
           disabled={loading}
           className={`w-full mt-3 bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
         >
           Sign Up with Google
-        </button>
+        </button> */}
       </div>
     </div>
   );

@@ -27,20 +27,7 @@ const Sidebar = () => {
       <div className="bg-red-900 z-50"></div>
       </button>
 
-      {/* Overlay for mobile view when sidebar is open */}
-      {/* {expand && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-40 sm:hidden z-40"
-          onClick={() => setExpand(false)}
-        />
-      )} */}
-
-      {/* Sidebar */}
-      {/* <div
-      onMouseEnter={() => setExpand(true)}
-      onMouseLeave={()=>setExpand(false)}
-        className={` sm:relative h-screen bg-gray-900 text-white border-r transition-all duration-300 z-50  ${expand ? "w-64 absolute" : "w-20"}`}
-      > */}/
+     
 
 <div
       onMouseEnter={() => setExpand(true)}
@@ -81,6 +68,19 @@ const Sidebar = () => {
             </button>
             </div>}
 
+                  <div className="flex justify-center items-center w-full py-2 px-4  text-blue-700 font-semibold rounded-lg text-center transition-all duration-300 hover:bg-gray-200">
+            <button
+              onClick={() => {
+                navigate("/dashboard");
+                
+              }}
+              
+            >
+              <HomeIcon selected={true} width={40} height={40} />
+              {/* {expand? <p>Home</p>:""} */}
+            </button>
+            </div>
+
                 <div className="flex justify-center items-center w-full py-2 px-4  text-blue-700 font-semibold rounded-lg text-center transition-all duration-300 hover:bg-gray-200">
             <button
               onClick={() => {
@@ -93,6 +93,9 @@ const Sidebar = () => {
               {/* {expand? <p>Home</p>:""} */}
             </button>
             </div>
+
+
+            
                 <div className="flex justify-center items-center w-full py-2 px-4  text-blue-700 font-semibold rounded-lg text-center transition-all duration-300 hover:bg-gray-200">
             <button
               onClick={() => {
@@ -106,18 +109,7 @@ const Sidebar = () => {
             </button>
             </div>
 
-                <div className="flex justify-center items-center w-full py-2 px-4  text-blue-700 font-semibold rounded-lg text-center transition-all duration-300 hover:bg-gray-200">
-            <button
-              onClick={() => {
-                navigate("/dashboard");
-                
-              }}
-              
-            >
-              <HomeIcon selected={true} width={40} height={40} />
-              {/* {expand? <p>Home</p>:""} */}
-            </button>
-            </div>
+            
             
             <div className="flex justify-center items-center w-full py-2 px-4  text-blue-700 font-semibold rounded-lg text-center transition-all duration-300 hover:bg-gray-200">
             <button
