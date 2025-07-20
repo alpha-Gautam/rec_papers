@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import logo from "./Logo.png";
 import logo1 from "./logo1.png";
+import { userLoginapi } from '../../api/login';
+
 
 const Navbar = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [userRole, setUserRole] = useState(null); // 'mentor', 'student', or null (logged-out)
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  
 
   const handleLogout = () => setUserRole(null);
 
@@ -17,7 +20,6 @@ const Navbar = () => {
   
   useEffect(() => {
    
-
     const handleScroll = () => {
       if (window.scrollY > 50) {
         setIsScrolled(true);
@@ -29,6 +31,36 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const guestLoginHandler = async () => {
+    setErrorMsg("");
+    try {
+      const loginResponse = await userLoginapi({ email: "guest@reck.ac.in", password: "12345"});
+      if (loginResponse.status === 200) {
+        const userData = loginResponse.data;
+    
+            if (userData["uuid"]) {
+              localStorage.setItem("username", userData["username"]);
+              localStorage.setItem("user_id", userData["uuid"]);
+              localStorage.setItem("email", userData["email"]);
+              localStorage.setItem("role", userData["is_faculty"]);
+              localStorage.setItem("college", userData["college"]);
+              localStorage.setItem("mobile", userData["mobile"]);
+              localStorage.setItem("department", userData["department"]);
+              localStorage.setItem("v_by_a", userData["verified_by_admin"]);
+    
+              navigate("/dashboard/profile");
+              // navigate("/dashboard");
+            }
+      } else {
+        alert("Login failed. Please check your credentials.");
+      }
+    } catch (error) {
+      alert(error.response?.data?.message || "Login failed. Try again.");
+    } finally {
+      // setLoginButton(false);
+    }
+  };
 
   return (
     <nav
@@ -67,6 +99,13 @@ const Navbar = () => {
               >
                 Register
               </Link>
+              <button
+                onClick={guestLoginHandler}
+                className="hover:text-blue-500 transition text-white no-underline"
+              >
+                Guest Login
+              </button>
+
              { isProduction && <Link
                 to="/dashboard"
                 className="hover:text-blue-500 transition text-white no-underline"
@@ -187,6 +226,8 @@ const Navbar = () => {
       </div>
     </nav>
   );
+
 };
 
+  
 export default Navbar;
