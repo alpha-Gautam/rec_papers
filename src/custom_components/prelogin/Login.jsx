@@ -150,12 +150,12 @@ const Login = () => {
         </button>
 
         {/* Google Login */}
-        <button
+        {/* <button
           onClick={handleGoogleLogin}
           className="w-full mt-3 bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition"
         >
           Sign In with Google
-        </button>
+        </button> */}
 
         {/* Forgot Password */}
         <div className="mt-3 text-center">

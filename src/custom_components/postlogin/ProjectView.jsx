@@ -447,7 +447,7 @@ const ProjectViewPanel = () => {
                     {editMode && (
                       <div>
                         <button
-                          className="p-1 h-[30px] bg-blue-500 rounded-sm mr-2"
+                          className="p-1 h-[30px] bg-blue-500 rounded-sm mr-2 whitespace-nowrap"
                           onClick={() => handleFileVisibility(filesdata["uuid"])}
                         >
                           Change visibility
