@@ -201,6 +201,7 @@ const ProjectViewPanel = () => {
         fetchData();
         setUploading(false);
         setShowFileDataPopup(false);
+        setFileLabel("");
       } else {
         alert("File Uploading Failed !");
         setUploading(false);
@@ -210,6 +211,7 @@ const ProjectViewPanel = () => {
       // Example: await uploadFileApi(formData);
     } else {
       console.log("No file selected");
+      alert("Please select a file to upload.");
       setUploading(false);
     }
   };
