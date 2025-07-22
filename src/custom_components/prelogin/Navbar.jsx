@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo1 from "./logo1.png";
 import { userLoginapi } from '../../api/login';
+import { wait } from "@testing-library/user-event/dist/utils";
+import { LoadingIcon } from '../../assets/icons/Loading';
 
 
 const Navbar = () => {
@@ -9,8 +11,9 @@ const Navbar = () => {
   const [userRole, setUserRole] = useState(null); // 'mentor', 'student', or null (logged-out)
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
-  
+  // const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [loginEmail, setLoginEmail] = useState("");
 
   const handleLogout = () => setUserRole(null);
 
@@ -32,10 +35,14 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const guestLoginHandler = async () => {
-    setErrorMsg("");
+  const guestLoginHandler = async (email="guest@reck.ac.in",password="123") => {
+    setLoading(true);
+    // console.log("before wait")
+    //   await wait(10000);
+    //   console.log("after wait")
+
     try {
-      const loginResponse = await userLoginapi({ email: "guest@reck.ac.in", password: "12345"});
+      const loginResponse = await userLoginapi({ email: email, password: password});
       if (loginResponse.status === 200) {
         const userData = loginResponse.data;
     
@@ -58,11 +65,21 @@ const Navbar = () => {
     } catch (error) {
       alert(error.response?.data?.message || "Login failed. Try again.");
     } finally {
-      // setLoginButton(false);
+      
+      setLoading(false);
     }
   };
 
   return (
+    <>
+{loading && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="  rounded-xl shadow-lg px-8 py-6 flex flex-col items-center">
+      <span className="text-lg font-semibold mb-2"><LoadingIcon/></span>
+      <div className="loader mt-2" />
+    </div>
+  </div>
+)}
     <nav
       className={`sticky top-0 z-50 transition-all duration-300 ${
         isScrolled ? "bg-black/70 shadow-md" : "bg-black"
@@ -105,6 +122,23 @@ const Navbar = () => {
               >
                 Guest Login
               </button>
+
+              <select name="guest_login" id="guest_login" className=" transition hover:border-0  text-white bg-black"
+              onChange={e => {
+                  const value = e.target.value;
+                  console.log("Selected:", value)
+                  if(value !== "") {
+                    guestLoginHandler(value);
+                  }
+                
+                  }}    
+              >
+
+                <option value="">Guest Login</option>
+                <option value="guest@reck.ac.in">student</option>
+                <option value="guestfaculty@reck.ac.in">faculty</option>
+
+              </select>
 
              { isProduction && <Link
                 to="/dashboard"
@@ -225,6 +259,7 @@ const Navbar = () => {
         </div>
       </div>
     </nav>
+    </>
   );
 
 };
