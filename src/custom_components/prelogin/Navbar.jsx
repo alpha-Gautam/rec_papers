@@ -116,12 +116,12 @@ const Navbar = () => {
               >
                 Register
               </Link>
-              <button
+              {/* <button
                 onClick={guestLoginHandler}
                 className="hover:text-blue-500 transition text-white no-underline"
               >
                 Guest Login
-              </button>
+              </button> */}
 
               <select name="guest_login" id="guest_login" className=" transition hover:border-0  text-white bg-black"
               onChange={e => {
