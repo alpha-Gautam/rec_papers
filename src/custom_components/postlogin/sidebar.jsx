@@ -3,14 +3,17 @@ import { useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import {HomeIcon,ChIconCreate,ChIconLogOut,ChIconLandingPage, ChIconChat, ChIconProfile} from "../../assets/images/icon"
 import logo from "../../assets/images/logo.png"
+import { Button } from "../../components/UI/button";
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const [expand, setExpand] = useState(false);
+  const [logout, setLogout] = useState(false);
   const isProduction = window.location.href.includes("localhost")
 
 
   const handleLogout = () => {
+
     localStorage.clear();
     navigate("/");
     console.log("Logout done!");
@@ -131,7 +134,7 @@ const Sidebar = () => {
               <div className="flex justify-center items-center py-2 px-2  text-blue-700 font-semibold rounded-lg text-center transition-all duration-300 hover:bg-gray-200 ">
             <button
               type="button"
-              onClick={handleLogout}
+              onClick={() => setLogout(true)}
               
             >
               <ChIconLogOut/>
@@ -142,6 +145,20 @@ const Sidebar = () => {
           </div>
         </aside>
       </div>
+      {logout && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="   shadow-lg  flex flex-col items-center">
+            <div className="w-[350px] h-[200px] rounded-xl bg-white p-4 flex-col items-center justify-between">
+              <div className="text-lg font-semibold">Are you sure you want to logout?</div>
+              <div className="flex justify-between p-1 mt-20">
+                <Button type="button" onClick={()=>setLogout(false)} className="rounded-xl">close</Button>
+                <Button onClick={handleLogout} className="rounded-xl"> Logout</Button>
+              </div>
+            </div>
+            <div className="loader mt-2" />
+          </div>
+        </div>
+      )}
     </>
   );
 };
