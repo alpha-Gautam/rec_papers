@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./StudentPanel.css";
 import { ProjectViewApi, projectFilterApi } from "../../api/user";
+import { LoadingIcon } from "../../assets/icons/Loading";
 
 const StudentPanel = () => {
   const [projectData, setProjectData] = useState([]);
-  const [userData, setUserData] = useState({});
+  // const [userData, setUserData] = useState({});
   const [searchValue, setSearchValue] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -19,21 +21,22 @@ const StudentPanel = () => {
     }
   };
 
-  useEffect(() => {
-    setUserData({
-      "username": localStorage.getItem("username"),
-      "email": localStorage.getItem("email"),
-      "college": localStorage.getItem("college"),
-      "mobile": localStorage.getItem("mobile"),
-      "user_id": localStorage.getItem("uuid"),
-      "role": localStorage.getItem("role"),
-      "department": localStorage.getItem("department")
-    });
-  }, []);
+  // useEffect(() => {
+  //   setUserData({
+  //     "username": localStorage.getItem("username"),
+  //     "email": localStorage.getItem("email"),
+  //     "college": localStorage.getItem("college"),
+  //     "mobile": localStorage.getItem("mobile"),
+  //     "user_id": localStorage.getItem("uuid"),
+  //     "role": localStorage.getItem("role"),
+  //     "department": localStorage.getItem("department")
+  //   });
+  // }, []);
 
   useEffect(() => {
     const fetchProjectList = async () => {
       try {
+        setLoading(true);
         const response = await ProjectViewApi();
         console.log(response.data);
         if (response.status === 200) {
@@ -49,6 +52,9 @@ const StudentPanel = () => {
         } else {
           console.error("Error message:", error.message);
         }
+      }
+      finally {
+        setLoading(false);
       }
     };
     fetchProjectList();
@@ -93,7 +99,14 @@ const StudentPanel = () => {
           <div></div>
 
         </div>
-        <div className="card-container flex flex-col gap-5 border-2 border-blue-500 p-4 bg-white rounded-md shadow-md">
+        {loading && (
+                  <div className="flex items-center justify-center h-full">
+                    <LoadingIcon color="#155DFC" />
+                  </div>
+                )}
+        
+
+        {!loading&&<div className="card-container flex flex-col gap-5 border-2 border-blue-500 p-4 bg-white rounded-md shadow-md">
           {projectData.map((paper) => (
             <div
               className=" bg-white border rounded-lg shadow-md p-4 flex flex-row justify-between"
@@ -137,7 +150,7 @@ const StudentPanel = () => {
               </div>
             </div>
           ))}
-        </div>
+        </div>}
       </main>
     </div>
   );

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./StudentPanel.css";
 import { ProjectViewApi, projectFilterApi,UserProjectViewApi } from "../../api/user";
+import { LoadingIcon } from "../../assets/icons/Loading";
 
 const FacultyProfile = (user_details) => {
   const [projectData, setProjectData] = useState([]);
   const [userData, setUserData] = useState({});
+  const [loading, setLoading] = useState(true);
   // const [searchValue, setSearchValue] = useState(null);
 
   const navigate = useNavigate();
@@ -34,9 +35,7 @@ const FacultyProfile = (user_details) => {
   useEffect(() => {
     const fetchProjectList = async () => {
       try {
-       
-
-        
+        setLoading(true);
           const response = await UserProjectViewApi(user_details.user_details.user_id);
           if (response.status === 200) {
             const data = response.data;
@@ -50,6 +49,9 @@ const FacultyProfile = (user_details) => {
        
       } catch (error) {
         console.error("API error:", error);
+      }
+      finally {
+        setLoading(false);
       }
     };
     fetchProjectList();
@@ -87,8 +89,13 @@ const FacultyProfile = (user_details) => {
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-3xl font-bold">Research Papers</h2>
         </div>
+        {loading && (
+          <div className="flex items-center justify-center h-full">
+            <LoadingIcon color="#155DFC"  />
+          </div>
+        )}
 
-        <div className="card-container flex flex-col gap-5">
+        {!loading && <div className="card-container flex flex-col gap-5">
           {projectData.map((paper) => (
             <div
               className="bg-white border rounded-lg shadow-md p-4 flex flex-row justify-between"
@@ -124,7 +131,7 @@ const FacultyProfile = (user_details) => {
               </div>
             </div>
           ))}
-        </div>
+        </div>}
       </div>
     </div>
   );
