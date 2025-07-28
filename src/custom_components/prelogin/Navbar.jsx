@@ -75,7 +75,7 @@ const Navbar = () => {
 {loading && (
   <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
     <div className="  rounded-xl shadow-lg px-8 py-6 flex flex-col items-center">
-      <span className="text-lg font-semibold mb-2"><LoadingIcon/></span>
+      <span className="text-lg font-semibold mb-2"><LoadingIcon color="#155DFC" /></span>
       <div className="loader mt-2" />
     </div>
   </div>

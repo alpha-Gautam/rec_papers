@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import {Routes, Route} from 'react-router-dom';
 import StudentPanel from './StudentPanel';
 import CreateProject from './CreateProject';
-import StudentProfile from './StudentProfile';
 import FacultyProfile from './FacultyProfile';
 import Sidebar from './sidebar'
 import ProjectViewPanel from './ProjectView'
