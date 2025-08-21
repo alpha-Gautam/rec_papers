@@ -40,8 +40,8 @@ import toast from "react-hot-toast";
 const collaborators=[
     {
         college: "Rajkiya Engineering College Sonbhadra",
-        students: ["Alice Smith", "Bob Johnson"],
-        mentor: "Dr. Johnson",
+        students: ["Abhinav Maurya", "Shashank Dwivedi"],
+        mentor: "Dr. Anurag Sewak",
     },
     
 ]
