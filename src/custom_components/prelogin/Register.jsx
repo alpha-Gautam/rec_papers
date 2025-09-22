@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BackIcon } from "../../assets/images/icon";
-import { userRegister } from '../../api/login';
+import { userRegister } from "../../api/login";
 // import { auth, provider } from '../../firebase';
 // import { signInWithPopup } from "firebase/auth";
 
@@ -9,6 +9,8 @@ const Signup = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({
     username: "",
+    first_name: "",
+    last_name: "",
     rollNo: "",
     email: "",
     mobile: "",
@@ -23,14 +25,19 @@ const Signup = () => {
 
   const handleBack = () => navigate("/");
   const handleTab = () => navigate("/login");
-  const handleChange = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
-  const handleRoleChange = e => setForm(f => ({ ...f, role: e.target.value }));
+  const handleChange = (e) =>
+    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+  const handleRoleChange = (e) =>
+    setForm((f) => ({ ...f, role: e.target.value }));
 
-  const submit = async data => {
+  const submit = async (data) => {
     setError("");
     try {
       const res = await userRegister(data);
-      if (res.status === 200) {
+      if (res.status === 201 || res.status === 200) {
+        alert(
+          "Registration successful! Please check your email box for activation and login."
+        );
         navigate("/login", { replace: true });
       } else {
         setError("Registration failed. Please try again.");
@@ -42,9 +49,18 @@ const Signup = () => {
     }
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (!form.username || !form.rollNo || !form.email || !form.college || !form.department || !form.password) {
+    if (
+      !form.username ||
+      !form.first_name ||
+      !form.last_name ||
+      !form.rollNo ||
+      !form.email ||
+      !form.college ||
+      !form.department ||
+      !form.password
+    ) {
       setError("Please fill in all required fields");
       return;
     }
@@ -53,21 +69,24 @@ const Signup = () => {
       return;
     }
     setLoading(true);
-    const emailValidate = form.email.split("@")
-    console.log("email validater", emailValidate)
-    if(emailValidate[emailValidate.length-1]!=="reck.ac.in"){
-      alert("Write a valied college 'Email Id'")
+    const emailValidate = form.email.split("@");
+    console.log("email validater", emailValidate);
+    if (emailValidate[emailValidate.length - 1] !== "reck.ac.in" && false) {
+      alert("Write a valied college 'Email Id'");
       setLoading(false);
-    }
-    else{
+    } else {
       submit({
         user_id: form.rollNo,
         username: form.username,
+        first_name: form.first_name,
+        last_name: form.last_name,
         email: form.email,
         password: form.password,
+        confirm_password: form.password,
         mobile: form.mobile,
         college: form.college,
         department: form.department,
+        designation: form.role,
         is_student: form.role === "Student",
         is_faculty: form.role === "Mentor",
       });
@@ -104,16 +123,24 @@ const Signup = () => {
     <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50">
       <div className="bg-white w-full max-w-md p-6 rounded-xl shadow-lg relative max-h-[90vh] overflow-y-auto my-8 mx-4 sm:mx-8">
         {/* Back Icon */}
-        <button onClick={handleBack} className="absolute top-4 left-4 text-gray-600 hover:text-black">
+        <button
+          onClick={handleBack}
+          className="absolute top-4 left-4 text-gray-600 hover:text-black"
+        >
           <BackIcon />
         </button>
 
         {/* Title */}
-        <h2 className="text-center text-xl font-semibold mb-6">Please Register To Continue</h2>
+        <h2 className="text-center text-xl font-semibold mb-6">
+          Please Register To Continue
+        </h2>
 
         {/* Tabs */}
         <div className="flex justify-center mb-4 border-b border-gray-300">
-          <button className="px-4 py-2 text-gray-500 hover:text-black" onClick={handleTab}>
+          <button
+            className="px-4 py-2 text-gray-500 hover:text-black"
+            onClick={handleTab}
+          >
             Sign In
           </button>
           <button className="px-4 py-2 text-black border-b-2 border-green-500 font-semibold">
@@ -122,7 +149,9 @@ const Signup = () => {
         </div>
 
         {/* Error */}
-        {error && <p className="text-red-500 text-sm text-center mb-2">{error}</p>}
+        {error && (
+          <p className="text-red-500 text-sm text-center mb-2">{error}</p>
+        )}
 
         {/* Form */}
         <form onSubmit={handleSubmit}>
@@ -132,7 +161,25 @@ const Signup = () => {
               value={form.username}
               onChange={handleChange}
               type="text"
-              placeholder="Full Name"
+              placeholder="UserName"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
+              required
+            />
+            <input
+              name="first_name"
+              value={form.first_name}
+              onChange={handleChange}
+              type="text"
+              placeholder="First Name"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
+              required
+            />
+            <input
+              name="last_name"
+              value={form.last_name}
+              onChange={handleChange}
+              type="text"
+              placeholder="Last Name"
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
               required
             />
@@ -151,8 +198,8 @@ const Signup = () => {
               onChange={handleChange}
               type="email"
               placeholder="College E-mail"
-              pattern="[a-zA-Z0-9._-]+@reck.ac.in"
-              title="Please enter a valid email address ending with @reck.ac.in"
+              // pattern="[a-zA-Z0-9._-]+@reck.ac.in"
+              // title="Please enter a valid email address ending with @reck.ac.in"
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
               required
             />
@@ -174,11 +221,21 @@ const Signup = () => {
               required
             >
               <option value="">Select college</option>
-              <option value="Rajkiya Engineering College Kannauj">Rajkiya Engineering College Kannauj</option>
-              <option value="Rajkiya Engineering College Banda">Rajkiya Engineering College Banda</option>
-              <option value="Rajkiya Engineering College Sonbhadra">Rajkiya Engineering College Sonbhadra</option>
-              <option value="Rajkiya Engineering College Bijnor">Rajkiya Engineering College Bijnor</option>
-              <option value="Rajkiya Engineering College Basti">Rajkiya Engineering College Basti</option>
+              <option value="Rajkiya Engineering College Kannauj">
+                Rajkiya Engineering College Kannauj
+              </option>
+              <option value="Rajkiya Engineering College Banda">
+                Rajkiya Engineering College Banda
+              </option>
+              <option value="Rajkiya Engineering College Sonbhadra">
+                Rajkiya Engineering College Sonbhadra
+              </option>
+              <option value="Rajkiya Engineering College Bijnor">
+                Rajkiya Engineering College Bijnor
+              </option>
+              <option value="Rajkiya Engineering College Basti">
+                Rajkiya Engineering College Basti
+              </option>
             </select>
             <select
               name="department"
@@ -188,9 +245,15 @@ const Signup = () => {
               required
             >
               <option value="">Select Department</option>
-              <option value="Computer Science & Engineering">Computer Science & Engineering</option>
-              <option value="Electronics Engineering">Electronics Engineering</option>
-              <option value="Electrical Engineering">Electrical Engineering</option>
+              <option value="Computer Science & Engineering">
+                Computer Science & Engineering
+              </option>
+              <option value="Electronics Engineering">
+                Electronics Engineering
+              </option>
+              <option value="Electrical Engineering">
+                Electrical Engineering
+              </option>
               <option value="Civil Engineering">Civil Engineering</option>
             </select>
             <input
@@ -210,14 +273,18 @@ const Signup = () => {
               type="password"
               placeholder="Re-type Password"
               minLength="5"
-              className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-400 ${form.password2!==form.password? "text-red-600":""}`}
+              className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-400 ${
+                form.password2 !== form.password ? "text-red-600" : ""
+              }`}
               required
             />
           </div>
 
           {/* Role Selection */}
           <div className="mt-4 text-center">
-            <label className="block text-gray-700 font-medium mb-1">Select your role:</label>
+            <label className="block text-gray-700 font-medium mb-1">
+              Select your role:
+            </label>
             <div className="flex justify-center space-x-6">
               <label className="flex items-center">
                 <input
@@ -248,7 +315,9 @@ const Signup = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full mt-6 bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+            className={`w-full mt-6 bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition ${
+              loading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
           >
             {loading ? "Signing Up..." : "Sign Up"}
           </button>

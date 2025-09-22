@@ -1,23 +1,24 @@
-import React from 'react';
-import SearchBox from './SearchBox';
-import { Card, CardContent, Typography, CardMedia } from '@mui/material';
+import React, { useEffect } from "react";
+// import { set_cookies } from "./../../api/login";
+// import SearchBox from "./SearchBox";
+import { Card, CardContent, Typography, CardMedia } from "@mui/material";
 
 const Home = () => {
   const cardsData = [
     {
-      title: 'Image Enhancement using ML',
-      description: '',
-      image: require('../../assets/images/paper-photo.jpg'), // Local image
+      title: "Image Enhancement using ML",
+      description: "",
+      image: require("../../assets/images/paper-photo.jpg"), // Local image
     },
     {
-      title: 'Portfolio Website Development using React.js',
-      description: '',
-      image: require('../../assets/images/paper-photo.jpg'), // Local image
+      title: "Portfolio Website Development using React.js",
+      description: "",
+      image: require("../../assets/images/paper-photo.jpg"), // Local image
     },
     {
-      title: 'Attention Mechanism Implementation',
-      description: '',
-      image: require('../../assets/images/paper-photo.jpg'), // Local image
+      title: "Attention Mechanism Implementation",
+      description: "",
+      image: require("../../assets/images/paper-photo.jpg"), // Local image
     },
   ];
 
@@ -25,6 +26,10 @@ const Home = () => {
     console.log(`Searching for: ${query}`);
     // Add logic here to filter or fetch search results
   };
+  // useEffect(() => {
+  //   set_cookies();
+  //   console.log("cookies is set");
+  // }, []);
 
   return (
     <div className="home bg-black text-white min-h-screen px-4 py-8">
@@ -52,7 +57,10 @@ const Home = () => {
               className="object-cover"
             />
             <CardContent className="p-4">
-              <Typography variant="h5" className="text-xl font-bold text-gray-900">
+              <Typography
+                variant="h5"
+                className="text-xl font-bold text-gray-900"
+              >
                 {card.title}
               </Typography>
               <Typography

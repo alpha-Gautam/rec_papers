@@ -13,20 +13,31 @@ if (window.location.href.includes("localhost")) {
 // baseURL = "https://recpapers-backend.onrender.com/";
 // const url = "/api";
 
-export const userLoginapi = async (data) => {
-  //   return server.get(url + "/login/", data);
+export const set_cookies = async () => {
   console.log("url is :-", baseURL);
-  const response = await axios.post(baseURL + "api/login/", data);
-  //   const response = await server.post("api/login/", data);
+  const response = await axios.get(baseURL + "account/get-cookies/");
 
+  return response;
+};
+export const userLoginapi = async (data) => {
+  console.log("url is :-", baseURL);
+  const response = await axios.post(baseURL + "account/login/", data);
+  return response;
+};
+export const userLogoutAPI = async (data) => {
+  console.log("url is :-", baseURL);
+  const response = await axios.post(baseURL + "account/logout/", data);
   return response;
 };
 
 export const userRegister = async (data) => {
-  //   return server.get(url + "/login/", data);
-  const response = await axios.post(baseURL + "api/ragister/", data);
-  //   const response = await server.post("api/login/", data);
-
+  const response = await axios.post(baseURL + "account/register/", data);
+  return response;
+};
+export const forgetPasswordAPI = async (email) => {
+  const response = await axios.post(baseURL + "account/forgot_password/", {
+    email: email,
+  });
   return response;
 };
 
